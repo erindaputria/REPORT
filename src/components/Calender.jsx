@@ -85,7 +85,7 @@ export function Calender() {
         </button>
       </div>
 
-      {/* Days of week */}
+      {/* Days of minggu */}
       <div className="grid grid-cols-7 gap-1 text-xs text-gray-500">
         {daysOfWeek.map((day) => (
           <div
