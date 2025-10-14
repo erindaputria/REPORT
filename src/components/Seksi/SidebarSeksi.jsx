@@ -10,11 +10,11 @@ import {
 import { Link, useLocation } from "react-router-dom";
 
 const items = [
-  { to: "/beranda", label: "Dashboard", icon: HomeIcon },
-  { to: "/pengajuan", label: "Penugasan", icon: ClipboardDocumentListIcon },
-  { to: "/monitoring", label: "Monitoring", icon: ChartBarIcon },
-  { to: "/arsip", label: "Arsip", icon: ArchiveBoxIcon },
-  { to: "/chat", label: "Layanan Chat", icon: ChatBubbleLeftEllipsisIcon },
+  {label: "Dashboard", icon: HomeIcon },
+  {label: "Penugasan", icon: ClipboardDocumentListIcon },
+  {label: "Monitoring", icon: ChartBarIcon },
+  {label: "Arsip", icon: ArchiveBoxIcon },
+  {label: "Layanan Chat", icon: ChatBubbleLeftEllipsisIcon },
 ];
 
 export default function Sidebar() {

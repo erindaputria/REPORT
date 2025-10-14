@@ -12,32 +12,30 @@ export default function BerandaSeksi() {
   // Data dummy
   const dataPelaporan = [
     { id: 1, pengirim: "Doni Ridho", perihal: "Perangkat Keras", tanggal: "18/09/2024", status: "Revisi" },
-    { id: 2, pengirim: "Sinta Wulandari", perihal: "Jaringan", tanggal: "19/09/2024", status: "Pending" },
-    { id: 3, pengirim: "Andi Pratama", perihal: "Sistem", tanggal: "20/09/2024", status: "Diterima" },
-    { id: 4, pengirim: "Lina Sari", perihal: "Aplikasi", tanggal: "21/09/2024", status: "Diproses" },
-    { id: 5, pengirim: "Agus Wijaya", perihal: "Database", tanggal: "22/09/2024", status: "Diterima" },
-    { id: 6, pengirim: "Budi Santoso", perihal: "Hardware", tanggal: "23/09/2024", status: "Ditolak" },
+    { id: 2, pengirim: "Sinta Wulandari", perihal: "Jaringan", tanggal: "19/09/2024", status: "Terverifikasi" },
+    { id: 3, pengirim: "Andi Pratama", perihal: "Sistem", tanggal: "20/09/2024", status: "Ditolak" },
+    { id: 4, pengirim: "Lina Sari", perihal: "Aplikasi", tanggal: "21/09/2024", status: "Draft" },
+    { id: 5, pengirim: "Agus Wijaya", perihal: "Database", tanggal: "22/09/2024", status: "Terverifikasi" },
+    { id: 6, pengirim: "Budi Santoso", perihal: "Hardware", tanggal: "23/09/2024", status: "Terverifikasi" },
     { id: 7, pengirim: "Rina Oktavia", perihal: "Akses", tanggal: "23/09/2024", status: "Pending" },
-    { id: 8, pengirim: "Teguh Ramadhan", perihal: "Bug Software", tanggal: "24/09/2024", status: "Diproses" },
-    { id: 9, pengirim: "Indah Puspita", perihal: "Server", tanggal: "25/09/2024", status: "Revisi" },
-    { id: 10, pengirim: "Fajar Nugraha", perihal: "Keamanan", tanggal: "26/09/2024", status: "Diterima" },
+    { id: 8, pengirim: "Teguh Ramadhan", perihal: "Bug Software", tanggal: "24/09/2024", status: "Terverifikasi" },
+    { id: 9, pengirim: "Indah Puspita", perihal: "Server", tanggal: "25/09/2024", status: "Draft" },
+    { id: 10, pengirim: "Fajar Nugraha", perihal: "Keamanan", tanggal: "26/09/2024", status: "Terverifikasi" },
   ];
 
   // fungsi pewarnaan status
   const statusColor = (status) => {
     switch (status) {
-      case "Diterima":
-        return "bg-green-100 text-green-700";
-      case "Diproses":
-        return "bg-blue-100 text-blue-700";
-      case "Pending":
-        return "bg-yellow-100 text-yellow-700";
+      case "Terverifikasi":
+        return "bg-green-100 text-black-700";
       case "Revisi":
-        return "bg-orange-100 text-orange-700";
+        return "bg-red-100 text-black-700";
+      case "Pending":
+        return "bg-yellow-100 text-black-700";
       case "Ditolak":
-        return "bg-red-100 text-red-700";
+        return "bg-red-100 text-black-700";
       default:
-        return "bg-gray-100 text-gray-700";
+        return "bg-gray-100 text-black-700";
     }
   };
 
@@ -137,9 +135,7 @@ export default function BerandaSeksi() {
                     </span>
                   </td>
                   <td className="p-3 flex gap-3">
-                    <EyeIcon className="w-5 h-5 text-blue-600 cursor-pointer" />
                     <PencilSquareIcon className="w-5 h-5 text-green-600 cursor-pointer" />
-                    <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" />
                   </td>
                 </tr>
               ))}
