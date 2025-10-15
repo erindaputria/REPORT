@@ -17,6 +17,8 @@ import SuksesPelaporan from "./pages/beranda/pelaporan/SuksesPelaporan";
 import BerandaSeksi from "./pages/beranda/Seksi/BerandaSeksi";
 import Layout from "./components/Seksi/LayoutSeksi";
 import PengajuanSeksi from "./pages/beranda/Seksi/PengajuanSeksi";
+import PenugasanSeksi from "./pages/beranda/Seksi/PenugasanSeksi"
+import FormPenugasanSeksi from "./pages/beranda/Seksi/FormPenugasanSeksi"
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="berandaseksi" element={<BerandaSeksi />} />    
           <Route path="pengajuanseksi" element={<PengajuanSeksi />} />
+          <Route path="penugasanseksi" element={<PenugasanSeksi />} />
+          <Route path="formpenugasanseksi" element={<FormPenugasanSeksi />} />
         </Route>
 
         {/* Halaman tanpa Layout */}
