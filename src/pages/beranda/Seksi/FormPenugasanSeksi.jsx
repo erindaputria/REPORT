@@ -1,8 +1,39 @@
 import React, { useState } from "react";
 import { FileText } from "lucide-react";
+import Swal from "sweetalert2";
+
 
 export default function PenugasanSeksi() {
     const [teknisi, setTeknisi] = useState("");
+
+
+    const handleSubmit = () => {
+      Swal.fire({
+      title: "Apakah Anda yakin ingin mengirim?",
+      text: "Cek kembali inputan Anda sebelum mengirim!",
+      icon: "warning",
+      iconColor: "#1e3a8a",
+      showCancelButton: true,
+      confirmButtonColor: "#1e3a8a",
+      cancelButtonColor: "#f87171",
+      confirmButtonText: "Ya, saya yakin!",
+      cancelButtonText: "Batalkan",
+      reverseButtons: true,
+      customClass: {
+      title: "text-2xl font-bold",
+      htmlContainer: "text-gray-600 text-sm",},
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+        title: "Laporan Dikirim!",
+        text: "Data berhasil dikirim ke sistem.",
+        icon: "success",
+        confirmButtonColor: "#1e3a8a",
+      });
+    }
+  });
+};
+
 
 
   return (
@@ -140,9 +171,12 @@ export default function PenugasanSeksi() {
             <button className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-800">
               Simpan Draft
             </button>
-            <button className="px-4 py-2 rounded-lg bg-blue-900 text-white hover:bg-blue-800">
+            <button
+              onClick={handleSubmit}
+              className="px-4 py-2 rounded-lg bg-blue-900 text-white hover:bg-blue-800">
               Kirim
             </button>
+
           </div>
         </div>
       </div>
