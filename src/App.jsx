@@ -21,6 +21,10 @@ import PenugasanSeksi from "./pages/beranda/Seksi/PenugasanSeksi"
 import FormPenugasanSeksi from "./pages/beranda/Seksi/FormPenugasanSeksi"
 import MonitoringSeksi from "./pages/beranda/Seksi/MonitoringSeksi"
 import StatistikSeksi from "./pages/beranda/Seksi/StatistikSeksi"
+import ArsipSeksi from "./pages/beranda/Seksi/ArsipSeksi"
+import ReopenSeksi from "./pages/beranda/Seksi/ReopenSeksi"
+import RatingSeksi from "./pages/beranda/Seksi/RatingSeksi";
+
 
 function App() {
   return (
@@ -34,6 +38,9 @@ function App() {
           <Route path="formpenugasanseksi" element={<FormPenugasanSeksi />} />
           <Route path="monitoringseksi" element={<MonitoringSeksi />} />
           <Route path="statistikseksi" element={<StatistikSeksi />} />
+          <Route path="arsipseksi" element={<ArsipSeksi />} />
+          <Route path="reopenseksi" element={<ReopenSeksi />} />
+          <Route path="ratingseksi" element={<RatingSeksi />} />
         </Route>
 
         {/* Halaman tanpa Layout */}
