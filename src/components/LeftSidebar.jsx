@@ -1,39 +1,44 @@
 import React, { useState } from "react";
-import { Home, Heart, Folder, Settings, FileText } from "lucide-react";
 
 const LeftSidebar = () => {
-  const [activeItem, setActiveItem] = useState("beranda");
+  const [activeItem, setActiveItem] = useState("Beranda");
 
   const navItems = [
     {
       id: "beranda",
       label: "Beranda",
-      icon: <Home size={20} />,
+      icon: "/assets/Logo Beranda.png", // Path ke gambar beranda
+      activeIcon: "/assets/beranda-active.png", // Icon aktif (opsional)
     },
     {
       id: "statistik",
       label: "Statistik",
-      icon: <div className="w-5 h-5 bg-current rounded-full opacity-60" />,
+      icon: "/assets/Logo Statistik.png", // Path ke gambar statistik
+      activeIcon: "/assets/statistik-active.png", // Icon aktif (opsional)
     },
     {
       id: "tentangkami",
       label: "Tentang Kami",
-      icon: <Heart size={20} />,
+      icon: "/assets/Logo Tentang Kami.png", // Path ke gambar tentang kami
+      activeIcon: "/assets/tentang-kami-active.png", // Icon aktif (opsional)
     },
     {
       id: "item2",
       label: "blablabla",
-      icon: <Folder size={20} />,
+      icon: "/assets/item2.png", // Path ke gambar item2
+      activeIcon: "/assets/item2-active.png", // Icon aktif (opsional)
     },
     {
       id: "item3",
       label: "blablabla",
-      icon: <Settings size={20} />,
+      icon: "/assets/item3.png", // Path ke gambar item3
+      activeIcon: "/assets/item3-active.png", // Icon aktif (opsional)
     },
     {
       id: "item4",
       label: "blablabla",
-      icon: <FileText size={20} />,
+      icon: "/assets/item4.png", // Path ke gambar item4
+      activeIcon: "/assets/item4-active.png", // Icon aktif (opsional)
     },
   ];
 
@@ -94,18 +99,21 @@ const LeftSidebar = () => {
                   : "bg-white text-[#226597] hover:bg-[#507687]/10"
               }`}
             >
-              <span
-                className={
-                  activeItem === item.id ? "text-white" : "text-[#226597]"
+              {/* Gambar icon */}
+              <img
+                src={
+                  activeItem === item.id && item.activeIcon
+                    ? item.activeIcon
+                    : item.icon
                 }
-              >
-                {item.icon}
-              </span>
-              {item.label}
+                alt={item.label}
+                className="w-5 h-5 object-contain"
+              />
+              <span className="font-medium">{item.label}</span>
             </button>
           ))}
         </nav>
-      </div>    
+      </div>
     </div>
   );
 };

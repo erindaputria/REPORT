@@ -240,7 +240,7 @@ const Register = () => {
         {/* Kolom kanan: Gambar - disembunyikan di layar kecil */}
         <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50 order-1 md:order-2 py-8 md:py-0">
           <img
-            src="/assets/Register.png"
+            src="/assets/Register Flip.png"
             alt="Illustration"
             className="object-contain w-2/3 md:w-3/4 h-auto max-h-64 md:max-h-none"
           />

@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { Menu, X, Bell, FileText } from "lucide-react";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { Menu, X, Bell, FileText, XCircle } from "lucide-react";
 import Header from "../../../components/Header";
 import LeftSidebar from "../../../components/LeftSidebar";
 
 export default function FormLaporan() {
   const [selectedReasons, setSelectedReasons] = useState([]);
   const [priority, setPriority] = useState("");
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   const [formData, setFormData] = useState({
     nama: "",
     nip: "",
@@ -13,8 +15,10 @@ export default function FormLaporan() {
     masalah: "",
     informasiTambahan: "",
   });
+  const fileInputRef = useRef(null);
+  const navigate = useNavigate();
 
-  const reasons = [,
+  const reasons = [
     "Perangkat Keras",
     "Perangkat Lunak & Aplikasi",
     "Jaringan & Konektivitas",
@@ -41,6 +45,18 @@ export default function FormLaporan() {
     },
   ];
 
+  // Fungsi untuk validasi form
+  const isFormValid = () => {
+    return (
+      formData.nama.trim() !== "" &&
+      formData.nip.trim() !== "" &&
+      formData.divisi.trim() !== "" &&
+      formData.masalah.trim() !== "" &&
+      selectedReasons.length > 0 &&
+      priority !== ""
+    );
+  };
+
   const toggleReason = (reason) => {
     setSelectedReasons((prev) =>
       prev.includes(reason)
@@ -52,7 +68,150 @@ export default function FormLaporan() {
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
-  
+
+  // Fungsi untuk handle upload file
+  const handleFileUpload = (event) => {
+    const files = Array.from(event.target.files);
+
+    // Validasi tipe file
+    const allowedTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/gif",
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "text/plain",
+    ];
+
+    // Validasi ukuran file (max 5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+
+    const validFiles = files.filter((file) => {
+      if (!allowedTypes.includes(file.type)) {
+        alert(
+          `File ${file.name} tidak didukung. Hanya file gambar, PDF, Word, dan text yang diperbolehkan.`
+        );
+        return false;
+      }
+
+      if (file.size > maxSize) {
+        alert(
+          `File ${file.name} terlalu besar. Maksimal ukuran file adalah 5MB.`
+        );
+        return false;
+      }
+
+      return true;
+    });
+
+    // Tambahkan file yang valid ke state
+    setUploadedFiles((prev) => [
+      ...prev,
+      ...validFiles.map((file) => ({
+        file,
+        id: Math.random().toString(36).substr(2, 9),
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      })),
+    ]);
+
+    // Reset input file
+    event.target.value = "";
+  };
+
+  // Fungsi untuk menghapus file
+  const handleRemoveFile = (fileId) => {
+    setUploadedFiles((prev) => prev.filter((file) => file.id !== fileId));
+  };
+
+  // Fungsi untuk format ukuran file
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+  };
+
+  // Fungsi untuk get file icon berdasarkan type
+  const getFileIcon = (fileType) => {
+    if (fileType.startsWith("image/")) {
+      return "🖼️";
+    } else if (fileType === "application/pdf") {
+      return "📄";
+    } else if (fileType.includes("word") || fileType.includes("document")) {
+      return "📝";
+    } else if (fileType === "text/plain") {
+      return "📃";
+    } else {
+      return "📎";
+    }
+  };
+
+  // Fungsi untuk handle kirim laporan
+  const handleKirimLaporan = () => {
+    if (isFormValid()) {
+      // Simpan data laporan
+      const laporanData = {
+        ...formData,
+        selectedReasons,
+        priority,
+        uploadedFiles: uploadedFiles.map((file) => ({
+          name: file.name,
+          size: file.size,
+          type: file.type,
+        })),
+        tanggal: new Date().toISOString(),
+        status: "dikirim",
+      };
+
+      console.log("Data laporan:", laporanData);
+
+      // Navigasi ke halaman sukses
+      navigate("/SuksesPelaporan", {
+        state: {
+          laporanData: laporanData,
+        },
+      });
+    } else {
+      alert("Harap lengkapi semua field yang wajib diisi!");
+    }
+  };
+
+  // Fungsi untuk handle simpan draft
+  const handleSimpanDraft = () => {
+    const draftData = {
+      ...formData,
+      selectedReasons,
+      priority,
+      uploadedFiles: uploadedFiles.map((file) => ({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      })),
+      tanggal: new Date().toISOString(),
+      status: "draft",
+    };
+
+    console.log("Data draft:", draftData);
+    // Simpan ke localStorage atau state management
+    localStorage.setItem("draftLaporan", JSON.stringify(draftData));
+    alert("Draft berhasil disimpan!");
+  };
+
+  // Fungsi untuk handle batalkan
+  const handleBatalkan = () => {
+    if (
+      window.confirm(
+        "Apakah Anda yakin ingin membatalkan? Data yang belum disimpan akan hilang."
+      )
+    ) {
+      navigate(-1); // Kembali ke halaman sebelumnya
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -62,8 +221,6 @@ export default function FormLaporan() {
       <div className="flex">
         {/* Sidebar - Diubah posisinya */}
         <div className="fixed top-0 left-0 h-full z-50">
-          {" "}
-          {/* z-50 untuk memastikan sidebar di atas header */}
           <LeftSidebar />
         </div>
 
@@ -116,7 +273,7 @@ export default function FormLaporan() {
           <div className="relative z-10 container mx-auto px-4 py-6 md:py-8">
             {/* Form Pelaporan dalam Card */}
             <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md border border-gray-200">
-              <div className="p-6  border-gray-200 text-center">
+              <div className="p-6 border-gray-200 text-center">
                 <h2 className="text-2xl font-bold text-[#226597]">
                   Pelaporan Online
                 </h2>
@@ -139,7 +296,7 @@ export default function FormLaporan() {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
                     <label className="text-sm font-medium text-gray-700 w-20">
-                      Nama
+                      Nama 
                     </label>
                     <input
                       type="text"
@@ -154,7 +311,7 @@ export default function FormLaporan() {
 
                   <div className="flex items-center space-x-4">
                     <label className="text-sm font-medium text-gray-700 w-20">
-                      NIP
+                      NIP 
                     </label>
                     <input
                       type="text"
@@ -167,7 +324,7 @@ export default function FormLaporan() {
 
                   <div className="flex items-center space-x-4">
                     <label className="text-sm font-medium text-gray-700 w-20">
-                      Divisi
+                      Divisi 
                     </label>
                     <input
                       type="text"
@@ -184,7 +341,7 @@ export default function FormLaporan() {
                 {/* Alasan Laporan */}
                 <div className="space-y-3 text-left">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Apa alasan Anda membuat laporan?
+                    Apa alasan Anda membuat laporan? *
                   </label>
                   <p className="text-xs text-gray-500">Pilih salah satu</p>
                   <div className="flex flex-wrap gap-2 justify-start">
@@ -207,7 +364,7 @@ export default function FormLaporan() {
                 {/* Kejelasan Masalah */}
                 <div className="space-y-2 text-left">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Bisakah Anda memberikan kejelasan terkait masalah ini?
+                    Bisakah Anda memberikan kejelasan terkait masalah ini? *
                   </label>
                   <p className="text-xs text-gray-500">
                     Jelaskan lebih rinci terkait masalah tersebut agar kami
@@ -226,7 +383,7 @@ export default function FormLaporan() {
                 {/* Level Prioritas */}
                 <div className="space-y-3 text-left">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Level prioritas laporan
+                    Level prioritas laporan *
                   </label>
                   <p className="text-xs text-gray-500">
                     Pilih tingkat urgensi laporan Anda agar kami dapat
@@ -257,8 +414,24 @@ export default function FormLaporan() {
                   <p className="text-xs text-gray-500">
                     Lampirkan screenshot, log, atau dokumen terkait untuk
                     membantu kami dalam memahami masalah Anda lebih cepat!
+                    <br />
                   </p>
-                  <button className="bg-[#226597] hover:bg-[#226597] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-start">
+
+                  {/* Hidden file input */}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileUpload}
+                    multiple
+                    accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt"
+                    className="hidden"
+                  />
+
+                  {/* Upload button */}
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="bg-[#226597] hover:bg-[#226597] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-start"
+                  >
                     <svg
                       className="w-4 h-4 mr-2"
                       fill="none"
@@ -272,8 +445,45 @@ export default function FormLaporan() {
                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                       />
                     </svg>
-                    Lampirkan File
+                    Pilih File
                   </button>
+
+                  {/* Uploaded files list */}
+                  {uploadedFiles.length > 0 && (
+                    <div className="mt-4 space-y-2">
+                      <p className="text-sm font-medium text-gray-700">
+                        File yang diupload ({uploadedFiles.length}):
+                      </p>
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {uploadedFiles.map((file) => (
+                          <div
+                            key={file.id}
+                            className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-md p-3"
+                          >
+                            <div className="flex items-center space-x-3">
+                              <span className="text-lg">
+                                {getFileIcon(file.type)}
+                              </span>
+                              <div>
+                                <p className="text-sm font-medium text-gray-700 truncate max-w-xs">
+                                  {file.name}
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                  {formatFileSize(file.size)}
+                                </p>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => handleRemoveFile(file.id)}
+                              className="text-red-500 hover:text-red-700 transition-colors"
+                            >
+                              <XCircle size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Informasi Tambahan */}
@@ -297,14 +507,28 @@ export default function FormLaporan() {
 
                 {/* Action Buttons */}
                 <div className="flex justify-between pt-4">
-                  <button className="text-black border border-gray-300 bg-transparent px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors text-left">
+                  <button
+                    onClick={handleBatalkan}
+                    className="text-black border border-gray-300 bg-transparent px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors text-left"
+                  >
                     Batalkan
                   </button>
                   <div className="flex gap-2">
-                    <button className="text-blackbg-transparent px-0 py-0 text-sm font-medium hover:text-black underline transition-colors text-left transform -translate-x-1">
+                    <button
+                      onClick={handleSimpanDraft}
+                      className="text-black bg-transparent px-0 py-0 text-sm font-medium hover:text-black underline transition-colors text-left transform -translate-x-1"
+                    >
                       Simpan draft
                     </button>
-                    <button className="bg-[#226597] hover:bg-[#226597] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors text-left">
+                    <button
+                      onClick={handleKirimLaporan}
+                      className={`px-4 py-2 rounded-md text-sm font-medium transition-colors text-left ${
+                        isFormValid()
+                          ? "bg-[#226597] hover:bg-[#226597] text-white cursor-pointer"
+                          : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      }`}
+                      disabled={!isFormValid()}
+                    >
                       Kirim Laporan
                     </button>
                   </div>
@@ -316,4 +540,4 @@ export default function FormLaporan() {
       </div>
     </div>
   );
-}   
+}

@@ -1,14 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu, X, Bell, Lock, Users, Smartphone } from "lucide-react";
 import Header from "../../../components/Header";
 import LeftSidebar from "../../../components/LeftSidebar";
 
 const ServiceApplication = () => {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const services = [
     {
-      icon: Lock,
       title: "Reset Password",
       titleDisplay: (
         <>
@@ -17,11 +18,11 @@ const ServiceApplication = () => {
           Password
         </>
       ),
-      color: "from-green-400 to-green-600",
       bgColor: "bg-[#226597]",
+      image: "/assets/Reset Password.png",
+      route: "/ResetPassword",
     },
     {
-      icon: Users,
       title: "Akses Sistem",
       titleDisplay: (
         <>
@@ -32,14 +33,29 @@ const ServiceApplication = () => {
       ),
       color: "from-purple-400 to-purple-600",
       bgColor: "bg-[#226597]",
+      image: "/assets/Akses Sistem.png",
+      route: "/AksesSistem",
     },
     {
-      icon: Smartphone,
       title: "Permintaan Perangkat",
+      titleDisplay: (
+        <>
+          Permintaan
+          <br />
+          Perangkat
+        </>
+      ),
       color: "from-orange-400 to-orange-600",
       bgColor: "bg-[#226597]",
+      image: "/assets/Permintaan Perangkat.png",
+      route: "/Permintaan",
     },
   ];
+
+  // Fungsi untuk handle navigasi
+  const handleServiceClick = (route) => {
+    navigate(route);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -157,22 +173,30 @@ const ServiceApplication = () => {
               {services.map((service, index) => (
                 <div
                   key={index}
+                  onClick={() => handleServiceClick(service.route)}
                   className="group cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
                 >
                   <div
-                    className={`${service.bgColor} rounded-2xl p-8 text-center text-white shadow-lg min-h-[200px] w-64 flex flex-col items-center justify-center`}
+                    className={`${service.bgColor} rounded-2xl p-6 text-center text-white shadow-lg min-h-[220px] w-64 flex flex-col items-center justify-center relative`}
                   >
-                    <div className="mb-6">
-                      <div className="w-16 h-16 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
-                        <service.icon className="w-8 h-8 text-white" />
+                    {/* Gambar di atas */}
+                    <div className="mb-4">
+                      <div className="w-20 h-20 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-3 overflow-hidden">
+                        {service.image ? (
+                          <img
+                            src={service.image}
+                            alt={service.title}
+                            className="w-12 h-12 object-contain"
+                          />
+                        ) : (
+                          <service.icon className="w-8 h-8 text-white" />
+                        )}
                       </div>
                     </div>
-                    <h3 className="text-xl font-semibold mb-2 text-center">
+
+                    <h3 className="text-xl font-semibold mb-2 text-center leading-tight">
                       {service.titleDisplay || service.title}
                     </h3>
-                    <p className="text-sm opacity-90 text-center">
-                      {service.description}
-                    </p>
                   </div>
                 </div>
               ))}

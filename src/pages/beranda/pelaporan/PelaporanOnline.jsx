@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu, X, Bell, FileText } from "lucide-react";
 import Header from "../../../components/Header";
 import LeftSidebar from "../../../components/LeftSidebar";
@@ -7,34 +8,82 @@ const PelaporanOnline = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [selectedOpd, setSelectedOpd] = useState(null);
+  const navigate = useNavigate();
 
   const opdList = [
-    { id: 1, name: "Dinas Pendidikan", logo: "/assets/Pendidikan.png" },
-    { id: 2, name: "Dinas Kesehatan" },
-    { id: 3, name: "Dinas Perhubungan" },
-    { id: 4, name: "Dinas Sosial" },
-    { id: 5, name: "Dinas Sumber Daya Air dan Bina Marga" },
+    { id: 1, name: "Dinas Pendidikan", logo: "/assets/Dinas Pendidikan.png" },
+    { id: 2, name: "Dinas Kesehatan", logo: "/assets/Dinas Kesehatan.png" },
+    { id: 3, name: "Dinas Perhubungan", logo: "/assets/Dinas Perhubungan.png" },
+    { id: 4, name: "Dinas Sosial", logo: "/assets/Dinas Sosial.png" },
+    {
+      id: 5,
+      name: "Dinas Sumber Daya Air dan Bina Marga",
+      logo: "/assets/Dinas Sumber Daya Air dan Bina Marga.png",
+    },
     {
       id: 6,
       name: "Dinas Perumahan Rakyat dan Kawasan Permukiman serta Pertahanan",
+      logo: "/assets/Dinas Perumahan Rakyat dan Kawasan Permukiman serta Pertahanan.png",
     },
-    { id: 7, name: "Dinas Pemadam Kebakaran dan Penyelamatan" },
-    { id: 8, name: "Dinas Perindustrian dan Tenaga Kerja" },
-    { id: 9, name: "Dinas Ketahanan Pangan dan Pertanian" },
-    { id: 10, name: "Dinas Perpustakaan dan Kearsipan" },
-    { id: 11, name: "Dinas Komunikasi dan Informatika" },
-    { id: 12, name: "Dinas Lingkungan Hidup" },
-    { id: 13, name: "Dinas Kependudukan dan Pencatatan Sipil" },
-    { id: 14, name: "Dinas Koperasi Usaha Kecil dan Menengah dan Perdagangan" },
-    { id: 15, name: "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu" },
+    {
+      id: 7,
+      name: "Dinas Pemadam Kebakaran dan Penyelamatan",
+      logo: "/assets/Dinas Pemadam Kebakaran dan Penyelamatan.png",
+    },
+    {
+      id: 8,
+      name: "Dinas Perindustrian dan Tenaga Kerja",
+      logo: "/assets/Dinas Perindustrian dan Tenaga Kerja.png",
+    },
+    {
+      id: 9,
+      name: "Dinas Ketahanan Pangan dan Pertanian",
+      logo: "/assets/Dinas Ketahanan Pangan dan Pertanian.png",
+    },
+    {
+      id: 10,
+      name: "Dinas Perpustakaan dan Kearsipan",
+      logo: "/assets/Dinas Perpustakaan dan Kearsipan.png",
+    },
+    {
+      id: 11,
+      name: "Dinas Komunikasi dan Informatika",
+      logo: "/assets/Dinas Komunikasi dan Informatika.png",
+    },
+    {
+      id: 12,
+      name: "Dinas Lingkungan Hidup",
+      logo: "/assets/Dinas Lingkungan Hidup.png",
+    },
+    {
+      id: 13,
+      name: "Dinas Kependudukan dan Pencatatan Sipil",
+      logo: "/assets/Dinas Kependudukan dan Pencatatan Sipil.png",
+    },
+    {
+      id: 14,
+      name: "Dinas Koperasi Usaha Kecil dan Menengah dan Perdagangan",
+      logo: "/assets/Dinas Koperasi Usaha Kecil dan Menengah dan Perdagangan.png",
+    },
+    {
+      id: 15,
+      name: "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu",
+      logo: "/assets/Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu.png",
+    },
     {
       id: 16,
       name: "Dinas Kebudayaan, Kepemudaan dan Olah Raga serta Pariwisata",
+      logo: "/assets/Dinas Kebudayaan, Kepemudaan dan Olah Raga serta Pariwisata.png",
     },
-    { id: 17, name: "Satuan Polisi Pamong Praja" },
+    {
+      id: 17,
+      name: "Satuan Polisi Pamong Praja",
+      logo: "/assets/Satuan Polisi Pamong Praja.png",
+    },
     {
       id: 18,
       name: "Dinas Pengendalian Penduduk, Perlindungan Perempuan dan Anak",
+      logo: "/assets/Dinas Pengendalian Penduduk, Perlindungan Perempuan dan Anak.png",
     },
   ];
 
@@ -45,7 +94,13 @@ const PelaporanOnline = () => {
   const handleOpdSelect = (opd) => {
     setSelectedOpd(opd);
     console.log(`OPD selected: ${opd.name}`);
-    // Navigasi ke form pelaporan selanjutnya
+
+    // Navigasi ke FormLaporan dengan membawa data OPD
+    navigate("/FormLaporan", {
+      state: {
+        selectedOpd: opd,
+      },
+    });
   };
 
   return (
@@ -171,8 +226,16 @@ const PelaporanOnline = () => {
                       <div className="bg-gradient-to-r from-[#226597] to-[#226597] rounded-lg p-3 md:p-4 border border-transparent group-hover:border-blue-300 group-hover:shadow-lg transition-all duration-300">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors flex-shrink-0">
-                              <FileText className="text-[#226597] w-4 h-4 md:w-5 md:h-5" />
+                            <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors flex-shrink-0 overflow-hidden">
+                              {opd.logo ? (
+                                <img
+                                  src={opd.logo}
+                                  alt={`Logo ${opd.name}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <FileText className="text-[#226597] w-4 h-4 md:w-5 md:h-5" />
+                              )}
                             </div>
                             <div className="min-w-0">
                               <h3 className="font-semibold text-white text-sm leading-tight">
@@ -197,8 +260,16 @@ const PelaporanOnline = () => {
                       <div className="bg-gradient-to-r from-[#226597] to-[#226597] rounded-lg p-3 md:p-4 border border-transparent group-hover:border-blue-300 group-hover:shadow-lg transition-all duration-300">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors flex-shrink-0">
-                              <FileText className="text-[#226597] w-4 h-4 md:w-5 md:h-5" />
+                            <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors flex-shrink-0 overflow-hidden">
+                              {opd.logo ? (
+                                <img
+                                  src={opd.logo}
+                                  alt={`Logo ${opd.name}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <FileText className="text-[#226597] w-4 h-4 md:w-5 md:h-5" />
+                              )}
                             </div>
                             <div className="min-w-0">
                               <h3 className="font-semibold text-white text-sm leading-tight">

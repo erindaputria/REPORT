@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 export function Beranda() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
@@ -37,6 +39,26 @@ export function Beranda() {
   for (let day = 1; day <= daysInMonth; day++) {
     calendarDays.push(day);
   }
+
+  // Fungsi untuk navigasi ke halaman Pelaporan Online
+  const handlePelaporanOnline = () => {
+    navigate("/PelaporanOnline");
+  };
+
+  // Fungsi untuk navigasi ke halaman Pengajuan
+  const handlePengajuan = () => {
+    navigate("/Pengajuan");
+  };
+
+  // Fungsi untuk navigasi ke halaman Knowledge Base
+  const handleKnowledgeBase = () => {
+    navigate("/KnowledgeBase");
+  };
+
+  // Fungsi untuk navigasi ke halaman Pelacakan
+  const handlePelacakan = () => {
+    navigate("/Pelacakan");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -127,11 +149,14 @@ export function Beranda() {
               </p>
             </div>
 
-            <button className="relative z-10 self-start px-4 py-2 border border-white rounded-full font-bold hover:bg-white hover:text-[#226597] transition text-sm md:text-base">
+            {/* Tombol dengan navigasi */}
+            <button
+              onClick={handlePelaporanOnline}
+              className="relative z-10 self-start px-4 py-2 border border-white rounded-full font-bold hover:bg-white hover:text-[#226597] transition text-sm md:text-base"
+            >
               Buat Laporan <Plus size={16} className="inline ml-2" />
             </button>
           </div>
-          
 
           {/* Card Pengajuan */}
           <div className="relative bg-[#226597] text-white rounded-2xl md:rounded-[2rem] shadow p-6 md:p-8 min-h-[240px] md:min-h-[280px] flex flex-col justify-between text-left overflow-hidden">
@@ -159,7 +184,11 @@ export function Beranda() {
               </p>
             </div>
 
-            <button className="relative z-10 self-start px-4 py-2 border border-white rounded-full font-bold hover:bg-white hover:text-[#226597] transition text-sm md:text-base">
+            {/* Tombol dengan navigasi ke Pengajuan */}
+            <button
+              onClick={handlePengajuan}
+              className="relative z-10 self-start px-4 py-2 border border-white rounded-full font-bold hover:bg-white hover:text-[#226597] transition text-sm md:text-base"
+            >
               Buat Pengajuan <Plus size={16} className="inline ml-2" />
             </button>
           </div>
@@ -171,9 +200,12 @@ export function Beranda() {
             Layanan
           </h2>
           <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-            {/* Card 1 */}
+            {/* Card 1 - Knowledge Base */}
             <div className="flex flex-col items-center">
-              <div className="w-32 h-32 md:w-40 md:h-40 bg-[#226597] rounded-2xl flex items-center justify-center hover:shadow">
+              <div
+                onClick={handleKnowledgeBase}
+                className="w-32 h-32 md:w-40 md:h-40 bg-[#226597] rounded-2xl flex items-center justify-center hover:shadow cursor-pointer transition-transform hover:scale-105"
+              >
                 <svg
                   width="50"
                   height="56"
@@ -231,9 +263,12 @@ export function Beranda() {
               </span>
             </div>
 
-            {/* Card 2 */}
+            {/* Card 2 - Cek Status Laporan */}
             <div className="flex flex-col items-center">
-              <div className="w-32 h-32 md:w-40 md:h-40 bg-[#226597] rounded-2xl flex items-center justify-center hover:shadow">
+              <div
+                onClick={handlePelacakan}
+                className="w-32 h-32 md:w-40 md:h-40 bg-[#226597] rounded-2xl flex items-center justify-center hover:shadow cursor-pointer transition-transform hover:scale-105"
+              >
                 <svg
                   width="60"
                   height="60"
