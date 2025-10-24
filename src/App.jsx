@@ -2,8 +2,12 @@ import { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Beranda } from "./pages/beranda/Beranda";
+
+//*-- Auth --*/
 import Register from "./pages/Register";
 import LogIn from "./pages/Login";
+
+//*-- Pengguna --*/
 import Profil from "./pages/profil/ProfilSaya";
 import Tampilan from "./pages/profil/Tampilan";
 import KnowledgeBase from "./pages/beranda/KnowledgeBase";
@@ -17,7 +21,14 @@ import Permintaan from "./pages/beranda/pengajuan/Permintaan";
 import SuksesPelayanan from "./pages/beranda/pengajuan/SuksesPelayanan";
 import SuksesPelaporan from "./pages/beranda/pelaporan/SuksesPelaporan";
 import ProfilMasyarakat from "./pages/profil/ProfilMasyarakat";
+
+//*-- Helpdesk --*/
 import HelpdeskChat from "./components/beranda/Helpdesk";
+
+//*-- Bidang --*/
+import HeaderBidang from "./pages/bidang/HeaderBidang";
+import SidebarBidang from "./pages/bidang/SidebarBidang";
+import DashboardBidang from "./pages/bidang/DashboardBidang";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -41,7 +52,10 @@ function App() {
         <Route path="/suksespelayanan" element={<SuksesPelayanan />} />
         <Route path="/suksespelaporan" element={<SuksesPelaporan />} />
         <Route path="/profilmasyarakat" element={<ProfilMasyarakat />} />
+        <Route path="/dashboardbidang" element={<DashboardBidang />} />
         <Route path="/helpdesk" element={<HelpdeskChat />} />
+        <Route path="/headerbidang" element={<HeaderBidang />} />
+        <Route path="/sidebarbidang" element={<SidebarBidang />} />
       </Routes>
     </Router>
   );
