@@ -422,7 +422,7 @@ export default function FormLaporan() {
                 {/* Upload File */}
                 <div className="space-y-2 text-left">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Tambahkan file 
+                    Tambahkan file
                   </label>
                   <p className="text-xs text-gray-500">
                     Lampirkan screenshot, log, atau dokumen terkait untuk

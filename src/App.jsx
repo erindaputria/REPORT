@@ -26,9 +26,10 @@ import ProfilMasyarakat from "./pages/profil/ProfilMasyarakat";
 import HelpdeskChat from "./components/beranda/Helpdesk";
 
 //*-- Bidang --*/
-import HeaderBidang from "./pages/bidang/HeaderBidang";
-import SidebarBidang from "./pages/bidang/SidebarBidang";
 import DashboardBidang from "./pages/bidang/DashboardBidang";
+import AksiTiket from "./pages/bidang/AksiTiket";
+
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -53,9 +54,8 @@ function App() {
         <Route path="/suksespelaporan" element={<SuksesPelaporan />} />
         <Route path="/profilmasyarakat" element={<ProfilMasyarakat />} />
         <Route path="/dashboardbidang" element={<DashboardBidang />} />
+        <Route path="/aksibidang" element={<AksiTiket />} />
         <Route path="/helpdesk" element={<HelpdeskChat />} />
-        <Route path="/headerbidang" element={<HeaderBidang />} />
-        <Route path="/sidebarbidang" element={<SidebarBidang />} />
       </Routes>
     </Router>
   );
