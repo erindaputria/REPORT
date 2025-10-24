@@ -1,5 +1,3 @@
-import { useState } from "react";
-import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Beranda } from "./pages/beranda/Beranda";
 
@@ -20,6 +18,18 @@ import AksesSistem from "./pages/beranda/pengajuan/AksesSistem";
 import Permintaan from "./pages/beranda/pengajuan/Permintaan";
 import SuksesPelayanan from "./pages/beranda/pengajuan/SuksesPelayanan";
 import SuksesPelaporan from "./pages/beranda/pelaporan/SuksesPelaporan";
+import BerandaSeksi from "./pages/beranda/Seksi/BerandaSeksi";
+import LayoutSeksi from "./components/Layout/LayoutSeksi";
+import LayoutTeknisi from "./components/Layout/LayoutTeknisi";
+import PengajuanSeksi from "./pages/beranda/Seksi/PengajuanSeksi";
+import PenugasanSeksi from "./pages/beranda/Seksi/PenugasanSeksi"
+import FormPenugasanSeksi from "./pages/beranda/Seksi/FormPenugasanSeksi"
+import MonitoringSeksi from "./pages/beranda/Seksi/MonitoringSeksi"
+import StatistikSeksi from "./pages/beranda/Seksi/StatistikSeksi"
+import ArsipSeksi from "./pages/beranda/Seksi/ArsipSeksi"
+import ReopenSeksi from "./pages/beranda/Seksi/ReopenSeksi"
+import RatingSeksi from "./pages/beranda/Seksi/RatingSeksi";
+import DashboardTeknisi from "./pages/beranda/Teknisi/DashboardTeknisi";
 import ProfilMasyarakat from "./pages/profil/ProfilMasyarakat";
 
 //*-- Helpdesk --*/
@@ -31,12 +41,31 @@ import AksiTiket from "./pages/bidang/AksiTiket";
 
 
 
-function App() {
-  const [count, setCount] = useState(0);
 
+function App() {
   return (
     <Router>
       <Routes>
+        {/* Halaman dengan Layout */}
+        <Route path="/" element={<LayoutSeksi />}>
+          <Route path="berandaseksi" element={<BerandaSeksi />} />    
+          <Route path="pengajuanseksi" element={<PengajuanSeksi />} />
+          <Route path="penugasanseksi" element={<PenugasanSeksi />} />
+          <Route path="formpenugasanseksi" element={<FormPenugasanSeksi />} />
+          <Route path="monitoringseksi" element={<MonitoringSeksi />} />
+          <Route path="statistikseksi" element={<StatistikSeksi />} />
+          <Route path="arsipseksi" element={<ArsipSeksi />} />
+          <Route path="reopenseksi" element={<ReopenSeksi />} />
+          <Route path="ratingseksi" element={<RatingSeksi />} />
+        </Route>
+
+        <Route path="/" element={<LayoutTeknisi />}>
+          <Route path="dashboardteknisi" element={<DashboardTeknisi />} />
+        </Route>
+
+
+
+        {/* Halaman tanpa Layout */}
         <Route path="/beranda" element={<Beranda />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LogIn />} />
