@@ -1,7 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Beranda } from "./pages/beranda/Beranda";
+
+//*-- Auth --*/
 import Register from "./pages/Register";
 import LogIn from "./pages/Login";
+
+//*-- Pengguna --*/
 import Profil from "./pages/profil/ProfilSaya";
 import Tampilan from "./pages/profil/Tampilan";
 import KnowledgeBase from "./pages/beranda/KnowledgeBase";
@@ -26,6 +30,16 @@ import ArsipSeksi from "./pages/beranda/Seksi/ArsipSeksi"
 import ReopenSeksi from "./pages/beranda/Seksi/ReopenSeksi"
 import RatingSeksi from "./pages/beranda/Seksi/RatingSeksi";
 import DashboardTeknisi from "./pages/beranda/Teknisi/DashboardTeknisi";
+import ProfilMasyarakat from "./pages/profil/ProfilMasyarakat";
+
+//*-- Helpdesk --*/
+import HelpdeskChat from "./components/beranda/Helpdesk";
+
+//*-- Bidang --*/
+import DashboardBidang from "./pages/bidang/DashboardBidang";
+import AksiTiket from "./pages/bidang/AksiTiket";
+
+
 
 
 function App() {
@@ -67,6 +81,10 @@ function App() {
         <Route path="/permintaan" element={<Permintaan />} />
         <Route path="/suksespelayanan" element={<SuksesPelayanan />} />
         <Route path="/suksespelaporan" element={<SuksesPelaporan />} />
+        <Route path="/profilmasyarakat" element={<ProfilMasyarakat />} />
+        <Route path="/dashboardbidang" element={<DashboardBidang />} />
+        <Route path="/aksibidang" element={<AksiTiket />} />
+        <Route path="/helpdesk" element={<HelpdeskChat />} />
       </Routes>
     </Router>
   );

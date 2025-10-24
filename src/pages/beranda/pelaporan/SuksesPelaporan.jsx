@@ -9,34 +9,81 @@ import {
 } from "lucide-react";
 import Header from "../../../components/Header";
 import LeftSidebar from "../../../components/LeftSidebar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
 
 export default function SuksesPelayanan() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
-  // Data dummy untuk tiket dan PIN
+  // Ambil data dari FormLaporan melalui state navigasi
+  const laporanData = location.state?.laporanData || {};
+
+  // Data tiket dengan OPD tujuan dari form
   const ticketData = {
     noTiket: "LPR318728",
     pin: "228973",
     jenisLayanan: "Pelaporan Online",
-    jenisPermohonan: "Dinas Pendidikan",
+    jenisPermohonan: laporanData.opdTujuan || "Dinas Pendidikan", // Ambil dari form
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <Header />
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="fixed top-0 left-0 h-full z-50">
-          <LeftSidebar />
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
+      {/* Mobile Header */}
+      <div className="bg-white p-4 flex items-center justify-between md:hidden shadow-sm">
+        <button
+          onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+          className="p-2 rounded-lg bg-gray-100"
+        >
+          {isMobileSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+            <Bell size={16} className="text-gray-600" />
+          </div>
+          <div className="w-8 h-8 rounded-full overflow-hidden">
+            <img
+              src="/assets/Haechan.jpg"
+              alt="Profil"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
+      </div>
+
+      {/* Left Sidebar - Hidden on mobile unless toggled */}
+      <div
+        className={`${
+          isMobileSidebarOpen ? "block" : "hidden"
+        } md:block fixed md:relative inset-0 z-50 md:z-auto bg-white md:bg-transparent w-72 md:w-auto`}
+      >
+        <div className="h-full">
+          <LeftSidebar />
+          <button
+            onClick={() => setIsMobileSidebarOpen(false)}
+            className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full md:hidden"
+          >
+            <X size={20} />
+          </button>
+        </div>
+      </div>
+
+      {/* Overlay for mobile sidebar */}
+      {isMobileSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={() => setIsMobileSidebarOpen(false)}
+        ></div>
+      )}
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
+        <Header />
 
         {/* Main Content */}
-        <div className="flex-1 relative overflow-hidden ml-64">
-          {" "}
-          {/* ml-64 untuk memberi space untuk sidebar */}
+        <div className="flex-1 relative overflow-hidden">
           {/* Custom SVG Background */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <svg
@@ -80,11 +127,12 @@ export default function SuksesPelayanan() {
               </g>
             </svg>
           </div>
+
           <div className="relative z-10 container mx-auto px-4 py-6 md:py-8">
             {/* Card Success */}
             <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md border border-gray-200">
               {/* Header Card */}
-              <div className="p-6 border-b border-[#226597]">
+              <div className="p-6">
                 <div className="w-16 h-16 bg-[#226597] rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
                     className="w-8 h-8 text-white"
@@ -100,10 +148,10 @@ export default function SuksesPelayanan() {
                     />
                   </svg>
                 </div>
-                <h1 className="text-2xl font-semibold text-[#000000]">
-                  Permohonan Anda Telah Berhasil Dikirim
+                <h1 className="text-2xl font-semibold text-[#000000] text-center">
+                  Laporan Anda Telah Berhasil Dikirim
                 </h1>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-sm text-center mt-3">
                   Terima kasih atas laporan Anda. Laporan telah tercatat, kami
                   akan menindaklanjuti sesuai prosedur dalam waktu yang
                   ditentukan. Silakan pantau perkembangan laporan melalui menu
@@ -115,10 +163,6 @@ export default function SuksesPelayanan() {
               <div className="p-6 space-y-6">
                 {/* Info Tiket */}
                 <div className="text-center">
-                  <h2 className="text-lg font-semibold text-gray-800 mb-4 text-left">
-                    Cek permohonan dengan ini:
-                  </h2>
-
                   <div className="space-y-4 max-w-md mx-auto">
                     {/* No. Tiket */}
                     <div className="flex justify-between items-center">
@@ -127,16 +171,6 @@ export default function SuksesPelayanan() {
                       </span>
                       <span className="text-lg font-bold text-[#226597]">
                         {ticketData.noTiket}
-                      </span>
-                    </div>
-
-                    {/* PIN */}
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium text-gray-600">
-                        PIN
-                      </span>
-                      <span className="text-lg font-bold text-[#226597]">
-                        {ticketData.pin}
                       </span>
                     </div>
 
@@ -150,7 +184,7 @@ export default function SuksesPelayanan() {
                       </span>
                     </div>
 
-                    {/* Jenis Permohonan */}
+                    {/* OPD Tujuan */}
                     <div className="flex justify-between items-center">
                       <span className="text-sm font-medium text-gray-600">
                         OPD Tujuan
@@ -163,44 +197,41 @@ export default function SuksesPelayanan() {
                 </div>
 
                 {/* Tombol Unduh Tiket */}
-                <div className="text-center">
-                  <button className="inline-flex items-center gap-2 bg-[#226597] hover:bg-[#1a507a] text-white px-6 py-2 rounded-md text-sm font-medium transition-colors">
+                <div className="text-right">
+                  <button className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 px-0 py-2 text-sm font-medium transition-colors underline">
                     <Download className="w-4 h-4" />
                     Unduh tiket
                   </button>
                 </div>
+              </div>
+            </div>
 
-                {/* Garis Pemisah */}
-                <div className="border-t border-gray-200 my-6"></div>
+            {/* Action Buttons */}
+            <div className="max-w-2xl mx-auto mt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {/* Cek Status Layanan */}
+                <button
+                  onClick={() => navigate("/pelacakan")}
+                  className="bg-[#226597] hover:bg-[#1a507a] text-white py-3 rounded-md text-sm font-medium transition-colors text-center"
+                >
+                  Cek status layanan
+                </button>
 
-                {/* Action Buttons */}
-                <div className="space-y-4">
-                  {/* Cek Status Layanan */}
-                  <button
-                    onClick={() => navigate("/cek-status")}
-                    className="w-full bg-[#226597] hover:bg-[#1a507a] text-white py-3 rounded-md text-sm font-medium transition-colors"
-                  >
-                    Cek status layanan
-                  </button>
+                {/* Buat Laporan Baru */}
+                <button
+                  onClick={() => navigate("/pelaporanonline")}
+                  className="bg-[#226597] hover:bg-[#1a507a] text-white py-3 rounded-md text-sm font-medium transition-colors text-center"
+                >
+                  Buat laporan baru
+                </button>
 
-                  {/* Buat Permohonan Baru */}
-                  <button
-                    onClick={() => navigate("/pelaporan-online")}
-                    className="w-full border border-[#226597] text-[#226597] hover:bg-[#226597] hover:text-white py-3 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2"
-                  >
-                    <ArrowLeft className="w-4 h-4" />
-                    Buat laporan baru
-                  </button>
-
-                  {/* Kembali ke Beranda */}
-                  <button
-                    onClick={() => navigate("/")}
-                    className="w-full border border-gray-300 text-gray-700 hover:bg-gray-50 py-3 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2"
-                  >
-                    <Home className="w-4 h-4" />
-                    Kembali ke beranda
-                  </button>
-                </div>
+                {/* Kembali ke Beranda */}
+                <button
+                  onClick={() => navigate("/beranda")}
+                  className="bg-[#226597] hover:bg-[#1a507a] text-white py-3 rounded-md text-sm font-medium transition-colors text-center"
+                >
+                  Kembali ke beranda
+                </button>
               </div>
             </div>
           </div>

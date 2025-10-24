@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 
-const LeftSidebar = () => {
+const SidebarBidang = () => {
   const [activeItem, setActiveItem] = useState("beranda"); // Perbaiki jadi "beranda" (huruf kecil)
 
   const navItems = [
     {
-      id: "beranda",
-      label: "Beranda",
+      id: "dashboard",
+      label: "Dashboard",
       icon: "/assets/Logo Beranda.png",
     },
     {
-      id: "riwayat",
-      label: "Riwayat",
-      icon: "/assets/Logo Riwayat.png",
+      id: "monitoring",
+      label: "Monitoring",
+      icon: "/assets/Logo Monitoring.png",
     },
     {
-      id: "kotakmasuk",
-      label: "Kotak Masuk",
-      icon: "/assets/Logo Kotak Masuk.png",
+      id: "statistik",
+      label: "Statistik",
+      icon: "/assets/Logo Statistik.png",
     },
   ];
 
@@ -97,4 +97,4 @@ const LeftSidebar = () => {
   );
 };
 
-export default LeftSidebar;
+export default SidebarBidang;

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, AlertCircle } from "lucide-react";
+import { Plus, Menu, X, Bell, Calendar } from "lucide-react";
 
 const months = [
   "Januari",
