@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, Bell, FileText, XCircle } from "lucide-react";
 import Header from "../../../components/Header";
 import LeftSidebar from "../../../components/LeftSidebar";
@@ -8,6 +8,8 @@ export default function FormLaporan() {
   const [selectedReasons, setSelectedReasons] = useState([]);
   const [priority, setPriority] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
     nip: "",
@@ -17,6 +19,12 @@ export default function FormLaporan() {
   });
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const selectedOpd = location.state?.selectedOpd || {
+    name: "Dinas Pendidikan",
+    logo: "/assets/Dinas Pendidikan.png",
+  };
 
   const reasons = [
     "Perangkat Keras",
@@ -27,25 +35,6 @@ export default function FormLaporan() {
     "Permasalahan Lainnya",
   ];
 
-  const priorities = [
-    {
-      label: "Tinggi",
-      value: "tinggi",
-      color: "bg-red-100 text-red-700 border-red-200",
-    },
-    {
-      label: "Sedang",
-      value: "sedang",
-      color: "bg-yellow-100 text-yellow-700 border-yellow-200",
-    },
-    {
-      label: "Rendah",
-      value: "rendah",
-      color: "bg-green-100 text-green-700 border-green-200",
-    },
-  ];
-
-  // Fungsi untuk validasi form
   const isFormValid = () => {
     return (
       formData.nama.trim() !== "" &&
@@ -53,7 +42,7 @@ export default function FormLaporan() {
       formData.divisi.trim() !== "" &&
       formData.masalah.trim() !== "" &&
       selectedReasons.length > 0 &&
-      priority !== ""
+      uploadedFiles.length > 0
     );
   };
 
@@ -69,11 +58,9 @@ export default function FormLaporan() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Fungsi untuk handle upload file
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
 
-    // Validasi tipe file
     const allowedTypes = [
       "image/jpeg",
       "image/jpg",
@@ -85,8 +72,7 @@ export default function FormLaporan() {
       "text/plain",
     ];
 
-    // Validasi ukuran file (max 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    const maxSize = 5 * 1024 * 1024;
 
     const validFiles = files.filter((file) => {
       if (!allowedTypes.includes(file.type)) {
@@ -106,7 +92,6 @@ export default function FormLaporan() {
       return true;
     });
 
-    // Tambahkan file yang valid ke state
     setUploadedFiles((prev) => [
       ...prev,
       ...validFiles.map((file) => ({
@@ -118,16 +103,13 @@ export default function FormLaporan() {
       })),
     ]);
 
-    // Reset input file
     event.target.value = "";
   };
 
-  // Fungsi untuk menghapus file
   const handleRemoveFile = (fileId) => {
     setUploadedFiles((prev) => prev.filter((file) => file.id !== fileId));
   };
 
-  // Fungsi untuk format ukuran file
   const formatFileSize = (bytes) => {
     if (bytes === 0) return "0 Bytes";
     const k = 1024;
@@ -136,7 +118,6 @@ export default function FormLaporan() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
-  // Fungsi untuk get file icon berdasarkan type
   const getFileIcon = (fileType) => {
     if (fileType.startsWith("image/")) {
       return "🖼️";
@@ -151,42 +132,51 @@ export default function FormLaporan() {
     }
   };
 
-  // Fungsi untuk handle kirim laporan
-  const handleKirimLaporan = () => {
+  const handleKonfirmasiKirim = () => {
     if (isFormValid()) {
-      // Simpan data laporan
-      const laporanData = {
-        ...formData,
-        selectedReasons,
-        priority,
-        uploadedFiles: uploadedFiles.map((file) => ({
-          name: file.name,
-          size: file.size,
-          type: file.type,
-        })),
-        tanggal: new Date().toISOString(),
-        status: "dikirim",
-      };
-
-      console.log("Data laporan:", laporanData);
-
-      // Navigasi ke halaman sukses
-      navigate("/SuksesPelaporan", {
-        state: {
-          laporanData: laporanData,
-        },
-      });
+      setShowConfirmation(true);
     } else {
-      alert("Harap lengkapi semua field yang wajib diisi!");
+      const missingFields = [];
+      if (!formData.nama.trim()) missingFields.push("Nama");
+      if (!formData.nip.trim()) missingFields.push("NIP");
+      if (!formData.divisi.trim()) missingFields.push("Divisi");
+      if (!formData.masalah.trim()) missingFields.push("Deskripsi Masalah");
+      if (selectedReasons.length === 0) missingFields.push("Alasan Laporan");
+      if (uploadedFiles.length === 0) missingFields.push("Lampiran File");
+
+      alert(`Harap lengkapi field berikut:\n${missingFields.join("\n")}`);
     }
   };
 
-  // Fungsi untuk handle simpan draft
+  const handleKirimLaporan = () => {
+    const laporanData = {
+      ...formData,
+      selectedReasons,
+      priority: priority || "sedang",
+      uploadedFiles: uploadedFiles.map((file) => ({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      })),
+      tanggal: new Date().toISOString(),
+      status: "dikirim",
+      opdTujuan: selectedOpd.name,
+    };
+
+    console.log("Data laporan:", laporanData);
+
+    navigate("/SuksesPelaporan", {
+      state: {
+        laporanData: laporanData,
+      },
+    });
+  };
+
   const handleSimpanDraft = () => {
     const draftData = {
       ...formData,
       selectedReasons,
-      priority,
+      priority: priority || "sedang",
       uploadedFiles: uploadedFiles.map((file) => ({
         name: file.name,
         size: file.size,
@@ -194,35 +184,77 @@ export default function FormLaporan() {
       })),
       tanggal: new Date().toISOString(),
       status: "draft",
+      opdTujuan: selectedOpd.name,
     };
 
     console.log("Data draft:", draftData);
-    // Simpan ke localStorage atau state management
     localStorage.setItem("draftLaporan", JSON.stringify(draftData));
     alert("Draft berhasil disimpan!");
   };
 
-  // Fungsi untuk handle batalkan
   const handleBatalkan = () => {
     if (
       window.confirm(
         "Apakah Anda yakin ingin membatalkan? Data yang belum disimpan akan hilang."
       )
     ) {
-      navigate(-1); // Kembali ke halaman sebelumnya
+      navigate(-1);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <Header />
-
-      <div className="flex">
-        {/* Sidebar - Diubah posisinya */}
-        <div className="fixed top-0 left-0 h-full z-50">
-          <LeftSidebar />
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
+      {/* Mobile Header */}
+      <div className="bg-white p-4 flex items-center justify-between md:hidden shadow-sm">
+        <button
+          onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+          className="p-2 rounded-lg bg-gray-100"
+        >
+          {isMobileSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+            <Bell size={16} className="text-gray-600" />
+          </div>
+          <div className="w-8 h-8 rounded-full overflow-hidden">
+            <img
+              src="/assets/Haechan.jpg"
+              alt="Profil"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
+      </div>
+
+      {/* Left Sidebar - Hidden on mobile unless toggled */}
+      <div
+        className={`${
+          isMobileSidebarOpen ? "block" : "hidden"
+        } md:block fixed md:relative inset-0 z-50 md:z-auto bg-white md:bg-transparent w-72 md:w-auto`}
+      >
+        <div className="h-full">
+          <LeftSidebar />
+          <button
+            onClick={() => setIsMobileSidebarOpen(false)}
+            className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full md:hidden"
+          >
+            <X size={20} />
+          </button>
+        </div>
+      </div>
+
+      {/* Overlay for mobile sidebar */}
+      {isMobileSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={() => setIsMobileSidebarOpen(false)}
+        ></div>
+      )}
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
+        <Header />
 
         {/* Main Content */}
         <div className="flex-1 relative overflow-hidden">
@@ -282,21 +314,28 @@ export default function FormLaporan() {
               <div className="p-6 space-y-6">
                 {/* Kirim laporan ke */}
                 <div className="space-y-2">
-                  <div className="flex items-center justify-start w-full">
-                    <label className="text-sm font-medium text-gray-700 mr-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-start w-full gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
                       Kirim laporan ke
                     </label>
-                    <button className="bg-[#226597] hover:bg-[#226597] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-                      📧 Dinas Pendidikan
-                    </button>
+                    <div className="bg-[#226597] text-white px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2 justify-center sm:justify-start">
+                      {selectedOpd.logo && (
+                        <img
+                          src={selectedOpd.logo}
+                          alt={`Logo ${selectedOpd.name}`}
+                          className="w-5 h-5 object-cover rounded"
+                        />
+                      )}
+                      <span className="text-sm">{selectedOpd.name}</span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Form Fields */}
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <label className="text-sm font-medium text-gray-700 w-20">
-                      Nama 
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 sm:w-20 text-left whitespace-nowrap">
+                      Nama
                     </label>
                     <input
                       type="text"
@@ -309,9 +348,9 @@ export default function FormLaporan() {
                     />
                   </div>
 
-                  <div className="flex items-center space-x-4">
-                    <label className="text-sm font-medium text-gray-700 w-20">
-                      NIP 
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 sm:w-20 text-left whitespace-nowrap">
+                      NIP
                     </label>
                     <input
                       type="text"
@@ -322,9 +361,9 @@ export default function FormLaporan() {
                     />
                   </div>
 
-                  <div className="flex items-center space-x-4">
-                    <label className="text-sm font-medium text-gray-700 w-20">
-                      Divisi 
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 sm:w-20 text-left whitespace-nowrap">
+                      Divisi
                     </label>
                     <input
                       type="text"
@@ -341,7 +380,7 @@ export default function FormLaporan() {
                 {/* Alasan Laporan */}
                 <div className="space-y-3 text-left">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Apa alasan Anda membuat laporan? *
+                    Apa alasan Anda membuat laporan?
                   </label>
                   <p className="text-xs text-gray-500">Pilih salah satu</p>
                   <div className="flex flex-wrap gap-2 justify-start">
@@ -349,7 +388,7 @@ export default function FormLaporan() {
                       <button
                         key={reason}
                         onClick={() => toggleReason(reason)}
-                        className={`px-3 py-1 rounded-md text-xs font-medium border transition-colors text-left ${
+                        className={`px-3 py-2 rounded-md text-sm font-medium border transition-colors text-left flex-1 sm:flex-none min-w-[140px] ${
                           selectedReasons.includes(reason)
                             ? "bg-[#226597] text-white border-[#226597]"
                             : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
@@ -364,7 +403,7 @@ export default function FormLaporan() {
                 {/* Kejelasan Masalah */}
                 <div className="space-y-2 text-left">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Bisakah Anda memberikan kejelasan terkait masalah ini? *
+                    Bisakah Anda memberikan kejelasan terkait masalah ini?
                   </label>
                   <p className="text-xs text-gray-500">
                     Jelaskan lebih rinci terkait masalah tersebut agar kami
@@ -376,48 +415,20 @@ export default function FormLaporan() {
                     onChange={(e) =>
                       handleInputChange("masalah", e.target.value)
                     }
-                    className="w-full px-3 py-2 min-h-[100px] bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
+                    className="w-full px-3 py-2 min-h-[120px] bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-left text-sm"
                   />
-                </div>
-
-                {/* Level Prioritas */}
-                <div className="space-y-3 text-left">
-                  <label className="text-sm font-medium text-gray-700 block">
-                    Level prioritas laporan *
-                  </label>
-                  <p className="text-xs text-gray-500">
-                    Pilih tingkat urgensi laporan Anda agar kami dapat
-                    memprioritaskan penanganan sesuai dampak masalah!
-                  </p>
-                  <div className="flex gap-2 justify-start">
-                    {priorities.map((item) => (
-                      <button
-                        key={item.value}
-                        onClick={() => setPriority(item.value)}
-                        className={`px-3 py-1 rounded-md text-sm font-medium border transition-colors text-left ${
-                          priority === item.value
-                            ? item.color + " border-current"
-                            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
                 </div>
 
                 {/* Upload File */}
                 <div className="space-y-2 text-left">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Tambahkan file
+                    Tambahkan file 
                   </label>
                   <p className="text-xs text-gray-500">
                     Lampirkan screenshot, log, atau dokumen terkait untuk
                     membantu kami dalam memahami masalah Anda lebih cepat!
-                    <br />
                   </p>
 
-                  {/* Hidden file input */}
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -427,10 +438,9 @@ export default function FormLaporan() {
                     className="hidden"
                   />
 
-                  {/* Upload button */}
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="bg-[#226597] hover:bg-[#226597] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-start"
+                    className="bg-[#226597] hover:bg-[#1a507a] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center sm:justify-start w-full sm:w-auto"
                   >
                     <svg
                       className="w-4 h-4 mr-2"
@@ -445,10 +455,9 @@ export default function FormLaporan() {
                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                       />
                     </svg>
-                    Pilih File
+                    Lampirkan File
                   </button>
 
-                  {/* Uploaded files list */}
                   {uploadedFiles.length > 0 && (
                     <div className="mt-4 space-y-2">
                       <p className="text-sm font-medium text-gray-700">
@@ -460,12 +469,12 @@ export default function FormLaporan() {
                             key={file.id}
                             className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-md p-3"
                           >
-                            <div className="flex items-center space-x-3">
-                              <span className="text-lg">
+                            <div className="flex items-center space-x-3 min-w-0 flex-1">
+                              <span className="text-lg flex-shrink-0">
                                 {getFileIcon(file.type)}
                               </span>
-                              <div>
-                                <p className="text-sm font-medium text-gray-700 truncate max-w-xs">
+                              <div className="min-w-0 flex-1">
+                                <p className="text-sm font-medium text-gray-700 truncate">
                                   {file.name}
                                 </p>
                                 <p className="text-xs text-gray-500">
@@ -475,7 +484,7 @@ export default function FormLaporan() {
                             </div>
                             <button
                               onClick={() => handleRemoveFile(file.id)}
-                              className="text-red-500 hover:text-red-700 transition-colors"
+                              className="text-red-500 hover:text-red-700 transition-colors flex-shrink-0 ml-2"
                             >
                               <XCircle size={16} />
                             </button>
@@ -486,45 +495,26 @@ export default function FormLaporan() {
                   )}
                 </div>
 
-                {/* Informasi Tambahan */}
-                <div className="space-y-2 text-left">
-                  <label className="text-sm font-medium text-gray-700 block">
-                    Informasi Tambahan
-                  </label>
-                  <p className="text-xs text-gray-500">
-                    Tambahkan detail tambahan yang mungkin membantu kami dalam
-                    memahami masalah atau permintaan Anda!
-                  </p>
-                  <textarea
-                    placeholder="Ketik disini..."
-                    value={formData.informasiTambahan}
-                    onChange={(e) =>
-                      handleInputChange("informasiTambahan", e.target.value)
-                    }
-                    className="w-full px-3 py-2 min-h-[120px] bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
-                  />
-                </div>
-
                 {/* Action Buttons */}
-                <div className="flex justify-between pt-4">
+                <div className="flex flex-col sm:flex-row justify-between pt-4 gap-3 sm:gap-0">
                   <button
                     onClick={handleBatalkan}
-                    className="text-black border border-gray-300 bg-transparent px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors text-left"
+                    className="text-black border border-gray-300 bg-transparent px-4 py-2 rounded-md text-sm font-medium hover:bg-red-50 transition-colors text-center order-2 sm:order-1"
                   >
                     Batalkan
                   </button>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 order-1 sm:order-2">
                     <button
                       onClick={handleSimpanDraft}
-                      className="text-black bg-transparent px-0 py-0 text-sm font-medium hover:text-black underline transition-colors text-left transform -translate-x-1"
+                      className="text-black bg-transparent px-0 py-0 text-sm font-medium hover:text-black underline transition-colors text-center sm:text-left"
                     >
                       Simpan draft
                     </button>
                     <button
-                      onClick={handleKirimLaporan}
-                      className={`px-4 py-2 rounded-md text-sm font-medium transition-colors text-left ${
+                      onClick={handleKonfirmasiKirim}
+                      className={`px-4 py-2 rounded-md text-sm font-medium transition-colors text-center ${
                         isFormValid()
-                          ? "bg-[#226597] hover:bg-[#226597] text-white cursor-pointer"
+                          ? "bg-[#226597] hover:bg-[#1a507a] text-white cursor-pointer"
                           : "bg-gray-300 text-gray-500 cursor-not-allowed"
                       }`}
                       disabled={!isFormValid()}
@@ -538,6 +528,53 @@ export default function FormLaporan() {
           </div>
         </div>
       </div>
+
+      {/* Popup Konfirmasi */}
+      {showConfirmation && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4 p-6">
+            <div className="text-center">
+              {/* Logo Peringatan */}
+              <div className="flex justify-center mb-4">
+                <svg
+                  width="60"
+                  height="60"
+                  viewBox="0 0 120 120"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M60 19.3495C87.615 19.3495 110 41.7345 110 69.3495C110 96.9645 87.615 119.349 60 119.349C32.385 119.349 10 96.9645 10 69.3495C10 41.7345 32.385 19.3495 60 19.3495ZM60 29.3495C49.3913 29.3495 39.2172 33.5638 31.7157 41.0652C24.2143 48.5667 20 58.7408 20 69.3495C20 79.9581 24.2143 90.1323 31.7157 97.6338C39.2172 105.135 49.3913 109.349 60 109.349C70.6087 109.349 80.7828 105.135 88.2843 97.6338C95.7857 90.1323 100 79.9581 100 69.3495C100 58.7408 95.7857 48.5667 88.2843 41.0652C80.7828 33.5638 70.6087 29.3495 60 29.3495ZM60 84.3495C61.3261 84.3495 62.5979 84.8763 63.5355 85.814C64.4732 86.7516 65 88.0234 65 89.3495C65 90.6756 64.4732 91.9473 63.5355 92.885C62.5979 93.8227 61.3261 94.3495 60 94.3495C58.6739 94.3495 57.4021 93.8227 56.4645 92.885C55.5268 91.9473 55 90.6756 55 89.3495C55 88.0234 55.5268 86.7516 56.4645 85.814C57.4021 84.8763 58.6739 84.3495 60 84.3495ZM60 39.3495C61.3261 39.3495 62.5979 39.8763 63.5355 40.814C64.4732 41.7516 65 43.0234 65 44.3495V74.3495C65 75.6756 64.4732 76.9473 63.5355 77.885C62.5979 78.8227 61.3261 79.3495 60 79.3495C58.6739 79.3495 57.4021 78.8227 56.4645 77.885C55.5268 76.9473 55 75.6756 55 74.3495V44.3495C55 43.0234 55.5268 41.7516 56.4645 40.814C57.4021 39.8763 58.6739 39.3495 60 39.3495Z"
+                    fill="#113F67"
+                  />
+                </svg>
+              </div>
+
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Apakah Anda yakin ingin mengirim?
+              </h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Cek kembali inputan Anda sebelum mengirim!
+              </p>
+
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <button
+                  onClick={handleKirimLaporan}
+                  className="px-4 py-2 bg-[#226597] text-white rounded-md text-sm font-medium hover:bg-[#1a5078] transition-colors"
+                >
+                  Ya, saya yakin
+                </button>
+                <button
+                  onClick={() => setShowConfirmation(false)}
+                  className="px-4 py-2 bg-red-600 border border-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700 transition-colors"
+                >
+                  Batalkan
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

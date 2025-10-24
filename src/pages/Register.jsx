@@ -204,7 +204,10 @@ const Register = () => {
             </div>
 
             <div className="flex flex-col-reverse sm:flex-row items-center justify-between pt-4 gap-4 sm:gap-0">
-              <a href="#" className="text-[#226597] hover:underline text-sm">
+              <a
+                href="/Login"
+                className="text-[#226597] hover:underline text-sm"
+              >
                 Masuk
               </a>
               <button

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const HeaderMasyarakat = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Header = () => {
 
     // Tambahkan logika navigasi di sini
     if (item === "Profil Saya") {
-      navigate("/profilsaya");
+      navigate("/profilmasyarakat");
     } else if (item === "Tampilan") {
       navigate("/tampilan");
     } else if (item === "Keluar") {
@@ -68,7 +68,7 @@ const Header = () => {
               {/* Avatar Profil */}
               <div className="w-8 h-8 md:w-9 md:h-9 rounded-full overflow-hidden flex-shrink-0">
                 <img
-                  src="/assets/Haechan.jpg"
+                  src="/assets/Lomon.png"
                   alt="Profil"
                   className="w-full h-full object-cover"
                 />
@@ -76,7 +76,7 @@ const Header = () => {
 
               {/* Nama */}
               <p className="text-gray-700 text-xs md:text-sm font-medium truncate max-w-[80px] md:max-w-[120px]">
-                Haikal Saputra
+                Lomon Kahiel
               </p>
             </div>
 
@@ -192,4 +192,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderMasyarakat;

@@ -323,18 +323,6 @@ export function Beranda() {
               Tidak ada riwayat laporan untuk ditampilkan
             </p>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-            {[1, 2, 3].map((item) => (
-              <div
-                key={item}
-                className="bg-white rounded-xl md:rounded-2xl p-3 text-center shadow-sm border border-gray-200"
-              >
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-200 rounded-lg md:rounded-xl mx-auto mb-2 md:mb-3"></div>
-                <p className="text-gray-500 text-xs md:text-sm">~ blablabla</p>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -361,8 +349,8 @@ export function Beranda() {
           <div className="w-10 h-10 bg-white lg:bg-white rounded-full flex items-center justify-center shadow-sm border border-gray-200">
             {/* Ikon lonceng */}
             <svg
-              width="25"
-              height="28"
+              width="22"
+              height="25"
               viewBox="0 0 25 28"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -418,14 +406,6 @@ export function Beranda() {
           <Calender />
         </div>
 
-        {/* Kotak Masuk */}
-        <div className="mb-8">
-          <h2 className="text-lg md:text-xl font-bold leading-tight mb-2 text-left text-gray-800 lg:text-white">
-            Kotak Masuk
-          </h2>
-          <div className="bg-white rounded-lg md:rounded-xl shadow-md p-6 md:p-10"></div>
-        </div>
-
         {/* ChatBot */}
         <div className="bg-white rounded-lg border p-3 flex items-center gap-2">
           {/* Logo custom */}
@@ -448,6 +428,7 @@ export function Beranda() {
           <span className="font-medium text-[#226597] text-sm md:text-base">
             Tanya Helpdesk
           </span>
+          
         </div>
       </div>
 

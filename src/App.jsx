@@ -16,6 +16,8 @@ import AksesSistem from "./pages/beranda/pengajuan/AksesSistem";
 import Permintaan from "./pages/beranda/pengajuan/Permintaan";
 import SuksesPelayanan from "./pages/beranda/pengajuan/SuksesPelayanan";
 import SuksesPelaporan from "./pages/beranda/pelaporan/SuksesPelaporan";
+import ProfilMasyarakat from "./pages/profil/ProfilMasyarakat";
+import HelpdeskChat from "./components/beranda/Helpdesk";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -38,6 +40,8 @@ function App() {
         <Route path="/permintaan" element={<Permintaan />} />
         <Route path="/suksespelayanan" element={<SuksesPelayanan />} />
         <Route path="/suksespelaporan" element={<SuksesPelaporan />} />
+        <Route path="/profilmasyarakat" element={<ProfilMasyarakat />} />
+        <Route path="/helpdesk" element={<HelpdeskChat />} />
       </Routes>
     </Router>
   );

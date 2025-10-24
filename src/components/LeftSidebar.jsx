@@ -1,44 +1,23 @@
 import React, { useState } from "react";
 
 const LeftSidebar = () => {
-  const [activeItem, setActiveItem] = useState("Beranda");
+  const [activeItem, setActiveItem] = useState("beranda"); // Perbaiki jadi "beranda" (huruf kecil)
 
   const navItems = [
     {
       id: "beranda",
       label: "Beranda",
-      icon: "/assets/Logo Beranda.png", // Path ke gambar beranda
-      activeIcon: "/assets/beranda-active.png", // Icon aktif (opsional)
+      icon: "/assets/Logo Beranda.png",
     },
     {
-      id: "statistik",
-      label: "Statistik",
-      icon: "/assets/Logo Statistik.png", // Path ke gambar statistik
-      activeIcon: "/assets/statistik-active.png", // Icon aktif (opsional)
+      id: "riwayat",
+      label: "Riwayat",
+      icon: "/assets/Logo Riwayat.png",
     },
     {
-      id: "tentangkami",
-      label: "Tentang Kami",
-      icon: "/assets/Logo Tentang Kami.png", // Path ke gambar tentang kami
-      activeIcon: "/assets/tentang-kami-active.png", // Icon aktif (opsional)
-    },
-    {
-      id: "item2",
-      label: "blablabla",
-      icon: "/assets/item2.png", // Path ke gambar item2
-      activeIcon: "/assets/item2-active.png", // Icon aktif (opsional)
-    },
-    {
-      id: "item3",
-      label: "blablabla",
-      icon: "/assets/item3.png", // Path ke gambar item3
-      activeIcon: "/assets/item3-active.png", // Icon aktif (opsional)
-    },
-    {
-      id: "item4",
-      label: "blablabla",
-      icon: "/assets/item4.png", // Path ke gambar item4
-      activeIcon: "/assets/item4-active.png", // Icon aktif (opsional)
+      id: "kotakmasuk",
+      label: "Kotak Masuk",
+      icon: "/assets/Logo Kotak Masuk.png",
     },
   ];
 
@@ -99,15 +78,15 @@ const LeftSidebar = () => {
                   : "bg-white text-[#226597] hover:bg-[#507687]/10"
               }`}
             >
-              {/* Gambar icon */}
+              {/* Gambar icon dengan filter putih saat aktif */}
               <img
-                src={
-                  activeItem === item.id && item.activeIcon
-                    ? item.activeIcon
-                    : item.icon
-                }
+                src={item.icon}
                 alt={item.label}
-                className="w-5 h-5 object-contain"
+                className={`w-5 h-5 object-contain transition-all ${
+                  activeItem === item.id
+                    ? "brightness-0 invert" // INI YANG BIKIN LOGO JADI PUTIH
+                    : ""
+                }`}
               />
               <span className="font-medium">{item.label}</span>
             </button>

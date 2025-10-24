@@ -1,25 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Home, Heart, Folder, Settings, FileText, X } from "lucide-react";
 import LeftSidebar from "../../components/LeftSidebar";
-import Header from "../../components/Header";
+import HeaderMasyarakat from "../../components/HeaderMasyarakat";
 
 const ProfilePage = () => {
   const [activeItem, setActiveItem] = useState("beranda");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
-  // Data profil
-  const profileData = {
-    nama: "Haikal Saputra",
-    nip: "200011142023062053",
-    divisi: "Divisi Sumber Daya Manusia",
-    email: "haikalsaputra@gmail.com",
-    telepon: "0877-9362-1634",
-  };
-
-  // Simpan data profil ke localStorage saat komponen mount
-  useEffect(() => {
-    localStorage.setItem("userProfile", JSON.stringify(profileData));
-  }, []);
+  const navItems = [
+    {
+      id: "beranda",
+      label: "Beranda",
+      icon: <Home size={20} />,
+    },
+    {
+      id: "statistik",
+      label: "Statistik",
+      icon: <div className="w-5 h-5 bg-current rounded-full opacity-60" />,
+    },
+    {
+      id: "item1",
+      label: "blablabla",
+      icon: <Heart size={20} />,
+    },
+    {
+      id: "item2",
+      label: "blablabla",
+      icon: <Folder size={20} />,
+    },
+    {
+      id: "item3",
+      label: "blablabla",
+      icon: <Settings size={20} />,
+    },
+    {
+      id: "item4",
+      label: "blablabla",
+      icon: <FileText size={20} />,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -50,7 +69,7 @@ const ProfilePage = () => {
 
       {/* Main Content Area */}
       <div className="flex-1">
-        <Header />
+        <HeaderMasyarakat />
         {/* Main Content */}
         <div className="px-4 md:px-6 py-4 md:py-8">
           {/* Profile Header */}
@@ -65,16 +84,16 @@ const ProfilePage = () => {
             <div className="bg-white rounded-lg p-4 md:p-5 mb-4 md:mb-6 w-full">
               <div className="flex flex-col sm:flex-row items-center sm:space-x-4 space-y-3 sm:space-y-0">
                 <img
-                  src="/assets/Haechan.jpg"
+                  src="/assets/Lomon.png"
                   alt="Haikal Saputra"
                   className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover"
                 />
                 <div className="text-center sm:text-left">
                   <h2 className="text-lg md:text-xl font-semibold text-gray-800">
-                    Haikal Saputra
+                    Lomon Kahiel
                   </h2>
                   <span className="inline-block bg-[#226597] text-white text-sm font-normal px-3 py-1 rounded-full mt-4">
-                    Pegawai
+                    Publik
                   </span>
                 </div>
               </div>
@@ -111,26 +130,26 @@ const ProfilePage = () => {
                 <label className="block text-sm font-medium text-black mb-1">
                   Nama Depan
                 </label>
-                <p className="text-gray-500 text-sm md:text-base">Haikal</p>
+                <p className="text-gray-500 text-sm md:text-base">Lomon</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-black mb-1">
                   Nama Belakang
                 </label>
-                <p className="text-gray-500 text-sm md:text-base">Saputra</p>
+                <p className="text-gray-500 text-sm md:text-base">Kahiel</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-black mb-1">
                   Tanggal Lahir
                 </label>
-                <p className="text-gray-500 text-sm md:text-base">06-06-2000</p>
+                <p className="text-gray-500 text-sm md:text-base">24-01-1991</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-black mb-1">
                   Email
                 </label>
                 <p className="text-gray-500 text-sm md:text-base break-all">
-                  haikalsaputra@gmail.com
+                  lomonkahiel@gmail.com
                 </p>
               </div>
               <div>
@@ -138,7 +157,7 @@ const ProfilePage = () => {
                   Nomor Telepon
                 </label>
                 <p className="text-gray-500 text-sm md:text-base">
-                  0877-9362-1634
+                  0878-2831-1228
                 </p>
               </div>
               <div>
@@ -146,51 +165,7 @@ const ProfilePage = () => {
                   Alamat
                 </label>
                 <p className="text-gray-500 text-sm md:text-base">
-                  Asemrowo Surabaya
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Work Info Section */}
-          <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
-            {/* Header + garis tipis */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-gray-300 gap-2 sm:gap-0">
-              <h3 className="text-lg font-semibold text-[#226597]">
-                Info Pekerjaan
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 text-left mt-4 md:mt-6">
-              <div>
-                <label className="block text-sm font-medium text-black mb-1">
-                  Nomor Induk Pegawai
-                </label>
-                <p className="text-gray-500 text-sm md:text-base break-all">
-                  200011142023062053
-                </p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-black mb-1">
-                  Tanggal Penerimaan
-                </label>
-                <p className="text-gray-500 text-sm md:text-base">18-06-2023</p>
-              </div>
-              <div className="hidden lg:block">
-                {/* Empty div untuk menjaga alignment grid di desktop */}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-black mb-1">
-                  Jabatan
-                </label>
-                <p className="text-gray-500 text-sm md:text-base">Pegawai</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-black mb-1">
-                  Divisi
-                </label>
-                <p className="text-gray-500 text-sm md:text-base">
-                  Divisi Sumber Daya Manusia
+                  Krembangan, Surabaya
                 </p>
               </div>
             </div>

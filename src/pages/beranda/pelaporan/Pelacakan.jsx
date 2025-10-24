@@ -8,14 +8,51 @@ const Pelacakan = () => {
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [errors, setErrors] = useState({ reportId: "", pin: "" });
 
   const handleSearch = () => {
+    // Reset errors
+    const newErrors = { reportId: "", pin: "" };
+
+    // Validasi
+    if (!reportId) {
+      newErrors.reportId = "Harap isi ID Laporan dengan benar";
+    }
+    if (!pin) {
+      newErrors.pin = "Harap isi Pin dengan benar";
+    }
+
+    setErrors(newErrors);
+
+    // Jika ada error, stop execution
     if (!reportId || !pin) {
-      alert("Mohon isi ID Laporan dan PIN");
       return;
     }
+
     console.log("Searching for report:", { reportId, pin });
-    // Handle search logic here
+
+    // Simulasi: data tidak ditemukan
+    setShowErrorPopup(true);
+  };
+
+  const closeErrorPopup = () => {
+    setShowErrorPopup(false);
+  };
+
+  // Clear error ketika user mulai mengetik
+  const handleReportIdChange = (e) => {
+    setReportId(e.target.value);
+    if (errors.reportId) {
+      setErrors((prev) => ({ ...prev, reportId: "" }));
+    }
+  };
+
+  const handlePinChange = (e) => {
+    setPin(e.target.value);
+    if (errors.pin) {
+      setErrors((prev) => ({ ...prev, pin: "" }));
+    }
   };
 
   return (
@@ -128,60 +165,133 @@ const Pelacakan = () => {
             </div>
 
             {/* Tracking Form */}
-            <div className="max-w-md mx-auto">
-              <div className="bg-white rounded-2xl shadow-xl p-8 border border-blue-100 text-left">
-                <div className="space-y-6">
-                  {/* ID Laporan Field */}
-                  <div className="flex items-center space-x-4">
-                    <label className="text-sm font-medium text-gray-700 whitespace-nowrap min-w-[100px]">
-                      ID Laporan
-                    </label>
-                    <input
-                      type="text"
-                      value={reportId}
-                      onChange={(e) => setReportId(e.target.value)}
-                      className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#226597] focus:border-transparent outline-none transition-all"
-                    />
-                  </div>
-
-                  {/* PIN Field */}
-                  <div className="flex items-center space-x-4">
-                    <label className="text-sm font-medium text-gray-700 whitespace-nowrap min-w-[100px]">
-                      Pin
-                    </label>
-                    <div className="relative flex-1">
+            <div className="max-w-xl mx-auto">
+              {/* ID Laporan Section - Outside Card */}
+              <div className="mb-6">
+                <div className="flex items-center space-x-4 mb-2">
+                  <label className="text-sm font-medium text-gray-700 whitespace-nowrap min-w-[120px]">
+                    ID Laporan
+                  </label>
+                  <div className="flex-1">
+                    <div
+                      className={`bg-white rounded-2xl shadow-xl p-4 border ${
+                        errors.reportId ? "border-red-300" : "border-blue-100"
+                      }`}
+                    >
                       <input
-                        type={showPin ? "text" : "password"}
-                        value={pin}
-                        onChange={(e) => setPin(e.target.value)}
-                        className="w-full px-4 py-3 pr-12 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#226597] focus:border-transparent outline-none transition-all"
+                        type="text"
+                        value={reportId}
+                        onChange={handleReportIdChange}
+                        className="w-full px-3 py-2 border-0 focus:ring-0 focus:outline-none bg-transparent"
                       />
-                      <button
-                        type="button"
-                        onClick={() => setShowPin(!showPin)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#226597] hover:text-[#226597]"
-                      >
-                        {showPin ? <EyeOff size={20} /> : <Eye size={20} />}
-                      </button>
                     </div>
                   </div>
+                </div>
+                {errors.reportId && (
+                  <div className="text-left ml-[136px]">
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.reportId}
+                    </p>
+                  </div>
+                )}
+              </div>
 
-                  {/* Search Button */}
-                  <div className="text-left">
-                    <button
-                      onClick={handleSearch}
-                      className="bg-[#226597] hover:bg-[#226597] text-white font-semibold py-3 px-6 rounded-3xl transition-colors flex items-center justify-start gap-2"
+              {/* PIN Card */}
+              <div className="mb-6">
+                <div className="flex items-center space-x-4 mb-2">
+                  <label className="text-sm font-medium text-gray-700 whitespace-nowrap min-w-[120px]">
+                    PIN
+                  </label>
+                  <div className="flex-1">
+                    <div
+                      className={`bg-white rounded-2xl shadow-xl p-4 border ${
+                        errors.pin ? "border-red-300" : "border-blue-100"
+                      }`}
                     >
-                      <Search size={20} />
-                      Cari
-                    </button>
+                      <div className="relative">
+                        <input
+                          type={showPin ? "text" : "password"}
+                          value={pin}
+                          onChange={handlePinChange}
+                          className="w-full px-3 py-2 pr-12 border-0 focus:ring-0 focus:outline-none bg-transparent"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPin(!showPin)}
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#226597] hover:text-[#226597]"
+                        >
+                          {showPin ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                {errors.pin && (
+                  <div className="text-left ml-[136px]">
+                    <p className="text-red-500 text-sm mt-1">{errors.pin}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Search Button */}
+              <div className="flex justify-start mt-6 ml-36">
+                <button
+                  onClick={handleSearch}
+                  className="bg-[#226597] hover:bg-[#1a507a] text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                >
+                  <Search size={20} />
+                  Cari
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Error Popup */}
+      {showErrorPopup && (
+        <>
+          {/* Overlay */}
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            {/* Popup Content */}
+            <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full mx-auto">
+              <div className="text-center">
+                {/* Warning Icon */}
+                <div className="flex justify-center mb-4">
+                  <svg
+                    width="80"
+                    height="80"
+                    viewBox="0 0 100 100"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M50 0C77.615 0 100 22.385 100 50C100 77.615 77.615 100 50 100C22.385 100 0 77.615 0 50C0 22.385 22.385 0 50 0ZM50 10C39.3913 10 29.2172 14.2143 21.7157 21.7157C14.2143 29.2172 10 39.3913 10 50C10 60.6087 14.2143 70.7828 21.7157 78.2843C29.2172 85.7857 39.3913 90 50 90C60.6087 90 70.7828 85.7857 78.2843 78.2843C85.7857 70.7828 90 60.6087 90 50C90 39.3913 85.7857 29.2172 78.2843 21.7157C70.7828 14.2143 60.6087 10 50 10ZM50 65C51.3261 65 52.5979 65.5268 53.5355 66.4645C54.4732 67.4021 55 68.6739 55 70C55 71.3261 54.4732 72.5979 53.5355 73.5355C52.5979 74.4732 51.3261 75 50 75C48.6739 75 47.4021 74.4732 46.4645 73.5355C45.5268 72.5979 45 71.3261 45 70C45 68.6739 45.5268 67.4021 46.4645 66.4645C47.4021 65.5268 48.6739 65 50 65ZM50 20C51.3261 20 52.5979 20.5268 53.5355 21.4645C54.4732 22.4021 55 23.6739 55 25V55C55 56.3261 54.4732 57.5979 53.5355 58.5355C52.5979 59.4732 51.3261 60 50 60C48.6739 60 47.4021 59.4732 46.4645 58.5355C45.5268 57.5979 45 56.3261 45 55V25C45 23.6739 45.5268 22.4021 46.4645 21.4645C47.4021 20.5268 48.6739 20 50 20Z"
+                      fill="#113F67"
+                    />
+                  </svg>
+                </div>
+
+                {/* Error Message */}
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                  Data tidak ditemukan!
+                </h3>
+                <p className="text-gray-600 mb-6">Cek kembali inputan Anda</p>
+
+                {/* OK Button - Smaller */}
+                <div className="flex justify-center">
+                  <button
+                    onClick={closeErrorPopup}
+                    className="bg-[#226597] hover:bg-[#1a507a] text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+                  >
+                    Oke
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

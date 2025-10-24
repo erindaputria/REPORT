@@ -143,7 +143,7 @@ const LogIn = () => {
               type="submit"
               className="w-full bg-[#226597] hover:bg-[#1a507a] text-white py-3 rounded-full font-medium transition-colors"
             >
-              Log in
+              Masuk
             </button>
           </form>
 
@@ -184,11 +184,11 @@ const LogIn = () => {
         </div>
 
         {/* Kolom kanan: gambar - disembunyikan di layar kecil */}
-        <div className="w-full md:w-1/2 bg-[#226597] flex items-center justify-center py-8 md:py-0 order-1 md:order-2">
+        <div className="w-full md:w-1/2 bg-[#226597] flex items-start justify-start order-1 md:order-2">
           <img
             src="/assets/Login.png"
             alt="Login Illustration"
-            className="object-contain w-2/3 md:w-3/4 h-auto max-h-64 md:max-h-none opacity-90"
+            className="object-contain w-4/5 h-auto max-h-64 md:max-h-none opacity-90 ml-0"
           />
         </div>
       </div>
