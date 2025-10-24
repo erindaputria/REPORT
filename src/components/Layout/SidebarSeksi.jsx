@@ -10,8 +10,8 @@ import {
 import { Link, useLocation } from "react-router-dom";
 
 const items = [
-  {label: "Dashboard", icon: HomeIcon },
-  {label: "Penugasan", icon: ClipboardDocumentListIcon },
+  {label: "Dashboard", icon: HomeIcon, path:"/berandaseksi" },
+  {label: "Penugasan", icon: ClipboardDocumentListIcon, path:"/penugasanseksi" },
   {label: "Monitoring", icon: ChartBarIcon },
   {label: "Arsip", icon: ArchiveBoxIcon },
   {label: "Layanan Chat", icon: ChatBubbleLeftEllipsisIcon },

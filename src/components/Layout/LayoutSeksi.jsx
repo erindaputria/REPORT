@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "./SidebarSeksi";
-import Navbar from "./NavbarSeksi";
+import Navbar from "./Navbar";
 import { Outlet } from "react-router-dom";
 
 export default function LayoutSeksi() {
