@@ -165,13 +165,13 @@ export default function PengajuanSeksi() {
         <label className="block text-gray-700 font-medium mb-2">
           Lampiran File
          </label>
-  <div>
-    <div className="flex items-center gap-2 ml-2">
-      <FileText size={18} className="text-blue-500" />
-      <span className="text-gray-700 text-sm">bukti_laporan.pdf</span>
+      <div>
+      <div className="flex items-center gap-2 ml-2">
+        <FileText size={18} className="text-blue-500" />
+       <span className="text-gray-700 text-sm">bukti_laporan.pdf</span>
+      </div>
     </div>
-  </div>
-  </div>
+    </div>
 
       {/* === Tombol Aksi === */}
       <div className="flex justify-between mt-8">
