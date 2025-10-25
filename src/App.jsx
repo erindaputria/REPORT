@@ -32,6 +32,7 @@ import RatingSeksi from "./pages/beranda/Seksi/RatingSeksi";
 import DashboardTeknisi from "./pages/beranda/Teknisi/DashboardTeknisi";
 import ProfilMasyarakat from "./pages/profil/ProfilMasyarakat";
 import CekDetailTeknisi from "./pages/beranda/Teknisi/CekDetailTeknisi";
+import UpdateProgressTeknisi from "./pages/beranda/Teknisi/UpdateProgresTeknisi";
 
 //*-- Helpdesk --*/
 import HelpdeskChat from "./components/beranda/Helpdesk";
@@ -63,6 +64,7 @@ function App() {
         <Route path="/" element={<LayoutTeknisi />}>
           <Route path="dashboardteknisi" element={<DashboardTeknisi />} />
           <Route path="cekdetailteknisi" element={<CekDetailTeknisi />} />
+          <Route path="updateprogresteknisi" element={<UpdateProgressTeknisi />} />
         </Route>
 
 
