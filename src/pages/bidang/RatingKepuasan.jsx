@@ -2,39 +2,12 @@ import React, { useState } from "react";
 import HeaderBidang from "./HeaderBidang";
 import SidebarBidang from "./SidebarBidang";
 import { Menu, X, Bell } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
-const DashboardBidang = () => {
+const RatingKepuasan = () => {
   const [activeTab, setActiveTab] = useState("pelaporan");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const navigate = useNavigate();
 
-  const stats = [
-    {
-      number: 82,
-      label: "Tiket Masuk",
-      description: "tiket yang masuk",
-      icon: "/assets/Tiket Masuk.png",
-    },
-    {
-      number: 44,
-      label: "Diverifikasi",
-      description: "tiket yang telah diverifikasi",
-      icon: "/assets/Diverifikasi.png",
-    },
-    {
-      number: 10,
-      label: "Revisi",
-      description: "tiket yang menunggu diverifikasi",
-      icon: "/assets/Revisi.png",
-    },
-    {
-      number: 3,
-      label: "Ditolak",
-      description: "tiket yang ditolak",
-      icon: "/assets/Ditolak.png",
-    },
-  ];
+  const stats = [];
 
   // Data tabel dengan path gambar profil
   const tableData = [
@@ -42,83 +15,103 @@ const DashboardBidang = () => {
       name: "Haikal Saputra",
       category: "Perangkat Keras",
       date: "18/09/2024",
-      priority: "Rendah",
-      status: "Draft",
+      completionDate: "20/09/2024",
       avatar: "/assets/Haechan.jpg",
+      rating: 4,
     },
     {
       name: "Rio Widoro",
       category: "Jaringan & Konektivitas",
       date: "18/09/2024",
-      priority: "Tinggi",
-      status: "Terverifikasi",
+      completionDate: "19/09/2024",
       avatar: "/assets/Rio.jpeg",
+      rating: 5,
     },
     {
       name: "Lia Yustia",
       category: "Perangkat Keras",
       date: "17/09/2024",
-      priority: "Rendah",
-      status: "Ditolak",
+      completionDate: "22/09/2024",
       avatar: "/assets/Lia.jpg",
+      rating: 3,
     },
     {
       name: "Ridwan Yusuf",
       category: "Email & Komunikasi",
       date: "17/09/2024",
-      priority: "Rendah",
-      status: "Draft",
+      completionDate: "18/09/2024",
       avatar: "/assets/Jaemin.jpg",
+      rating: 4,
     },
     {
       name: "Ella Meisya",
       category: "Jaringan & Konektivitas",
       date: "17/09/2024",
-      priority: "Tinggi",
-      status: "Terverifikasi",
+      completionDate: "20/09/2024",
       avatar: "/assets/Ella.jpg",
+      rating: 5,
     },
     {
       name: "Sri Wulandari",
       category: "Keamanan",
       date: "16/09/2024",
-      priority: "Rendah",
-      status: "Draft",
+      completionDate: "20/09/2024",
       avatar: "/assets/Suzy.jpg",
+      rating: 5,
     },
     {
       name: "Supriatno",
       category: "Email & Komunikasi",
       date: "16/09/2024",
-      priority: "Sedang",
-      status: "Draft",
+      completionDate: "20/09/2024",
       avatar: "/assets/Suprianto.jpg",
+      rating: 5,
     },
     {
       name: "Anya Rosalina",
       category: "Email & Komunikasi",
       date: "16/09/2024",
-      priority: "Rendah",
-      status: "Terverifikasi",
+      completionDate: "20/09/2024",
       avatar: "/assets/Anya.jpg",
+      rating: 5,
     },
     {
       name: "Widya Karim",
       category: "Keamanan",
       date: "15/09/2024",
-      priority: "Rendah",
-      status: "Draft",
+      completionDate: "20/09/2024",
       avatar: "/assets/Widya.jpeg",
+      rating: 4,
     },
     {
       name: "Rudiono",
       category: "Perangkat Keras",
       date: "15/09/2024",
-      priority: "Rendah",
-      status: "Terverifikasi",
+      completionDate: "20/09/2024",
       avatar: "/assets/Rudiono.jpeg",
+      rating: 5,
     },
   ];
+
+  // Komponen bintang rating
+  const StarRating = ({ rating }) => {
+    return (
+      <div className="flex items-center space-x-1">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <svg
+            key={star}
+            className={`w-3 h-3 sm:w-4 sm:h-4 ${
+              star <= rating ? "text-[#226597]" : "text-gray-300"
+            }`}
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -177,52 +170,54 @@ const DashboardBidang = () => {
         {/* Dashboard Content */}
         <main className="flex-1 p-4 md:p-6">
           {/* Dashboard Header Card */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6 mb-6 md:mb-8">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6 mb-4 md:mb-8">
             <h1 className="text-xl md:text-2xl font-bold text-[#226597] text-left">
-              Dashboard
+              Rating Kepuasan
             </h1>
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg shadow-sm p-4 md:p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
-              >
-                <div className="flex flex-col">
-                  <div className="flex items-start space-x-3 mb-3">
-                    <img
-                      src={stat.icon}
-                      alt={stat.label}
-                      className="w-6 h-6 md:w-8 md:h-8 object-contain"
-                    />
-                    <div className="flex-1">
-                      <h3 className="text-sm md:text-base font-semibold text-gray-800 text-left">
-                        {stat.label}
-                      </h3>
+          {stats.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
+              {stats.map((stat, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-lg shadow-sm p-4 md:p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
+                >
+                  <div className="flex flex-col">
+                    <div className="flex items-start space-x-3 mb-3">
+                      <img
+                        src={stat.icon}
+                        alt={stat.label}
+                        className="w-6 h-6 md:w-8 md:h-8 object-contain"
+                      />
+                      <div className="flex-1">
+                        <h3 className="text-sm md:text-base font-semibold text-gray-800 text-left">
+                          {stat.label}
+                        </h3>
+                      </div>
                     </div>
+                    <div className="text-xl md:text-2xl font-bold text-gray-900 mb-2 text-left">
+                      {stat.number}
+                    </div>
+                    <p className="text-xs md:text-sm text-gray-500 text-left">
+                      {stat.description}
+                    </p>
                   </div>
-                  <div className="text-xl md:text-2xl font-bold text-gray-900 mb-2 text-left">
-                    {stat.number}
-                  </div>
-                  <p className="text-xs md:text-sm text-gray-500 text-left">
-                    {stat.description}
-                  </p>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* Card untuk Pelaporan dan Filter Pencarian */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6 mb-6 md:mb-8">
             {/* Tab Navigation */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 md:mb-6">
               {/* Tab Navigation */}
-              <div className="flex space-x-4 sm:space-x-8 border-b border-gray-200 pb-0.5 w-full sm:w-auto overflow-x-auto">
+              <div className="flex space-x-4 md:space-x-8 border-b border-gray-200 pb-0.5 w-full sm:w-auto overflow-x-auto">
                 <button
                   onClick={() => setActiveTab("pelaporan")}
-                  className={`pb-3 px-1 font-medium text-sm whitespace-nowrap ${
+                  className={`pb-3 px-1 font-medium text-xs md:text-sm whitespace-nowrap ${
                     activeTab === "pelaporan"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : "text-gray-500 hover:text-gray-700"
@@ -232,7 +227,7 @@ const DashboardBidang = () => {
                 </button>
                 <button
                   onClick={() => setActiveTab("pelayanan")}
-                  className={`pb-3 px-1 font-medium text-sm whitespace-nowrap ${
+                  className={`pb-3 px-1 font-medium text-xs md:text-sm whitespace-nowrap ${
                     activeTab === "pelayanan"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : "text-gray-500 hover:text-gray-700"
@@ -245,8 +240,9 @@ const DashboardBidang = () => {
               {/* Tombol Refresh */}
               <button className="flex items-center space-x-2 bg-[#226597] hover:bg-blue-600 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 w-full sm:w-auto justify-center">
                 <svg
-                  width="16"
-                  height="16"
+                  width="14"
+                  height="14"
+                  className="md:w-4 md:h-4"
                   viewBox="0 0 16 16"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -256,7 +252,7 @@ const DashboardBidang = () => {
                     fill="white"
                   />
                 </svg>
-                <span className="text-sm font-medium">Refresh</span>
+                <span className="text-xs md:text-sm font-medium">Refresh</span>
               </button>
             </div>
 
@@ -270,14 +266,23 @@ const DashboardBidang = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
                 <div className="text-left">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                    <div className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                    <div className="text-xs md:text-sm font-medium text-gray-700 whitespace-nowrap">
                       Perihal
                     </div>
                     <div className="relative flex-1">
-                      <button className="w-full text-left text-sm text-gray-500 p-2 bg-white rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-between">
-                        Pilih perihal
+                      <select className="w-full text-xs md:text-sm text-gray-700 p-2 bg-white rounded border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none">
+                        <option value="">Semua</option>
+                        <option value="perangkat-keras">Perangkat Keras</option>
+                        <option value="jaringan-konektivitas">
+                          Jaringan & Konektivitas
+                        </option>
+                        <option value="email-komunikasi">
+                          Email & Komunikasi
+                        </option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         <svg
-                          className="w-4 h-4 ml-2"
+                          className="w-3 h-3 md:w-4 md:h-4"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -289,20 +294,27 @@ const DashboardBidang = () => {
                             d="M19 9l-7 7-7-7"
                           />
                         </svg>
-                      </button>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="text-left">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                    <div className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                      Status
+                    <div className="text-xs md:text-sm font-medium text-gray-700 whitespace-nowrap">
+                      Rating
                     </div>
                     <div className="relative flex-1">
-                      <button className="w-full text-left text-sm text-gray-500 p-2 bg-white rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-between">
-                        Pilih status
+                      <select className="w-full text-xs md:text-sm text-gray-700 p-2 bg-white rounded border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none">
+                        <option value="">Semua</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         <svg
-                          className="w-4 h-4 ml-2"
+                          className="w-3 h-3 md:w-4 md:h-4"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -314,32 +326,7 @@ const DashboardBidang = () => {
                             d="M19 9l-7 7-7-7"
                           />
                         </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-left">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                    <div className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                      Prioritas
-                    </div>
-                    <div className="relative flex-1">
-                      <button className="w-full text-left text-sm text-gray-500 p-2 bg-white rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-between">
-                        Pilih prioritas
-                        <svg
-                          className="w-4 h-4 ml-2"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -348,20 +335,19 @@ const DashboardBidang = () => {
 
             {/* Table Section */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-              {/* Table Header */}
-              <div className="bg-[#226597] p-3 md:p-4 grid grid-cols-2 md:grid-cols-7 gap-2 md:gap-4 text-xs md:text-sm font-medium text-white text-left hidden md:grid">
-                <div className="min-w-[120px]">Pengirim</div>
-                <div className="min-w-[150px]">Perihal</div>
+              {/* Desktop Table Header */}
+              <div className="bg-[#226597] rounded-t-lg p-3 md:p-4 grid grid-cols-6 gap-2 md:gap-3 text-xs md:text-sm font-medium text-white text-left hidden md:grid">
+                <div className="min-w-[150px]">Pengirim</div>
+                <div className="min-w-[160px]">Perihal</div>
                 <div className="min-w-[100px]">Tanggal masuk</div>
-                <div className="min-w-[100px]">Lampiran</div>
-                <div className="min-w-[80px]">Prioritas</div>
-                <div className="min-w-[100px]">Status</div>
+                <div className="min-w-[100px]">Tanggal selesai</div>
+                <div className="min-w-[80px]">Rating</div>
                 <div className="min-w-[60px]">Aksi</div>
               </div>
 
               {/* Mobile Table Header */}
               <div className="bg-[#226597] p-3 md:p-4 text-xs md:text-sm font-medium text-white text-left md:hidden">
-                Daftar Pelaporan
+                Daftar Rating Kepuasan
               </div>
 
               {/* Table Data */}
@@ -369,7 +355,7 @@ const DashboardBidang = () => {
                 {tableData.map((item, index) => (
                   <div
                     key={index}
-                    className={`p-3 md:p-4 grid grid-cols-1 md:grid-cols-7 gap-3 md:gap-4 text-sm text-left items-center ${
+                    className={`p-3 md:p-4 grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-3 text-sm text-left items-center ${
                       index !== tableData.length - 1
                         ? "border-b border-gray-200"
                         : ""
@@ -377,7 +363,7 @@ const DashboardBidang = () => {
                   >
                     {/* Mobile View */}
                     <div className="md:hidden space-y-3">
-                      {/* Row 1: Pengirim dan Tanggal */}
+                      {/* Row 1: Pengirim dan Rating */}
                       <div className="flex justify-between items-center">
                         <div className="font-medium text-gray-800 flex items-center space-x-3">
                           <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
@@ -398,79 +384,54 @@ const DashboardBidang = () => {
                               </div>
                             )}
                           </div>
-                          <span className="truncate">{item.name}</span>
-                        </div>
-                        <div className="text-gray-600 text-sm">{item.date}</div>
-                      </div>
-
-                      {/* Row 2: Perihal dan Lampiran */}
-                      <div className="flex justify-between items-center">
-                        <div className="text-gray-600">{item.category}</div>
-                        <div className="text-gray-600">
-                          <div className="flex items-center space-x-1">
-                            <svg
-                              className="w-4 h-4 text-gray-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                              />
-                            </svg>
-                            <span className="text-xs">document.pdf</span>
+                          <div>
+                            <span className="text-sm font-semibold">
+                              {item.name}
+                            </span>
+                            <div className="mt-1">
+                              <StarRating rating={item.rating} />
+                            </div>
                           </div>
                         </div>
-                      </div>
-
-                      {/* Row 3: Prioritas, Status, dan Aksi */}
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center space-x-2">
-                          <span
-                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                              item.priority === "Tinggi"
-                                ? "bg-green-100 text-green-800 border border-green-200"
-                                : item.priority === "Sedang"
-                                ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
-                                : "bg-red-100 text-red-800 border border-red-200"
-                            }`}
-                          >
-                            {item.priority}
-                          </span>
-                          <span
-                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                              item.status === "Terverifikasi"
-                                ? "bg-green-100 text-green-800 border border-green-200"
-                                : item.status === "Draft"
-                                ? "bg-gray-100 text-gray-800 border border-gray-200"
-                                : "bg-red-100 text-red-800 border border-red-200"
-                            }`}
-                          >
-                            {item.status}
-                          </span>
-                        </div>
-                        <div>
-                          <button className="text-[#226597] hover:text-[#113F67] transition-colors duration-200">
+                        <div className="text-right">
+                          <button className="text-[#113F67] hover:text-[#226597] transition-colors duration-200">
                             <svg
-                              width="20"
-                              height="20"
+                              width="18"
+                              height="18"
                               viewBox="0 0 24 24"
-                              fill="currentColor"
+                              fill="none"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <path d="M16.757 2.99766L9.291 10.4637L9.299 14.7107L13.537 14.7027L21 7.24066V19.9987C21 20.2639 20.8946 20.5182 20.7071 20.7058C20.5196 20.8933 20.2652 20.9987 20 20.9987H4C3.73478 20.9987 3.48043 20.8933 3.29289 20.7058C3.10536 20.5182 3 20.2639 3 19.9987V3.99866C3 3.73344 3.10536 3.47909 3.29289 3.29155C3.48043 3.10401 3.73478 2.99866 4 2.99866L16.757 2.99766ZM20.485 2.09766L21.9 3.51166L12.707 12.7047L11.295 12.7067L11.293 11.2907L20.485 2.09766Z" />
+                              <path
+                                d="M12 9C11.2044 9 10.4413 9.31607 9.87868 9.87868C9.31607 10.4413 9 11.2044 9 12C9 12.7956 9.31607 13.5587 9.87868 14.1213C10.4413 14.6839 11.2044 15 12 15C12.7956 15 13.5587 14.6839 14.1213 14.1213C14.6839 13.5587 15 12.7956 15 12C15 11.2044 14.6839 10.4413 14.1213 9.87868C13.5587 9.31607 12.7956 9 12 9ZM12 17C10.6739 17 9.40215 16.4732 8.46447 15.5355C7.52678 14.5979 7 13.3261 7 12C7 10.6739 7.52678 9.40215 8.46447 8.46447C9.40215 7.52678 10.6739 7 12 7C13.3261 7 14.5979 7.52678 15.5355 8.46447C16.4732 9.40215 17 10.6739 17 12C17 13.3261 16.4732 14.5979 15.5355 15.5355C14.5979 16.4732 13.3261 17 12 17ZM12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5Z"
+                                fill="currentColor"
+                              />
                             </svg>
                           </button>
+                        </div>
+                      </div>
+
+                      {/* Row 2: Perihal */}
+                      <div className="text-gray-600 text-sm">
+                        {item.category}
+                      </div>
+
+                      {/* Row 3: Tanggal */}
+                      <div className="flex justify-between text-xs text-gray-500">
+                        <div>
+                          <div className="font-medium">Tanggal Masuk:</div>
+                          <div>{item.date}</div>
+                        </div>
+                        <div>
+                          <div className="font-medium">Tanggal Selesai:</div>
+                          <div>{item.completionDate}</div>
                         </div>
                       </div>
                     </div>
 
                     {/* Desktop View */}
                     {/* Pengirim dengan gambar profil */}
-                    <div className="hidden md:flex font-medium text-gray-800 items-center space-x-3 min-w-[120px]">
+                    <div className="hidden md:flex font-medium text-gray-800 items-center space-x-3 min-w-[150px]">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
                         {item.avatar ? (
                           <img
@@ -492,77 +453,31 @@ const DashboardBidang = () => {
                       <span className="truncate">{item.name}</span>
                     </div>
 
-                    <div className="hidden md:block text-gray-600 min-w-[150px]">
+                    <div className="hidden md:block text-gray-600 min-w-[160px] truncate">
                       {item.category}
                     </div>
                     <div className="hidden md:block text-gray-600 min-w-[100px]">
                       {item.date}
                     </div>
-
-                    {/* Lampiran dokumen */}
                     <div className="hidden md:block text-gray-600 min-w-[100px]">
-                      <div className="flex items-center space-x-1">
-                        <svg
-                          className="w-4 h-4 text-gray-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                          />
-                        </svg>
-                        <span className="text-xs">document.pdf</span>
-                      </div>
+                      {item.completionDate}
                     </div>
-
-                    {/* Prioritas dengan badge warna */}
                     <div className="hidden md:block min-w-[80px]">
-                      <span
-                        className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          item.priority === "Tinggi"
-                            ? "bg-green-100 text-green-800 border border-green-200"
-                            : item.priority === "Sedang"
-                            ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
-                            : "bg-red-100 text-red-800 border border-red-200"
-                        }`}
-                      >
-                        {item.priority}
-                      </span>
+                      <StarRating rating={item.rating} />
                     </div>
-
-                    {/* Status dengan badge warna */}
-                    <div className="hidden md:block min-w-[100px]">
-                      <span
-                        className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          item.status === "Terverifikasi"
-                            ? "bg-green-100 text-green-800 border border-green-200"
-                            : item.status === "Draft"
-                            ? "bg-gray-100 text-gray-800 border border-gray-200"
-                            : "bg-red-100 text-red-800 border border-red-200"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    </div>
-
-                    {/* Aksi dengan logo SVG berwarna biru */}
                     <div className="hidden md:block min-w-[60px]">
-                      <button
-                        onClick={() => navigate("/aksibidang")}
-                        className="text-[#226597] hover:text-[#113F67] transition-colors duration-200"
-                      >
+                      <button className="text-[#113F67] hover:text-[#226597] transition-colors duration-200">
                         <svg
-                          width="20"
-                          height="20"
+                          width="18"
+                          height="18"
                           viewBox="0 0 24 24"
-                          fill="currentColor"
+                          fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path d="M16.757 2.99766L9.291 10.4637L9.299 14.7107L13.537 14.7027L21 7.24066V19.9987C21 20.2639 20.8946 20.5182 20.7071 20.7058C20.5196 20.8933 20.2652 20.9987 20 20.9987H4C3.73478 20.9987 3.48043 20.8933 3.29289 20.7058C3.10536 20.5182 3 20.2639 3 19.9987V3.99866C3 3.73344 3.10536 3.47909 3.29289 3.29155C3.48043 3.10401 3.73478 2.99866 4 2.99866L16.757 2.99766ZM20.485 2.09766L21.9 3.51166L12.707 12.7047L11.295 12.7067L11.293 11.2907L20.485 2.09766Z" />
+                          <path
+                            d="M12 9C11.2044 9 10.4413 9.31607 9.87868 9.87868C9.31607 10.4413 9 11.2044 9 12C9 12.7956 9.31607 13.5587 9.87868 14.1213C10.4413 14.6839 11.2044 15 12 15C12.7956 15 13.5587 14.6839 14.1213 14.1213C14.6839 13.5587 15 12.7956 15 12C15 11.2044 14.6839 10.4413 14.1213 9.87868C13.5587 9.31607 12.7956 9 12 9ZM12 17C10.6739 17 9.40215 16.4732 8.46447 15.5355C7.52678 14.5979 7 13.3261 7 12C7 10.6739 7.52678 9.40215 8.46447 8.46447C9.40215 7.52678 10.6739 7 12 7C13.3261 7 14.5979 7.52678 15.5355 8.46447C16.4732 9.40215 17 10.6739 17 12C17 13.3261 16.4732 14.5979 15.5355 15.5355C14.5979 16.4732 13.3261 17 12 17ZM12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5Z"
+                            fill="currentColor"
+                          />
                         </svg>
                       </button>
                     </div>
@@ -573,12 +488,11 @@ const DashboardBidang = () => {
               {/* Pagination Info */}
               <div className="flex flex-col sm:flex-row justify-between items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-500 mt-4 p-3 md:p-4 border-t border-gray-200">
                 <div className="text-left order-2 sm:order-1">
-                  Menampilkan data 1 sampai 10 dari 33 data
+                  Menampilkan data 1 sampai 10 dari 42 data
                 </div>
 
                 {/* Pagination Navigation */}
                 <div className="flex items-center space-x-3 md:space-x-4 order-1 sm:order-2 mb-3 sm:mb-0">
-                  {/* Tombol Previous */}
                   <button className="text-[#226597] hover:text-[#113F67] transition-colors duration-200">
                     <svg
                       className="w-4 h-4 md:w-5 md:h-5"
@@ -595,7 +509,6 @@ const DashboardBidang = () => {
                     </svg>
                   </button>
 
-                  {/* Nomor Halaman */}
                   <div className="flex items-center space-x-2 md:space-x-3">
                     <span className="text-[#226597] font-medium">1</span>
                     <span className="text-gray-700 hover:text-[#226597] cursor-pointer transition-colors duration-200">
@@ -606,7 +519,6 @@ const DashboardBidang = () => {
                     </span>
                   </div>
 
-                  {/* Tombol Next */}
                   <button className="text-[#226597] hover:text-[#113F67] transition-colors duration-200">
                     <svg
                       className="w-4 h-4 md:w-5 md:h-5"
@@ -632,4 +544,4 @@ const DashboardBidang = () => {
   );
 };
 
-export default DashboardBidang;
+export default RatingKepuasan;

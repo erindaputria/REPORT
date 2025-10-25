@@ -38,6 +38,8 @@ import HelpdeskChat from "./components/beranda/Helpdesk";
 //*-- Bidang --*/
 import DashboardBidang from "./pages/bidang/DashboardBidang";
 import AksiTiket from "./pages/bidang/AksiTiket";
+import MonitoringBidang from "./pages/bidang/MonitoringBidang";
+import RatingKepuasan from "./pages/bidang/RatingKepuasan";
 
 
 
@@ -48,7 +50,7 @@ function App() {
       <Routes>
         {/* Halaman dengan Layout */}
         <Route path="/" element={<LayoutSeksi />}>
-          <Route path="berandaseksi" element={<BerandaSeksi />} />    
+          <Route path="berandaseksi" element={<BerandaSeksi />} />
           <Route path="pengajuanseksi" element={<PengajuanSeksi />} />
           <Route path="penugasanseksi" element={<PenugasanSeksi />} />
           <Route path="formpenugasanseksi" element={<FormPenugasanSeksi />} />
@@ -62,8 +64,6 @@ function App() {
         <Route path="/" element={<LayoutTeknisi />}>
           <Route path="dashboardteknisi" element={<DashboardTeknisi />} />
         </Route>
-
-
 
         {/* Halaman tanpa Layout */}
         <Route path="/beranda" element={<Beranda />} />
@@ -84,6 +84,8 @@ function App() {
         <Route path="/profilmasyarakat" element={<ProfilMasyarakat />} />
         <Route path="/dashboardbidang" element={<DashboardBidang />} />
         <Route path="/aksibidang" element={<AksiTiket />} />
+        <Route path="/monitoringbidang" element={<MonitoringBidang />} />
+        <Route path="/ratingkepuasan" element={<RatingKepuasan />} />
         <Route path="/helpdesk" element={<HelpdeskChat />} />
       </Routes>
     </Router>
