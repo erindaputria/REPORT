@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { RefreshCcw, Eye } from "lucide-react";
-import { Star } from "lucide-react";
 
-export default function RatingSeksi() {
+export default function RatingTeknisi() {
   const [activeTab, setActiveTab] = useState("pelaporan");
 
+  // Dummy data baru
   const dataRating = [
     { id: 1, nama: "Budi Winarto", perihal: "Jaringan & Konektivitas", masuk: "02/09/2024", selesai: "11/09/2024", rating: 5, foto: "/assets/shizuku.jpg" },
     { id: 2, nama: "Elly Serila", perihal: "Jaringan & Konektivitas", masuk: "02/09/2024", selesai: "10/09/2024", rating: 4, foto: "/assets/Suika.jpg" },
@@ -18,16 +18,16 @@ export default function RatingSeksi() {
     { id: 10, nama: "Yudi Deriga", perihal: "Perangkat Keras", masuk: "29/08/2024", selesai: "06/09/2024", rating: 5, foto: "/assets/Suika.jpg" },
   ];
 
-  const renderStars = (rating) => {
-    return Array(5)
-      .fill()
-      .map((_, i) => (
-        <Star
-          key={i}
-          size={16}
-          className={i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}
-        />
-      ));
+  const renderStars = (count) => {
+    return (
+      <div className="flex">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className={i < count ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}>
+            ★
+          </span>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -35,7 +35,7 @@ export default function RatingSeksi() {
       {/* Judul */}
       <h1 className="text-3xl font-bold text-gray-800">Rating Kepuasan</h1>
 
-      {/* Tab */}
+      {/* Tab Pelaporan / Pelayanan */}
       <div className="bg-white rounded-2xl shadow overflow-hidden">
         <div className="border-b flex items-center justify-between px-6">
           <div className="flex">
@@ -73,17 +73,7 @@ export default function RatingSeksi() {
               <option>Semua</option>
               <option>Keamanan</option>
               <option>Jaringan</option>
-              <option>Email</option>
-            </select>
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm mb-1">Pilih Prioritas</label>
-            <select className="border rounded-lg p-2 text-sm min-w-[150px]">
-              <option>Semua</option>
-              <option>Rendah</option>
-              <option>Sedang</option>
-              <option>Tinggi</option>
+              <option>Perangkat Keras</option>
             </select>
           </div>
 
@@ -117,19 +107,15 @@ export default function RatingSeksi() {
               {dataRating.map((item) => (
                 <tr key={item.id} className="border-b hover:bg-gray-50 transition">
                   <td className="p-3 flex items-center gap-2">
-                    <img
-                      src={item.foto}
-                      alt={item.nama}
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
+                    <img src={item.foto} alt={item.nama} className="w-8 h-8 rounded-full object-cover" />
                     {item.nama}
                   </td>
                   <td className="p-3">{item.perihal}</td>
                   <td className="p-3">{item.masuk}</td>
                   <td className="p-3">{item.selesai}</td>
-                  <td className="p-3 flex gap-1">{renderStars(item.rating)}</td>
-                  <td className="p-3">
-                    <Eye size={18} className="text-gray-600 cursor-pointer hover:text-blue-700" />
+                  <td className="p-3">{renderStars(item.rating)}</td>
+                  <td className="p-3 text-blue-600 cursor-pointer">
+                    <Eye className="w-5 h-5" />
                   </td>
                 </tr>
               ))}
@@ -139,7 +125,7 @@ export default function RatingSeksi() {
 
         {/* Pagination */}
         <div className="flex justify-between items-center p-4 border-t text-sm text-gray-600">
-          <p>Menampilkan data 1 sampai 10 dari 42 data</p>
+          <p>Menampilkan data 1 sampai 10 dari 25 data</p>
           <div className="flex gap-2">
             <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">&lt;</button>
             <button className="px-3 py-1 border rounded-lg bg-blue-600 text-white">1</button>

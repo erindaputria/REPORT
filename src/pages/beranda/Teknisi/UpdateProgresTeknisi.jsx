@@ -3,7 +3,7 @@ import { FileText } from "lucide-react";
 import Swal from "sweetalert2";
 
 export default function UpdateProgressTeknisi() {
-  const [status, setStatus] = useState("Diproses");
+  const [status, setStatus] = useState("");
 
 
   const handleSubmit = () => {
