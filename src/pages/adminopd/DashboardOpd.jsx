@@ -1,39 +1,15 @@
 import React, { useState } from "react";
-import HeaderBidang from "./HeaderBidang";
-import SidebarBidang from "./SidebarBidang";
+import HeaderOpd from "./HeaderOpd";
+import SidebarOpd from "./SidebarOpd";
 import { Menu, X, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const DashboardBidang = () => {
+const DashboardOpd = () => {
   const [activeTab, setActiveTab] = useState("pelaporan");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   const stats = [
-    {
-      number: 82,
-      label: "Tiket Masuk",
-      description: "tiket yang masuk",
-      icon: "/assets/Tiket Masuk.png",
-    },
-    {
-      number: 44,
-      label: "Diverifikasi",
-      description: "tiket yang telah diverifikasi",
-      icon: "/assets/Diverifikasi.png",
-    },
-    {
-      number: 10,
-      label: "Revisi",
-      description: "tiket yang menunggu diverifikasi",
-      icon: "/assets/Revisi.png",
-    },
-    {
-      number: 3,
-      label: "Ditolak",
-      description: "tiket yang ditolak",
-      icon: "/assets/Ditolak.png",
-    },
   ];
 
   // Data tabel dengan path gambar profil
@@ -151,7 +127,7 @@ const DashboardBidang = () => {
         } md:block fixed md:relative inset-0 z-50 md:z-auto bg-white md:bg-transparent w-72 md:w-auto`}
       >
         <div className="h-full">
-          <SidebarBidang />
+          <SidebarOpd />
           <button
             onClick={() => setIsMobileSidebarOpen(false)}
             className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full md:hidden"
@@ -172,7 +148,7 @@ const DashboardBidang = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <HeaderBidang />
+        <HeaderOpd />
 
         {/* Dashboard Content */}
         <main className="flex-1 p-4 md:p-6">
@@ -632,4 +608,4 @@ const DashboardBidang = () => {
   );
 };
 
-export default DashboardBidang;
+export default DashboardOpd;

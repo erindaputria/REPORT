@@ -7,17 +7,35 @@ const LogIn = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+    // Clear error ketika user mulai mengetik
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Reset errors
+    setErrors({
+      email: "",
+      password: "",
+    });
 
     const payload = {
       email: formData.email,
@@ -37,7 +55,21 @@ const LogIn = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Login gagal!");
+        const errorData = await response.json();
+
+        // Handle error berdasarkan response dari API
+        if (response.status === 401) {
+          if (errorData.message?.toLowerCase().includes("email")) {
+            setErrors({ email: "Email salah", password: "" });
+          } else if (errorData.message?.toLowerCase().includes("password")) {
+            setErrors({ email: "", password: "Kata sandi salah" });
+          } else {
+            setErrors({ email: "Email salah", password: "Kata sandi salah" });
+          }
+        } else {
+          throw new Error("Login gagal!");
+        }
+        return;
       }
 
       const data = await response.json();
@@ -49,10 +81,14 @@ const LogIn = () => {
       }
 
       alert("Login berhasil!");
-      navigate("/dashboard"); // langsung redirect
+      navigate("/beranda"); // langsung redirect
     } catch (error) {
       console.error("Error:", error);
-      alert("Terjadi kesalahan saat login.");
+      // Jika error network atau server error
+      setErrors({
+        email: "Terjadi kesalahan",
+        password: "Terjadi kesalahan",
+      });
     }
   };
 
@@ -74,7 +110,7 @@ const LogIn = () => {
             Masuk
           </h1>
           <p className="text-gray-600 mb-6 md:mb-8 text-sm">
-            Gunakan email untuk melanjutkan
+            Gunakan email atau lainnya untuk melanjutkan
           </p>
 
           {/* Form login */}
@@ -87,7 +123,7 @@ const LogIn = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Alamat email / username
+                Alamat email
               </label>
               <input
                 type="email"
@@ -96,8 +132,13 @@ const LogIn = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.email ? "border-red-500" : "border-gray-300"
+                }`}
               />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
             </div>
 
             <div>
@@ -114,8 +155,13 @@ const LogIn = () => {
                 value={formData.password}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.password ? "border-red-500" : "border-gray-300"
+                }`}
               />
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+              )}
               <div className="flex items-center mt-2">
                 <input
                   type="checkbox"
@@ -133,10 +179,14 @@ const LogIn = () => {
               </div>
             </div>
 
+            {/* PERUBAHAN DI SINI: Mengganti <a> dengan <Link> */}
             <div className="text-right mb-4">
-              <a href="#" className="text-sm text-[#226597] hover:underline">
+              <Link
+                to="/lupapassword"
+                className="text-sm text-[#226597] underline hover:no-underline"
+              >
                 Lupa kata sandi?
-              </a>
+              </Link>
             </div>
 
             <button
@@ -158,28 +208,6 @@ const LogIn = () => {
                 Daftar di sini
               </Link>
             </p>
-          </div>
-
-          {/* Footer untuk mobile */}
-          <div className="mt-8 pt-4 border-t border-gray-200 w-full md:hidden">
-            <div className="flex flex-col items-center space-y-4 text-xs text-gray-600">
-              <div className="flex space-x-4">
-                <a href="#" className="hover:underline">
-                  Bantuan
-                </a>
-                <a href="#" className="hover:underline">
-                  Privasi
-                </a>
-                <a href="#" className="hover:underline">
-                  Ketentuan
-                </a>
-              </div>
-              <div>
-                <select className="text-gray-600 bg-transparent border-none focus:outline-none">
-                  <option>Bahasa Indonesia</option>
-                </select>
-              </div>
-            </div>
           </div>
         </div>
 

@@ -4,7 +4,7 @@ import { Menu, X, Bell, FileText, XCircle, ChevronDown } from "lucide-react";
 import Header from "../../../components/Header";
 import LeftSidebar from "../../../components/LeftSidebar";
 
-export default function FormLaporan() {
+export default function FormScanAset() {
   const [selectedReasons, setSelectedReasons] = useState([]);
   const [priority, setPriority] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -16,11 +16,11 @@ export default function FormLaporan() {
     nip: "20001142023052053",
     divisi: "Divisi Sumber Daya Manusia",
     judulPelaporan: "",
-    kategoriAset: "",
-    jenisAset: "",
-    bentukAset: "",
-    dataAset: "",
-    lokasiKejadian: "",
+    kategoriAset: "Jaringan",
+    jenisAset: "TI",
+    bentukAset: "Fisik",
+    dataAset: "Router TP-Link",
+    lokasiKejadian: "Dinas Pendidikan Kantor B Lantai 2",
     rincianMasalah: "",
     penyelesaianDiharapkan: "",
   });
@@ -54,11 +54,6 @@ export default function FormLaporan() {
       formData.nip.trim() !== "" &&
       formData.divisi.trim() !== "" &&
       formData.judulPelaporan.trim() !== "" &&
-      formData.kategoriAset.trim() !== "" &&
-      formData.jenisAset.trim() !== "" &&
-      formData.bentukAset.trim() !== "" &&
-      formData.dataAset.trim() !== "" &&
-      formData.lokasiKejadian.trim() !== "" &&
       formData.rincianMasalah.trim() !== "" &&
       formData.penyelesaianDiharapkan.trim() !== "" &&
       uploadedFiles.length > 0
@@ -369,37 +364,9 @@ export default function FormLaporan() {
                         Kategori Aset
                       </label>
                       <div className="relative">
-                        <button
-                          onClick={() => toggleDropdown("kategoriAset")}
-                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
-                        >
-                          <span
-                            className={`flex-1 text-left ${
-                              formData.kategoriAset
-                                ? "text-gray-700"
-                                : "text-gray-400"
-                            }`}
-                          >
-                            {formData.kategoriAset || "Pilih kategori"}
-                          </span>
-                          <ChevronDown size={16} className="text-gray-400" />
-                        </button>
-                        {dropdowns.kategoriAset && (
-                          <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
-                            {kategoriOptions.map((option) => (
-                              <div
-                                key={option}
-                                onClick={() => {
-                                  handleInputChange("kategoriAset", option);
-                                  toggleDropdown("kategoriAset");
-                                }}
-                                className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
-                              >
-                                {option}
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                        <div className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                          {formData.kategoriAset}
+                        </div>
                       </div>
                     </div>
 
@@ -409,40 +376,13 @@ export default function FormLaporan() {
                         Jenis Aset
                       </label>
                       <div className="relative">
-                        <button
-                          onClick={() => toggleDropdown("jenisAset")}
-                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
-                        >
-                          <span
-                            className={`flex-1 text-left ${
-                              formData.jenisAset
-                                ? "text-gray-700"
-                                : "text-gray-400"
-                            }`}
-                          >
-                            {formData.jenisAset || "Pilih jenis aset"}
-                          </span>
-                          <ChevronDown size={16} className="text-gray-400" />
-                        </button>
-                        {dropdowns.jenisAset && (
-                          <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
-                            {jenisAsetOptions.map((option) => (
-                              <div
-                                key={option}
-                                onClick={() => {
-                                  handleInputChange("jenisAset", option);
-                                  toggleDropdown("jenisAset");
-                                }}
-                                className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
-                              >
-                                {option}
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                        <div className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                          {formData.jenisAset}
+                        </div>
                       </div>
                     </div>
                   </div>
+
                   {/* Bentuk Aset */}
                   <div className="space-y-2">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -452,37 +392,9 @@ export default function FormLaporan() {
                           Bentuk Aset
                         </label>
                         <div className="relative">
-                          <button
-                            onClick={() => toggleDropdown("bentukAset")}
-                            className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
-                          >
-                            <span
-                              className={`flex-1 text-left ${
-                                formData.bentukAset
-                                  ? "text-gray-700"
-                                  : "text-gray-400"
-                              }`}
-                            >
-                              {formData.bentukAset || "Pilih bentuk aset"}
-                            </span>
-                            <ChevronDown size={16} className="text-gray-400" />
-                          </button>
-                          {dropdowns.bentukAset && (
-                            <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
-                              {bentukAsetOptions.map((option) => (
-                                <div
-                                  key={option}
-                                  onClick={() => {
-                                    handleInputChange("bentukAset", option);
-                                    toggleDropdown("bentukAset");
-                                  }}
-                                  className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
-                                >
-                                  {option}
-                                </div>
-                              ))}
-                            </div>
-                          )}
+                          <div className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                            {formData.bentukAset}
+                          </div>
                         </div>
                       </div>
 
@@ -492,37 +404,9 @@ export default function FormLaporan() {
                           Data Aset
                         </label>
                         <div className="relative">
-                          <button
-                            onClick={() => toggleDropdown("dataAset")}
-                            className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
-                          >
-                            <span
-                              className={`flex-1 text-left ${
-                                formData.dataAset
-                                  ? "text-gray-700"
-                                  : "text-gray-400"
-                              }`}
-                            >
-                              {formData.dataAset || "Pilih aset yang diminta"}
-                            </span>
-                            <ChevronDown size={16} className="text-gray-400" />
-                          </button>
-                          {dropdowns.dataAset && (
-                            <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
-                              {dataAsetOptions.map((option) => (
-                                <div
-                                  key={option}
-                                  onClick={() => {
-                                    handleInputChange("dataAset", option);
-                                    toggleDropdown("dataAset");
-                                  }}
-                                  className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
-                                >
-                                  {option}
-                                </div>
-                              ))}
-                            </div>
-                          )}
+                          <div className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                            {formData.dataAset}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -533,15 +417,9 @@ export default function FormLaporan() {
                     <label className="text-sm font-medium text-gray-700 block">
                       Lokasi Kejadian
                     </label>
-                    <input
-                      type="text"
-                      placeholder="Ketik disini"
-                      value={formData.lokasiKejadian}
-                      onChange={(e) =>
-                        handleInputChange("lokasiKejadian", e.target.value)
-                      }
-                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-left placeholder:text-left"
-                    />
+                    <div className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                      {formData.lokasiKejadian}
+                    </div>
                   </div>
                 </div>
 

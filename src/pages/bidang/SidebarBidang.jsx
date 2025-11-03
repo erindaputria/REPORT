@@ -1,25 +1,46 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SidebarBidang = () => {
-  const [activeItem, setActiveItem] = useState("beranda"); // Perbaiki jadi "beranda" (huruf kecil)
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Tentukan activeItem berdasarkan path saat ini
+  const getActiveItem = () => {
+    const path = location.pathname;
+    if (path.includes("/dashboardbidang")) return "dashboardbidang";
+    if (path.includes("/monitoringbidang")) return "monitoringbidang";
+    if (path.includes("/ratingkepuasan")) return "ratingkepuasan";
+    return "dashboard"; // default
+  };
+
+  const [activeItem, setActiveItem] = useState(getActiveItem());
 
   const navItems = [
     {
       id: "dashboard",
       label: "Dashboard",
       icon: "/assets/Logo Beranda.png",
+      path: "/dashboardbidang",
     },
     {
       id: "monitoring",
       label: "Monitoring",
       icon: "/assets/Logo Monitoring.png",
+      path: "/monitoringbidang",
     },
     {
-      id: "statistik",
-      label: "Statistik",
-      icon: "/assets/Logo Statistik.png",
+      id: "rating",
+      label: "Rating",
+      icon: "/assets/Logo Rating.png",
+      path: "/ratingkepuasan",
     },
   ];
+
+  const handleNavigation = (item) => {
+    setActiveItem(item.id);
+    navigate(item.path);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
@@ -71,7 +92,7 @@ const SidebarBidang = () => {
           {navItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveItem(item.id)}
+              onClick={() => handleNavigation(item)}
               className={`w-full flex items-center gap-3 px-3 py-4 rounded-full transition-all duration-200 ${
                 activeItem === item.id
                   ? "bg-[#226597] text-white"

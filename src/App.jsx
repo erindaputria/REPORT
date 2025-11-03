@@ -4,6 +4,9 @@ import { Beranda } from "./pages/beranda/Beranda";
 //*-- Auth --*/
 import Register from "./pages/Register";
 import LogIn from "./pages/Login";
+import LupaPassword from "./pages/LupaPassword";
+import MasukKode from "./pages/MasukKode";
+import KataSandiBaru from "./pages/KataSandiBaru";
 
 //*-- Pengguna --*/
 import Profil from "./pages/profil/ProfilSaya";
@@ -11,6 +14,7 @@ import Tampilan from "./pages/profil/Tampilan";
 import KnowledgeBase from "./pages/beranda/KnowledgeBase";
 import PelaporanOnline from "./pages/beranda/pelaporan/PelaporanOnline";
 import FormLaporan from "./pages/beranda/pelaporan/FormLaporan";
+import FormScanAset from "./pages/beranda/pelaporan/FormScanAset";
 import Pelacakan from "./pages/beranda/pelaporan/Pelacakan";
 import Pengajuan from "./pages/beranda/pengajuan/Pengajuan";
 import ResetPassword from "./pages/beranda/pengajuan/ResetPassword";
@@ -23,12 +27,12 @@ import LayoutSeksi from "./components/Layout/LayoutSeksi";
 import LayoutTeknisi from "./components/Layout/LayoutTeknisi";
 import LayoutKota from "./components/Layout/LayoutKota";
 import PengajuanSeksi from "./pages/beranda/Seksi/PengajuanSeksi";
-import PenugasanSeksi from "./pages/beranda/Seksi/PenugasanSeksi"
-import FormPenugasanSeksi from "./pages/beranda/Seksi/FormPenugasanSeksi"
-import MonitoringSeksi from "./pages/beranda/Seksi/MonitoringSeksi"
-import StatistikSeksi from "./pages/beranda/Seksi/StatistikSeksi"
-import ArsipSeksi from "./pages/beranda/Seksi/ArsipSeksi"
-import ReopenSeksi from "./pages/beranda/Seksi/ReopenSeksi"
+import PenugasanSeksi from "./pages/beranda/Seksi/PenugasanSeksi";
+import FormPenugasanSeksi from "./pages/beranda/Seksi/FormPenugasanSeksi";
+import MonitoringSeksi from "./pages/beranda/Seksi/MonitoringSeksi";
+import StatistikSeksi from "./pages/beranda/Seksi/StatistikSeksi";
+import ArsipSeksi from "./pages/beranda/Seksi/ArsipSeksi";
+import ReopenSeksi from "./pages/beranda/Seksi/ReopenSeksi";
 import RatingSeksi from "./pages/beranda/Seksi/RatingSeksi";
 import DashboardTeknisi from "./pages/beranda/Teknisi/DashboardTeknisi";
 import ProfilMasyarakat from "./pages/profil/ProfilMasyarakat";
@@ -48,6 +52,10 @@ import KBEditorKota from "./pages/beranda/AdminKota/KBEditorKota";
 import LihatArtikelKota from "./pages/beranda/AdminKota/LihatArtikelKota";
 import PengumumanKota from "./pages/beranda/AdminKota/PengumumanKota";
 
+//*-- Masyarakat --*/
+import { BerandaMasyarakat } from "./pages/masyarakat/BerandaMasyarakat";
+import SidebarMasyarakat from "./pages/masyarakat/SidebarMasyarakat";
+
 //*-- Helpdesk --*/
 import HelpdeskChat from "./components/beranda/Helpdesk";
 
@@ -55,6 +63,16 @@ import HelpdeskChat from "./components/beranda/Helpdesk";
 import DashboardBidang from "./pages/bidang/DashboardBidang";
 import AksiTiket from "./pages/bidang/AksiTiket";
 import BuatPengumumanKota from "./pages/beranda/AdminKota/BuatPengumumanKota";
+import MonitoringBidang from "./pages/bidang/MonitoringBidang";
+import RatingKepuasan from "./pages/bidang/RatingKepuasan";
+
+//*-- Admin OPD --*/
+import DashboardOpd from "./pages/adminopd/DashboardOpd";
+import CekDetail from "./pages/adminopd/CekDetail";
+import KnowledgeBaseDraft from "./pages/adminopd/KnowledgeBaseDraft";
+import KnowledgeBaseDiajukan from "./pages/adminopd/KnowledgeBaseDiajukan";
+import DraftBaru from "./pages/adminopd/DraftBaru";
+import RatingKepuasanOpd from "./pages/adminopd/RatingKepuasanOpd";
 
 function App() {
   return (
@@ -62,7 +80,7 @@ function App() {
       <Routes>
         {/* Halaman dengan Layout */}
         <Route path="/" element={<LayoutSeksi />}>
-          <Route path="berandaseksi" element={<BerandaSeksi />} />    
+          <Route path="berandaseksi" element={<BerandaSeksi />} />
           <Route path="pengajuanseksi" element={<PengajuanSeksi />} />
           <Route path="penugasanseksi" element={<PenugasanSeksi />} />
           <Route path="formpenugasanseksi" element={<FormPenugasanSeksi />} />
@@ -99,16 +117,19 @@ function App() {
           <Route path="buatpengumumankota" element={<BuatPengumumanKota />} />
         </Route>
 
-
-
         {/* Halaman tanpa Layout */}
         <Route path="/beranda" element={<Beranda />} />
+        <Route path="/berandamasyarakat" element={<BerandaMasyarakat />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LogIn />} />
+        <Route path="/lupapassword" element={<LupaPassword />} />
+        <Route path="/masukkode" element={<MasukKode />} />
+        <Route path="/katasandibaru" element={<KataSandiBaru />} />
         <Route path="/profilsaya" element={<Profil />} />
         <Route path="/tampilan" element={<Tampilan />} />
         <Route path="/knowledgebase" element={<KnowledgeBase />} />
         <Route path="/pelaporanonline" element={<PelaporanOnline />} />
+        <Route path="/formscanaset" element={<FormScanAset />} />
         <Route path="/formlaporan" element={<FormLaporan />} />
         <Route path="/pelacakan" element={<Pelacakan />} />
         <Route path="/pengajuan" element={<Pengajuan />} />
@@ -120,6 +141,18 @@ function App() {
         <Route path="/profilmasyarakat" element={<ProfilMasyarakat />} />
         <Route path="/dashboardbidang" element={<DashboardBidang />} />
         <Route path="/aksibidang" element={<AksiTiket />} />
+        <Route path="/monitoringbidang" element={<MonitoringBidang />} />
+        <Route path="/ratingkepuasan" element={<RatingKepuasan />} />
+        <Route path="/dashboardopd" element={<DashboardOpd />} />
+        <Route path="/cekdetail" element={<CekDetail />} />
+        <Route path="/knowledgebasedraft" element={<KnowledgeBaseDraft />} />
+        <Route
+          path="/knowledgebasediajukan"
+          element={<KnowledgeBaseDiajukan />}
+        />
+        <Route path="/draftbaru" element={<DraftBaru />} />
+        <Route path="/ratingkepuasanopd" element={<RatingKepuasanOpd />} />
+        <Route path="/sidebarmasyarakat" element={<SidebarMasyarakat />} />
         <Route path="/helpdesk" element={<HelpdeskChat />} />
       </Routes>
     </Router>
