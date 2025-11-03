@@ -4,7 +4,7 @@ import LeftSidebar from "../../components/LeftSidebar";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function Beranda() {
+export function BerandaMasyarakat() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -121,7 +121,7 @@ export function Beranda() {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               <img
-                src="/assets/Haechan.jpg"
+                src="/assets/lomon.jpeg"
                 alt="Profil"
                 className="w-full h-full object-cover"
               />
@@ -246,7 +246,7 @@ export function Beranda() {
       {/* Center Content - Tambahkan padding top untuk mobile header */}
       <div className="flex-1 p-4 md:p-6 mt-16 md:mt-0">
         {/* Main Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 md:mb-8 justify-center">
+        <div className="grid grid-cols-1 gap-4 mb-6 md:mb-8 justify-center">
           {/* Card Pelaporan */}
           <div className="relative bg-[#226597] text-white rounded-2xl md:rounded-[2rem] shadow p-6 md:p-8 min-h-[240px] md:min-h-[280px] flex flex-col justify-between text-left overflow-hidden">
             {/* SVG Background */}
@@ -266,54 +266,19 @@ export function Beranda() {
             {/* Konten Card */}
             <div className="relative z-10">
               <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-2">
-                Pelaporan <br /> Online
+                Pelaporan Online
               </h2>
-              <p className="mb-4 text-white/80 text-sm md:text-base">
-                Laporkan persoalan dan <br /> permasalahan Anda disini!
+              <p className="text-white/80 text-sm md:text-base mt-4 md:mt-6">
+                Laporkan persoalan dan permasalahan Anda disini!
               </p>
             </div>
 
             {/* Tombol dengan navigasi */}
             <button
               onClick={handlePelaporanOnline}
-              className="relative z-10 self-start px-4 py-2 border border-white rounded-full font-bold hover:bg-white hover:text-[#226597] transition text-sm md:text-base"
+              className="relative z-10 self-start px-6 py-3 border border-white rounded-full font-bold hover:bg-white hover:text-[#226597] transition text-sm md:text-base"
             >
               Buat Laporan <Plus size={16} className="inline ml-2" />
-            </button>
-          </div>
-
-          {/* Card Pengajuan */}
-          <div className="relative bg-[#226597] text-white rounded-2xl md:rounded-[2rem] shadow p-6 md:p-8 min-h-[240px] md:min-h-[280px] flex flex-col justify-between text-left overflow-hidden">
-            {/* SVG Background */}
-            <svg
-              className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
-              viewBox="0 0 402 186"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M375.619 41.9351C97.9339 190.999 -92.4496 -4.28339 -240.227 0.0719757C-392.381 4.58015 -403 80.7703 -403 50.3973V95.823C-403 95.823 -352.96 77.0332 -267.191 71.2784C44.0096 50.3973 62.1523 237.166 206.79 217.212C351.428 197.259 452.16 0.847076 375.619 41.9351Z"
-                fill="white"
-                fillOpacity="0.1"
-              />
-            </svg>
-
-            {/* Konten Card */}
-            <div className="relative z-10">
-              <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-2">
-                Pengajuan <br /> Pelayanan
-              </h2>
-              <p className="mb-4 text-white/80 text-sm md:text-base">
-                Ajukan pelayanan yang Anda <br /> perlukan disini!
-              </p>
-            </div>
-
-            {/* Tombol dengan navigasi ke Pengajuan */}
-            <button
-              onClick={handlePengajuan}
-              className="relative z-10 self-start px-4 py-2 border border-white rounded-full font-bold hover:bg-white hover:text-[#226597] transition text-sm md:text-base"
-            >
-              Buat Pengajuan <Plus size={16} className="inline ml-2" />
             </button>
           </div>
         </div>
@@ -499,7 +464,7 @@ export function Beranda() {
                 {/* Avatar Profil */}
                 <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
                   <img
-                    src="/assets/Haechan.jpg"
+                    src="/assets/Lomon.png"
                     alt="Profil"
                     className="w-full h-full object-cover"
                   />
@@ -507,7 +472,7 @@ export function Beranda() {
 
                 {/* Nama */}
                 <p className="text-gray-700 text-xs font-medium truncate">
-                  Haikal Saputra
+                  Lomon Kahiel
                 </p>
               </div>
               {/* Icon Dropdown */}
