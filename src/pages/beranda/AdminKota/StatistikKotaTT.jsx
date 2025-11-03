@@ -21,18 +21,18 @@ export default function StatistikKotaTT() {
 
   // === Dummy Data untuk Chart & Tabel ===
   const dataTahun = [
-    { name: "januari", value: 101 },
-    { name: "februari", value: 121 },
-    { name: "maret", value: 92 },
-    { name: "april", value: 131 },
+    { name: "jan", value: 101 },
+    { name: "feb", value: 121 },
+    { name: "mar", value: 92 },
+    { name: "apr", value: 131 },
     { name: "mei", value: 125 },
-    { name: "juni", value: 103 },
-    { name: "juli", value: 161 },
-    { name: "agustus", value: 141 },
-    { name: "september", value: 128 },
-    { name: "oktober", value: 125 },
-    { name: "november", value: 121 },
-    { name: "desember", value: 100 },
+    { name: "jun", value: 103 },
+    { name: "jul", value: 161 },
+    { name: "agu", value: 141 },
+    { name: "sep", value: 128 },
+    { name: "okt", value: 125 },
+    { name: "nov", value: 121 },
+    { name: "des", value: 100 },
   ];
 
   const total = dataTahun.reduce((sum, d) => sum + d.value, 0);
@@ -140,7 +140,7 @@ export default function StatistikKotaTT() {
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={dataTahun}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis hide dataKey="name" />
+              <XAxis dataKey="name" />
               <YAxis />
               <Tooltip
                 contentStyle={{

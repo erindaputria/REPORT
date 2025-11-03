@@ -42,6 +42,11 @@ import StatistikKotaLP from "./pages/beranda/AdminKota/StatistikKotaLP"
 import StatistikKotaTT from "./pages/beranda/AdminKota/StatistikKotaTT";
 import RateKota from "./pages/beranda/AdminKota/RateKota";
 import RateKotaOpd from "./pages/beranda/AdminKota/RateKotaOpd";
+import KnowledgeBaseKota from "./pages/beranda/AdminKota/KnowledgeBaseKota";
+import AksiKBKota from "./pages/beranda/AdminKota/AksiKBKota";
+import KBEditorKota from "./pages/beranda/AdminKota/KBEditorKota";
+import LihatArtikelKota from "./pages/beranda/AdminKota/LihatArtikelKota";
+import PengumumanKota from "./pages/beranda/AdminKota/PengumumanKota";
 
 //*-- Helpdesk --*/
 import HelpdeskChat from "./components/beranda/Helpdesk";
@@ -49,6 +54,7 @@ import HelpdeskChat from "./components/beranda/Helpdesk";
 //*-- Bidang --*/
 import DashboardBidang from "./pages/bidang/DashboardBidang";
 import AksiTiket from "./pages/bidang/AksiTiket";
+import BuatPengumumanKota from "./pages/beranda/AdminKota/BuatPengumumanKota";
 
 function App() {
   return (
@@ -85,6 +91,12 @@ function App() {
           <Route path="ratekota" element={<RateKota />} />
           <Route path="ratekotaopd/:opdName" element={<RateKotaOpd />} />
           <Route path="ratekotaopd" element={<RateKotaOpd />} />
+          <Route path="knowledgebasekota" element={<KnowledgeBaseKota />} />
+          <Route path="aksikbkota" element={<AksiKBKota />} />
+          <Route path="kbeditorkota" element={<KBEditorKota />} />
+          <Route path="lihatartikelkota" element={<LihatArtikelKota />} />
+          <Route path="pengumumankota" element={<PengumumanKota />} />
+          <Route path="buatpengumumankota" element={<BuatPengumumanKota />} />
         </Route>
 
 

@@ -18,7 +18,7 @@ export default function SidebarKota() {
     { name: "Dashboard", icon: <HomeIcon className="w-5 h-5" />, path: "/dashboardkota" },
     { name: "Knowledge Base", icon: <BookOpenIcon className="w-5 h-5" />, path: "/knowledgebasekota" },
     { name: "Statistik", icon: <ChartBarIcon className="w-5 h-5" />, path: "/StatistikKotaKL", isActive: isStatistikActive,},
-    { name: "Pengumuman", icon: <Cog6ToothIcon className="w-5 h-5" />, path: "/pengumumanadminkota" },
+    { name: "Pengumuman", icon: <Cog6ToothIcon className="w-5 h-5" />, path: "/pengumumankota" },
     { name: "Rating", icon: <StarIcon className="w-5 h-5" />, path: "/ratekota" },
   ];
 

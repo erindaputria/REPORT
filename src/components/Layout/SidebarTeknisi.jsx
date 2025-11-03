@@ -14,11 +14,6 @@ export default function SidebarTeknisi() {
       path: "/dashboardteknisi",
     },
     {
-      name: "Arsip",
-      icon: <ArchiveBoxIcon className="w-5 h-5" />,
-      path: "/arsipteknisi",
-    },
-    {
       name: "Rating",
       icon: <StarIcon className="w-5 h-5" />,
       path: "/ratingteknisi",
