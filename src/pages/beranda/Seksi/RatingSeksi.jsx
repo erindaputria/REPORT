@@ -91,11 +91,11 @@ export default function RatingSeksi() {
             <label className="text-gray-600 text-sm mb-1">Pilih Rating</label>
             <select className="border rounded-lg p-2 text-sm min-w-[150px]">
               <option>Semua</option>
-              <option>★</option>
-              <option>★★</option>
-              <option>★★★</option>
-              <option>★★★★</option>
-              <option>★★★★★</option>
+              <option>⭐</option>
+              <option>⭐⭐</option>
+              <option>⭐⭐⭐</option>
+              <option>⭐⭐⭐⭐</option>
+              <option>⭐⭐⭐⭐⭐</option>
             </select>
           </div>
         </div>

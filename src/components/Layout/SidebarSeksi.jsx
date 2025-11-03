@@ -3,7 +3,7 @@ import {
   HomeIcon,
   ClipboardDocumentListIcon,
   ChartBarIcon,
-  ArchiveBoxIcon,
+  StarIcon,
   ChatBubbleLeftEllipsisIcon,
 } from "@heroicons/react/24/solid";
 
@@ -13,7 +13,7 @@ const items = [
   {label: "Dashboard", icon: HomeIcon, path:"/berandaseksi" },
   {label: "Penugasan", icon: ClipboardDocumentListIcon, path:"/penugasanseksi" },
   {label: "Monitoring", icon: ChartBarIcon },
-  {label: "Arsip", icon: ArchiveBoxIcon },
+  {label: "Rating", icon: StarIcon },
   {label: "Layanan Chat", icon: ChatBubbleLeftEllipsisIcon },
 ];
 

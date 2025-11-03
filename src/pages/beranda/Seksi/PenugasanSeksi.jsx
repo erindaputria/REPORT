@@ -96,7 +96,7 @@ export default function PenugasanSeksi() {
   const handleImageError = (e) => {
     e.target.src = "/assets/default.jpg"; // pastikan kamu punya default.jpg di /public/assets/
   };
-
+  
   return (
     <div className="bg-white shadow-lg rounded-2xl p-8 mt-4">
       {/* Header + Tombol Refresh */}

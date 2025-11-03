@@ -25,6 +25,7 @@ import SuksesPelaporan from "./pages/beranda/pelaporan/SuksesPelaporan";
 import BerandaSeksi from "./pages/beranda/Seksi/BerandaSeksi";
 import LayoutSeksi from "./components/Layout/LayoutSeksi";
 import LayoutTeknisi from "./components/Layout/LayoutTeknisi";
+import LayoutKota from "./components/Layout/LayoutKota";
 import PengajuanSeksi from "./pages/beranda/Seksi/PengajuanSeksi";
 import PenugasanSeksi from "./pages/beranda/Seksi/PenugasanSeksi";
 import FormPenugasanSeksi from "./pages/beranda/Seksi/FormPenugasanSeksi";
@@ -35,6 +36,21 @@ import ReopenSeksi from "./pages/beranda/Seksi/ReopenSeksi";
 import RatingSeksi from "./pages/beranda/Seksi/RatingSeksi";
 import DashboardTeknisi from "./pages/beranda/Teknisi/DashboardTeknisi";
 import ProfilMasyarakat from "./pages/profil/ProfilMasyarakat";
+import CekDetailTeknisi from "./pages/beranda/Teknisi/CekDetailTeknisi";
+import UpdateProgressTeknisi from "./pages/beranda/Teknisi/UpdateProgresTeknisi";
+import RatingTeknisi from "./pages/beranda/Teknisi/RatingTeknisi";
+import DashboardKota from "./pages/beranda/AdminKota/DashboardKota"
+import CekDetailKota from "./pages/beranda/AdminKota/CekDetailKota";
+import StatistikKotaKL from "./pages/beranda/AdminKota/StatistikKotaKL";
+import StatistikKotaLP from "./pages/beranda/AdminKota/StatistikKotaLP"
+import StatistikKotaTT from "./pages/beranda/AdminKota/StatistikKotaTT";
+import RateKota from "./pages/beranda/AdminKota/RateKota";
+import RateKotaOpd from "./pages/beranda/AdminKota/RateKotaOpd";
+import KnowledgeBaseKota from "./pages/beranda/AdminKota/KnowledgeBaseKota";
+import AksiKBKota from "./pages/beranda/AdminKota/AksiKBKota";
+import KBEditorKota from "./pages/beranda/AdminKota/KBEditorKota";
+import LihatArtikelKota from "./pages/beranda/AdminKota/LihatArtikelKota";
+import PengumumanKota from "./pages/beranda/AdminKota/PengumumanKota";
 
 //*-- Masyarakat --*/
 import { BerandaMasyarakat } from "./pages/masyarakat/BerandaMasyarakat";
@@ -46,6 +62,7 @@ import HelpdeskChat from "./components/beranda/Helpdesk";
 //*-- Bidang --*/
 import DashboardBidang from "./pages/bidang/DashboardBidang";
 import AksiTiket from "./pages/bidang/AksiTiket";
+import BuatPengumumanKota from "./pages/beranda/AdminKota/BuatPengumumanKota";
 import MonitoringBidang from "./pages/bidang/MonitoringBidang";
 import RatingKepuasan from "./pages/bidang/RatingKepuasan";
 
@@ -74,8 +91,30 @@ function App() {
           <Route path="ratingseksi" element={<RatingSeksi />} />
         </Route>
 
+        {/* Layout TEKNISI */}
         <Route path="/" element={<LayoutTeknisi />}>
           <Route path="dashboardteknisi" element={<DashboardTeknisi />} />
+          <Route path="cekdetailteknisi" element={<CekDetailTeknisi />} />
+          <Route path="updateprogresteknisi" element={<UpdateProgressTeknisi />} />
+          <Route path="ratingteknisi" element={<RatingTeknisi />} />
+        </Route>
+
+        {/* Layout KOTA */}
+        <Route path="/" element={<LayoutKota />}>
+          <Route path="dashboardkota" element={<DashboardKota />} />
+          <Route path="cekdetailkota" element={<CekDetailKota />} />
+          <Route path="statistikkotakl" element={<StatistikKotaKL />} />
+          <Route path="statistikkotalp" element={<StatistikKotaLP />} />
+          <Route path="statistikkotatt" element={<StatistikKotaTT />} />
+          <Route path="ratekota" element={<RateKota />} />
+          <Route path="ratekotaopd/:opdName" element={<RateKotaOpd />} />
+          <Route path="ratekotaopd" element={<RateKotaOpd />} />
+          <Route path="knowledgebasekota" element={<KnowledgeBaseKota />} />
+          <Route path="aksikbkota" element={<AksiKBKota />} />
+          <Route path="kbeditorkota" element={<KBEditorKota />} />
+          <Route path="lihatartikelkota" element={<LihatArtikelKota />} />
+          <Route path="pengumumankota" element={<PengumumanKota />} />
+          <Route path="buatpengumumankota" element={<BuatPengumumanKota />} />
         </Route>
 
         {/* Halaman tanpa Layout */}
