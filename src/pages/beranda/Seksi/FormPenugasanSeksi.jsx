@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import { FileText } from "lucide-react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
+export default function FormPenugasanSeksi() {
+  const navigate = useNavigate();
 
-export default function PenugasanSeksi() {
-    const [teknisi, setTeknisi] = useState("");
+  // Data teknisi (avatar + nama). Sesuaikan path gambar yang kamu punya.
+  const daftarTeknisi = [
+    { nama: "Eren Jaeger", avatar: "/assets/Suika.jpg" },
+    { nama: "Bakugo Katsuki", avatar: "/assets/shizuku.jpg" },
+    { nama: "Meguru Bachira", avatar: "/assets/Bokuto.jpg" },
+  ];
 
+  const [selectedTeknisi, setSelectedTeknisi] = useState("");
+  const teknisiObj = daftarTeknisi.find((t) => t.nama === selectedTeknisi);
 
-    const handleSubmit = () => {
-      Swal.fire({
+  const handleSubmit = () => {
+    Swal.fire({
       title: "Apakah Anda yakin ingin mengirim?",
       text: "Cek kembali inputan Anda sebelum mengirim!",
       icon: "warning",
@@ -20,163 +29,227 @@ export default function PenugasanSeksi() {
       cancelButtonText: "Batalkan",
       reverseButtons: true,
       customClass: {
-      title: "text-2xl font-bold",
-      htmlContainer: "text-gray-600 text-sm",},
+        title: "text-2xl font-bold",
+        htmlContainer: "text-gray-600 text-sm",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-        title: "Laporan Dikirim!",
-        text: "Data berhasil dikirim ke sistem.",
-        icon: "success",
-        confirmButtonColor: "#1e3a8a",
-      });
-    }
-  });
-};
-
-
+          title: "Laporan Dikirim!",
+          text: "Data berhasil dikirim ke sistem.",
+          icon: "success",
+          confirmButtonColor: "#1e3a8a",
+        });
+      }
+    });
+  };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] py-8 px-6">
-      <div className="bg-white shadow-lg rounded-2xl p-10 max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold mb-8">Detail Penugasan Laporan</h1>
+    <div className="p-6 space-y-6">
+      <h1 className="text-2xl font-bold text-[#0F2C59] mb-4">Detail Penugasan</h1>
 
-        {/* GRID 2 KOLOM (LABEL & VALUE) */}
-        <div className="grid grid-cols-[180px_350px] gap-x-6 gap-y-5 items-center mb-8">
-
+      <div className="bg-white rounded-2xl shadow border border-gray-100 p-6 space-y-6">
+        {/* Info atas */}
+        <div className="space-y-4">
           {/* Pengirim */}
-          <label className="text-gray-700 font-medium">Pengirim</label>
-          <div className="flex items-center gap-3">
-            <img
-              src="/assets/Bokuto.jpg"
-              alt="Profile"
-              className="w-8 h-8 rounded-full object-cover"
-            />
-            <span className="font-semibold text-gray-800">arr labrador</span>
+          <div className="flex items-center gap-4">
+            <label className="w-36 font-medium text-gray-800">Pengirim</label>
+            <div className="flex items-center gap-2">
+              <img
+                src="/assets/shizuku.jpg"
+                alt="avatar"
+                className="w-8 h-8 rounded-full object-cover"
+              />
+              <span className="text-gray-800 font-medium">Widiya Karim</span>
+            </div>
           </div>
 
           {/* ID Laporan */}
-          <label className="text-gray-700 font-medium">ID Laporan</label>
-          <input
-            type="text"
-            value="LPR318728"
-            readOnly
-            className="w-full bg-gray-200 text-gray-700 p-2 rounded-md text-center"
-          />
-
-          {/* Perihal */}
-          <label className="text-gray-700 font-medium">Perihal</label>
-          <input
-            type="text"
-            value="Keamanan"
-            readOnly
-            className="w-full bg-gray-200 text-gray-700 p-2 rounded-md text-center"
-          />
-
-          {/* Prioritas */}
-          <label className="text-gray-700 font-medium">Prioritas</label>
-          <input
-            type="text"
-            value="Sedang"
-            readOnly
-            className="w-full bg-gray-200 text-gray-700 p-2 rounded-md text-center"
-            />
-
-          {/* Status */}
-          <label className="text-gray-700 font-medium">Status</label>
-          <input
-            type="text"
-            value="Draft"
-            readOnly
-            className="w-full bg-gray-200 text-gray-700 p-2 rounded-md text-center"
-          />
-
-          {/* Pilih Teknisi */}
-            <label className="text-gray-700 font-medium">Pilih Teknisi</label>
-            <select
-                value={teknisi}
-                onChange={(e) => setTeknisi(e.target.value)}
-                className="w-full border rounded-md p-2 text-sm max-w-[350px]"
-            >
-                <option value="" disabled hidden></option>
-                <option value="Eren Jaeger">Eren Jaeger</option>
-                <option value="Bakugo Katsuki">Bakugo Katsuki</option>
-                <option value="Meguru Bachira">Meguru Bachira</option>
-            </select>
-
-          {/* Pengerjaan Awal */}
-          <label className="text-gray-700 font-medium">Pengerjaan Awal</label>
-          <div className="flex items-center border rounded-md p-2">
-            <input
-              type="date"
-              className="w-full text-sm text-gray-700 outline-none"
-            />
+          <div className="flex items-center gap-4">
+            <label className="w-36 font-medium text-gray-800">ID laporan</label>
+            <div className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium w-60 text-center">
+              LPR25838
+            </div>
           </div>
 
-          {/* Tenggat Pengerjaan */}
-          <label className="text-gray-700 font-medium">Tenggat Pengerjaan</label>
-          <div className="flex items-center border rounded-md p-2">
+          {/* Prioritas (readonly) */}
+          <div className="flex items-center gap-4">
+            <label className="w-36 font-medium text-gray-800">Prioritas</label>
+            <div className="w-60 bg-green-500 text-white text-sm font-semibold text-center py-2 rounded-md shadow-sm">
+              Rendah
+            </div>
+          </div>
+
+          {/* Status (readonly) */}
+          <div className="flex items-center gap-4">
+            <label className="w-36 font-medium text-gray-800">Status</label>
+            <div className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium w-60 text-center">
+              Draft
+            </div>
+          </div>
+        </div>
+
+        {/* Judul Pelaporan */}
+        <div className="pt-4 border-t">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Judul Pelaporan
+          </label>
+          <input
+            readOnly
+            type="text"
+            defaultValue="Router bermasalah"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 bg-gray-100"
+          />
+        </div>
+
+        {/* Kategori & Jenis */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm text-gray-700 mb-1">Kategori Aset</label>
+            <div className="bg-gray-200 text-gray-700 px-3 py-2 rounded-md text-sm">
+              Jaringan
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm text-gray-700 mb-1">Jenis Aset</label>
+            <div className="bg-gray-200 text-gray-700 px-3 py-2 rounded-md text-sm">
+              TI
+            </div>
+          </div>
+        </div>
+
+        {/* Bentuk & Data */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm text-gray-700 mb-1">Bentuk Aset</label>
+            <div className="bg-gray-200 text-gray-700 px-3 py-2 rounded-md text-sm">
+              Fisik
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm text-gray-700 mb-1">Data Aset</label>
+            <div className="bg-gray-200 text-gray-700 px-3 py-2 rounded-md text-sm">
+              Router TP-Link
+            </div>
+          </div>
+        </div>
+
+        {/* Lokasi */}
+        <div>
+          <label className="block text-sm text-gray-700 mb-1">Lokasi Kejadian</label>
+          <div className="w-1/2 bg-gray-200 text-gray-700 px-3 py-2 rounded-md text-sm">
+            Dinas Pendidikan Kantor 2 Lantai 2
+          </div>
+        </div>
+
+        {/* Pilih Teknisi + Avatar pratinjau */}
+        <div>
+          <label className="block text-sm text-gray-700 mb-1">Pilih Teknisi</label>
+          <div className="max-w-md">
+            <select
+              value={selectedTeknisi}
+              onChange={(e) => setSelectedTeknisi(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:ring-1 focus:ring-[#0F2C59] focus:outline-none"
+            >
+              {/* Placeholder hanya tampil sebagai value awal — tidak muncul di list */}
+              <option value="" disabled hidden>
+                Pilih teknisi
+              </option>
+              {daftarTeknisi.map((t) => (
+                <option key={t.nama} value={t.nama}>
+                  {t.nama}
+                </option>
+              ))}
+            </select>
+
+            {teknisiObj && (
+              <div className="flex items-center gap-2 mt-3 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 w-fit">
+                <img
+                  src={teknisiObj.avatar}
+                  alt={teknisiObj.nama}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+                <span className="text-gray-800 text-sm font-medium">
+                  {teknisiObj.nama}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Jadwal pengerjaan */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Pengerjaan Awal
+            </label>
             <input
               type="date"
-              className="w-full text-sm text-gray-700 outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Sampai
+            </label>
+            <input
+              type="date"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700"
             />
           </div>
         </div>
 
         {/* Rincian Masalah */}
-        <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-1">
-            Rincian Masalah
-          </label>
+        <div>
+          <label className="block text-sm text-gray-700 mb-1">Rincian Masalah</label>
           <textarea
-            className="w-full border rounded-md p-3 text-sm bg-gray-100"
-            rows="4"
             readOnly
-            defaultValue="Pada komputer di unit pelayanan, muncul pesan error yang meminta pembayaran tebusan dalam bentuk bitcoin agar data bisa dipulihkan..."
-          />
+            rows="3"
+            defaultValue="ROUTER DI RUANG ANA RUSAK AMBG"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 bg-gray-100"
+          ></textarea>
         </div>
 
-        {/* Informasi Tambahan */}
-        <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-1">
-            Informasi Tambahan
+        {/* Lampiran */}
+        <div>
+          <label className="block text-sm text-gray-700 mb-1">Lampiran File</label>
+          <div className="flex items-center gap-2 bg-gray-200 rounded-md px-3 py-2 w-fit">
+            <FileText className="w-5 h-5 text-blue-600" />
+            <span className="text-sm text-gray-700">bukti-laporan.pdf</span>
+          </div>
+        </div>
+
+        {/* Penyelesaian */}
+        <div>
+          <label className="block text-sm text-gray-700 mb-1">
+            Penyelesaian yang Diharapkan
           </label>
           <textarea
-            className="w-full border rounded-md p-3 text-sm bg-gray-100"
-            rows="3"
-            placeholder="-"
-          />
+            readOnly
+            rows="2"
+            defaultValue="MOHON SEGERA DILAYANI"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 bg-gray-100"
+          ></textarea>
         </div>
 
-        {/* === Lampiran === */}
-      <div className="mt-4">
-        <label className="block text-gray-700 font-medium mb-2">
-          Lampiran File
-         </label>
-    </div>
-        {/* Lampiran */}
-        <div className="flex items-center gap-2 mb-8 ml-3">
-          <FileText className="w-5 h-5 text-blue-600" />
-          <a>
-            bukti_laporan.pdf
-          </a>
-        </div>
-
-        {/* Tombol */}
-        <div className="flex justify-between items-center">
-          <button className="px-4 py-2 rounded-lg border text-gray-700 hover:bg-gray-100">
+        {/* Tombol Aksi */}
+        <div className="flex justify-between items-center mt-6 pt-4 border-t">
+          <button
+            onClick={() => navigate(-1)}
+            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100 text-sm font-medium"
+          >
             Batalkan
           </button>
-          <div className="flex gap-3">
-            <button className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-800">
+          <div className="flex gap-5 items-center">
+            <button className="text-[#0F2C59] underline text-sm hover:text-[#15397A] font-medium">
               Simpan Draft
             </button>
             <button
               onClick={handleSubmit}
-              className="px-4 py-2 rounded-lg bg-blue-900 text-white hover:bg-blue-800">
+              className="px-5 py-2 bg-[#0F2C59] hover:bg-[#15397A] text-white rounded-lg text-sm font-medium"
+            >
               Kirim
             </button>
-
           </div>
         </div>
       </div>

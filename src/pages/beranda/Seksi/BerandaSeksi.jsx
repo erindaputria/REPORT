@@ -1,275 +1,339 @@
 import React, { useState } from "react";
 import {
-  PaperClipIcon,
-  PencilSquareIcon,
+  DocumentIcon,
   ArrowPathIcon,
+  PencilSquareIcon,
 } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
-export default function BerandaSeksi() {
+export default function DashboardSeksi() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("pelaporan");
 
-  // === Data Dummy ===
   const dataPelaporan = [
     {
       id: 1,
       pengirim: "Doni Ridho",
-      perihal: "Perangkat Keras",
       tanggal: "18/09/2024",
+      kategori: "Sistem Operasi",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
       status: "Revisi",
       foto: "/assets/Suika.jpg",
+      lampiran: ["/assets/doc1.pdf", "/assets/doc2.pdf"],
     },
     {
       id: 2,
-      pengirim: "Sinta Wulandari",
-      perihal: "Jaringan",
-      tanggal: "19/09/2024",
-      status: "Terverifikasi",
+      pengirim: "Hiko Wicakso",
+      tanggal: "18/09/2024",
+      kategori: "Aplikasi",
+      jenis: "Non-IT",
+      bentuk: "Fisik",
+      status: "Draft",
       foto: "/assets/shizuku.jpg",
+      lampiran: ["/assets/doc1.pdf"],
     },
     {
       id: 3,
-      pengirim: "Andi Pratama",
-      perihal: "Sistem",
-      tanggal: "20/09/2024",
-      status: "Ditolak",
-      foto: "/assets/Suika.jpg",
+      pengirim: "Ella Melisya",
+      tanggal: "18/09/2024",
+      kategori: "Aplikasi",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
+      status: "Terverifikasi",
+      foto: "/assets/Bokuto.jpg",
+      lampiran: ["/assets/doc1.pdf", "/assets/doc2.pdf", "/assets/doc3.pdf"],
     },
     {
       id: 4,
-      pengirim: "Lina Sari",
-      perihal: "Aplikasi",
-      tanggal: "21/09/2024",
-      status: "Draft",
-      foto: "/assets/shizuku.jpg",
+      pengirim: "Arnya Rosalina",
+      tanggal: "20/09/2024",
+      kategori: "Jaringan",
+      jenis: "Non-IT",
+      bentuk: "Non-Fisik",
+      status: "Pending",
+      foto: "/assets/Suika.jpg",
+      lampiran: [],
     },
     {
       id: 5,
-      pengirim: "Agus Wijaya",
-      perihal: "Database",
-      tanggal: "22/09/2024",
-      status: "Terverifikasi",
+      pengirim: "Arnya Rosalina",
+      tanggal: "20/09/2024",
+      kategori: "Jaringan",
+      jenis: "Non-IT",
+      bentuk: "Non-Fisik",
+      status: "Ditolak",
       foto: "/assets/Suika.jpg",
+      lampiran: [],
     },
     {
       id: 6,
-      pengirim: "Budi Santoso",
-      perihal: "Hardware",
-      tanggal: "23/09/2024",
-      status: "Terverifikasi",
-      foto: "/assets/shizuku.jpg",
+      pengirim: "Doni Ridho",
+      tanggal: "18/09/2024",
+      kategori: "Sistem Operasi",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
+      status: "Revisi",
+      foto: "/assets/Suika.jpg",
+      lampiran: ["/assets/doc1.pdf", "/assets/doc2.pdf"],
     },
     {
       id: 7,
-      pengirim: "Rina Oktavia",
-      perihal: "Akses",
-      tanggal: "23/09/2024",
-      status: "Pending",
-      foto: "/assets/Suika.jpg",
+      pengirim: "Hiko Wicakso",
+      tanggal: "18/09/2024",
+      kategori: "Aplikasi",
+      jenis: "Non-IT",
+      bentuk: "Fisik",
+      status: "Draft",
+      foto: "/assets/shizuku.jpg",
+      lampiran: ["/assets/doc1.pdf"],
     },
     {
       id: 8,
-      pengirim: "Teguh Ramadhan",
-      perihal: "Bug Software",
-      tanggal: "24/09/2024",
+      pengirim: "Ella Melisya",
+      tanggal: "18/09/2024",
+      kategori: "Aplikasi",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
       status: "Terverifikasi",
-      foto: "/assets/shizuku.jpg",
+      foto: "/assets/Bokuto.jpg",
+      lampiran: ["/assets/doc1.pdf", "/assets/doc2.pdf", "/assets/doc3.pdf"],
     },
     {
       id: 9,
-      pengirim: "Indah Puspita",
-      perihal: "Server",
-      tanggal: "25/09/2024",
-      status: "Draft",
+      pengirim: "Arnya Rosalina",
+      tanggal: "20/09/2024",
+      kategori: "Jaringan",
+      jenis: "Non-IT",
+      bentuk: "Non-Fisik",
+      status: "Pending",
       foto: "/assets/Suika.jpg",
+      lampiran: [],
     },
     {
       id: 10,
-      pengirim: "Fajar Nugraha",
-      perihal: "Keamanan",
-      tanggal: "26/09/2024",
-      status: "Terverifikasi",
-      foto: "/assets/shizuku.jpg",
+      pengirim: "Arnya Rosalina",
+      tanggal: "20/09/2024",
+      kategori: "Jaringan",
+      jenis: "Non-IT",
+      bentuk: "Non-Fisik",
+      status: "Ditolak",
+      foto: "/assets/Suika.jpg",
+      lampiran: [],
     },
   ];
 
-  // === Pewarnaan status ===
-  const statusColor = (status) => {
+  const getStatusColor = (status) => {
     switch (status) {
-      case "Terverifikasi":
-        return "bg-green-100 text-green-700";
-      case "Revisi":
-        return "bg-red-100 text-red-700";
-      case "Pending":
-        return "bg-yellow-100 text-yellow-700";
       case "Ditolak":
-        return "bg-red-100 text-red-700";
+        return "bg-red-500";
+      case "Draft":
+        return "bg-gray-500";
+      case "Pending":
+        return "bg-yellow-400";
+      case "Terverifikasi":
+        return "bg-green-500";
       default:
-        return "bg-gray-100 text-gray-700";
+        return "bg-blue-500";
     }
   };
 
-  const handleImageError = (e) => {
-    e.target.src = "/assets/default.jpg"; // fallback jika gambar gagal dimuat
-  };
-
   return (
-    <div className="space-y-6">
-      {/* Judul dan Tombol Refresh */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-      </div>
+    <div className="p-6 space-y-6">
+      <h1 className="text-2xl font-bold text-[#0F2C59]">Dashboard</h1>
 
-      {/* Statistik */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Summary Cards */}
+      <div className="grid grid-cols-4 gap-4">
         {[
           { label: "Tiket Masuk", value: 33 },
           { label: "Pending", value: 10 },
           { label: "Diverifikasi", value: 15 },
           { label: "Ditolak", value: 1 },
-        ].map((item) => (
-          <div key={item.label} className="bg-white shadow rounded-2xl p-4">
-            <p className="text-sm text-gray-500">{item.label}</p>
-            <h2 className="text-2xl font-semibold mt-2">{item.value}</h2>
+        ].map((item, i) => (
+          <div
+            key={i}
+            className="bg-white rounded-2xl shadow border border-gray-100 flex flex-col justify-center items-center py-5"
+          >
+            <span className="text-3xl font-semibold text-[#0F2C59]">
+              {item.value}
+            </span>
+            <span className="text-sm text-gray-500">{item.label}</span>
           </div>
         ))}
       </div>
 
-      {/* Tabs + Refresh */}
-      <div className="flex items-center justify-between border-b px-4 py-2 bg-white rounded-t-2xl">
+      {/* Content Card */}
+      <div className="bg-white rounded-2xl shadow border border-gray-100 p-5">
         {/* Tabs */}
-        <div className="flex gap-6">
-          <button
-            onClick={() => setActiveTab("pelaporan")}
-            className={`text-sm font-semibold pb-2 border-b-2 transition ${
-              activeTab === "pelaporan"
-                ? "border-blue-700 text-blue-700"
-                : "border-transparent text-gray-500 hover:text-blue-700"
-            }`}
-          >
-            Pelaporan
+        <div className="flex justify-between items-center border-b mb-4">
+          <div className="flex">
+          {["pelaporan", "pelayanan"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-5 py-2 text-sm font-semibold capitalize rounded-t-lg ${
+                activeTab === tab
+                  ? "text-[#0F2C59] border-b-4 border-[#0F2C59]"
+                  : "text-gray-400 hover:text-[#0F2C59]"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        <button className="flex items-center gap-2 bg-[#0F2C59] hover:bg-[#15397A] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+            <ArrowPathIcon className="w-4 h-4" />
+            Refresh
           </button>
-          <button
-            onClick={() => setActiveTab("pelayanan")}
-            className={`text-sm font-semibold pb-2 border-b-2 transition ${
-              activeTab === "pelayanan"
-                ? "border-blue-700 text-blue-700"
-                : "border-transparent text-gray-500 hover:text-blue-700"
-            }`}
-          >
-            Pelayanan
-          </button>
         </div>
 
-        {/* Tombol Refresh di kanan */}
-        <button className="flex items-center gap-2 bg-[#133E73] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#0e315d] transition">
-          <ArrowPathIcon className="w-4 h-4" />
-          Refresh
-        </button>
-      </div>
+        {/* Filter Pencarian */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm mb-5">
+          <h2 className="text-[#0F2C59] font-semibold mb-6 text-sm">
+            Filter pencarian
+          </h2>
 
-      {/* Filter Section */}
-      <div className="p-4 border-b bg-white flex flex-wrap gap-6 items-end rounded-b-2xl">
-        <div className="flex flex-col">
-          <label className="text-sm text-gray-600 mb-1"> Pilih Perihal</label>
-          <select className="border rounded-lg p-2 text-sm w-40">
-            <option>Semua</option>
-            <option>Perangkat Keras</option>
-            <option>Keamanan</option>
-            <option>Jaringan</option>
-          </select>
+          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+            {/* Baris 1 */}
+            <div className="flex items-center justify-between">
+              <label className="w-24 text-sm font-medium text-gray-700">
+                Kategori
+              </label>
+              <select className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#0F2C59]">
+                <option>Semua</option>
+                <option>Sistem Operasi</option>
+                <option>Aplikasi</option>
+                <option>Jaringan</option>
+              </select>
+            </div>
+            <div className="flex items-center justify-between">
+              <label className="w-24 text-sm font-medium text-gray-700">
+                Bentuk
+              </label>
+              <select className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#0F2C59]">
+                <option>Semua</option>
+                <option>Fisik</option>
+                <option>Non-Fisik</option>
+              </select>
+            </div>
+
+            {/* Baris 2 */}
+            <div className="flex items-center justify-between">
+              <label className="w-24 text-sm font-medium text-gray-700">
+                Jenis
+              </label>
+              <select className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#0F2C59]">
+                <option>Semua</option>
+                <option>IT</option>
+                <option>Non-IT</option>
+              </select>
+            </div>
+            <div className="flex items-center justify-between">
+              <label className="w-24 text-sm font-medium text-gray-700">
+                Status
+              </label>
+              <select className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#0F2C59]">
+                <option>Semua</option>
+                <option>Pending</option>
+                <option>Terverifikasi</option>
+                <option>Revisi</option>
+                <option>Ditolak</option>
+              </select>
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-col">
-          <label className="text-sm text-gray-600 mb-1"> Pilih Status</label>
-          <select className="border rounded-lg p-2 text-sm w-40">
-            <option>Semua</option>
-            <option>Terverifikasi</option>
-            <option>Pending</option>
-            <option>Revisi</option>
-          </select>
-        </div>
-
-        <div className="flex flex-col">
-          <label className="text-sm text-gray-600 mb-1">Pilih Prioritas</label>
-          <select className="border rounded-lg p-2 text-sm w-40">
-            <option>Semua</option>
-            <option>Rendah</option>
-            <option>Sedang</option>
-            <option>Tinggi</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Tabel */}
-      <div className="p-4 bg-white rounded-2xl shadow overflow-x-auto">
-        <table className="w-full text-sm text-left">
-          <thead>
-            <tr className="bg-blue-900 text-white">
-              <th className="p-3 rounded-l-lg">Pengirim</th>
-              <th className="p-3">Perihal</th>
-              <th className="p-3">Tanggal Masuk</th>
-              <th className="p-3">Lampiran</th>
-              <th className="p-3">Status</th>
-              <th className="p-3 rounded-r-lg">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dataPelaporan.map((item) => (
-              <tr
-                key={item.id}
-                className="border-b hover:bg-gray-50 transition"
-              >
-                {/* Kolom Pengirim */}
-                <td className="p-3 flex items-center gap-3">
-                  <img
-                    src={item.foto}
-                    alt={item.pengirim}
-                    onError={handleImageError}
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                  <span>{item.pengirim}</span>
-                </td>
-                <td className="p-3">{item.perihal}</td>
-                <td className="p-3">{item.tanggal}</td>
-                <td className="p-3 text-blue-600 flex items-center gap-1 cursor-pointer">
-                  <PaperClipIcon className="w-4 h-4" /> Lampiran
-                </td>
-                <td className="p-3">
-                  <span
-                    className={`px-3 py-1 rounded-lg text-xs font-semibold ${statusColor(
-                      item.status
-                    )}`}
-                  >
-                    {item.status}
-                  </span>
-                </td>
-                <td className="p-3 flex gap-3">
-                  <PencilSquareIcon className="w-5 h-5 text-blue-600 cursor-pointer hover:text-blue-800 transition" />
-                </td>
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm text-left border-collapse">
+            <thead className="bg-[#0F2C59] text-white text-xs uppercase">
+              <tr>
+                <th className="py-3 px-4 rounded-tl-lg">Pengirim</th>
+                <th className="py-3 px-4">Tanggal Masuk</th>
+                <th className="py-3 px-4">Kategori</th>
+                <th className="py-3 px-4">Jenis</th>
+                <th className="py-3 px-4">Bentuk</th>
+                <th className="py-3 px-4">Lampiran</th>
+                <th className="py-3 px-4">Status</th>
+                <th className="py-3 px-4 rounded-tr-lg">Aksi</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-gray-700">
+              {dataPelaporan.map((item) => (
+                <tr
+                  key={item.id}
+                  className="border-b last:border-none hover:bg-gray-50"
+                >
+                  {/* Avatar + Nama */}
+                  <td className="py-3 px-4 flex items-center gap-2">
+                    <img
+                      src={item.foto}
+                      alt={item.pengirim}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <span>{item.pengirim}</span>
+                  </td>
 
-        {/* Pagination */}
-        <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
-          <p>Menampilkan 1 - 10 dari 50 data</p>
+                  <td className="py-3 px-4">{item.tanggal}</td>
+                  <td className="py-3 px-4">{item.kategori}</td>
+                  <td className="py-3 px-4">{item.jenis}</td>
+                  <td className="py-3 px-4">{item.bentuk}</td>
+
+                  {/* Lampiran (1-3 ikon) */}
+                  <td className="py-3 px-4">
+                    <div className="flex gap-2">
+                      {item.lampiran.length > 0 ? (
+                        item.lampiran.slice(0, 3).map((_, idx) => (
+                          <DocumentIcon
+                            key={idx}
+                            className="w-5 h-5 text-[#0F2C59] hover:text-[#15397A] cursor-pointer"
+                          />
+                        ))
+                      ) : (
+                        <span className="text-gray-400 text-xs italic">
+                          Tidak ada
+                        </span>
+                      )}
+                    </div>
+                  </td>
+
+                  <td className="py-3 px-4">
+                    <span
+                      className={`text-xs text-white px-3 py-1 rounded-full ${getStatusColor(
+                        item.status
+                      )}`}
+                    >
+                      {item.status}
+                    </span>
+                  </td>
+
+                  {/* Aksi */}
+                  <td className="py-3 px-4">
+                    <button
+                      onClick={() => navigate("/pengajuanbidang")}
+                      className="text-[#0F2C59] hover:text-[#15397A] transition"
+                    >
+                      <PencilSquareIcon className="w-5 h-5" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Footer */}
+        <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
+          <span>
+            Menampilkan data 1 sampai {dataPelaporan.length} dari 30 data
+          </span>
           <div className="flex gap-2">
-            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
-              &lt;
-            </button>
-            <button className="px-3 py-1 border rounded-lg bg-blue-600 text-white">
-              1
-            </button>
-            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
-              2
-            </button>
-            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
-              3
-            </button>
-            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
-              &gt;
-            </button>
+            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">&lt;</button>
+            <button className="px-3 py-1 border rounded-lg bg-blue-600 text-white">1</button>
+            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">2</button>
+            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">3</button>
+            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">&gt;</button>
           </div>
         </div>
       </div>

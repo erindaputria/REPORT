@@ -1,135 +1,297 @@
 import React, { useState } from "react";
-import { RefreshCcw, Eye } from "lucide-react";
-import { Star } from "lucide-react";
+import {
+  ArrowPathIcon,
+  ChevronDownIcon,
+  StarIcon,
+  EyeIcon,
+} from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom"; // ✅ Tambahan
 
 export default function RatingSeksi() {
-  const [activeTab, setActiveTab] = useState("pelaporan");
+  const [activeTab, setActiveTab] = useState("Pelaporan");
+  const [filters, setFilters] = useState({
+    kategori: "",
+    jenis: "",
+    bentuk: "",
+    rating: "",
+  });
 
-  const dataRating = [
-    { id: 1, nama: "Budi Winarto", perihal: "Jaringan & Konektivitas", masuk: "02/09/2024", selesai: "11/09/2024", rating: 5, foto: "/assets/shizuku.jpg" },
-    { id: 2, nama: "Elly Serila", perihal: "Jaringan & Konektivitas", masuk: "02/09/2024", selesai: "10/09/2024", rating: 4, foto: "/assets/Suika.jpg" },
-    { id: 3, nama: "Vina Erlita", perihal: "Perangkat Keras", masuk: "02/09/2024", selesai: "10/09/2024", rating: 5, foto: "/assets/Bokuto.jpg" },
-    { id: 4, nama: "Faralia April", perihal: "Printer & Peripherals", masuk: "02/09/2024", selesai: "09/09/2024", rating: 1, foto: "/assets/shizuku.jpg" },
-    { id: 5, nama: "Wawan Mujito", perihal: "Perangkat Keras", masuk: "01/09/2024", selesai: "09/09/2024", rating: 4, foto: "/assets/Suika.jpg" },
-    { id: 6, nama: "Galang Wadi", perihal: "Keamanan", masuk: "01/09/2024", selesai: "08/09/2024", rating: 3, foto: "/assets/shizuku.jpg" },
-    { id: 7, nama: "Joko Erwan", perihal: "Email & Komunikasi", masuk: "31/08/2024", selesai: "08/09/2024", rating: 5, foto: "/assets/Suika.jpg" },
-    { id: 8, nama: "Suklistiani", perihal: "Jaringan & Konektivitas", masuk: "31/08/2024", selesai: "07/09/2024", rating: 5, foto: "/assets/Bokuto.jpg" },
-    { id: 9, nama: "Toni Ridho", perihal: "Email & Komunikasi", masuk: "29/08/2024", selesai: "07/09/2024", rating: 2, foto: "/assets/shizuku.jpg" },
-    { id: 10, nama: "Yudi Deriga", perihal: "Perangkat Keras", masuk: "29/08/2024", selesai: "06/09/2024", rating: 5, foto: "/assets/Suika.jpg" },
+  const navigate = useNavigate(); // ✅ Inisialisasi navigasi
+
+  const data = [
+    {
+      pengirim: "Doni Ridho",
+      masuk: "18/09/2024",
+      selesai: "18/09/2024",
+      kategori: "Sistem Operasi",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
+      rating: 5,
+      foto: "/assets/Suika.jpg",
+    },
+    {
+      pengirim: "Rio Widoro",
+      masuk: "18/09/2024",
+      selesai: "18/09/2024",
+      kategori: "Jaringan",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
+      rating: 4,
+      foto: "/assets/Bokuto.jpg",
+    },
+    {
+      pengirim: "Lia Yustia",
+      masuk: "17/09/2024",
+      selesai: "18/09/2024",
+      kategori: "Aplikasi",
+      jenis: "Non-IT",
+      bentuk: "Fisik",
+      rating: 3,
+      foto: "/assets/shizuku.jpg",
+    },
+    {
+      pengirim: "Ella Meisya",
+      masuk: "17/09/2024",
+      selesai: "17/09/2024",
+      kategori: "Aplikasi",
+      jenis: "IT",
+      bentuk: "Fisik",
+      rating: 4,
+      foto: "/assets/Bokuto.jpg",
+    },
+    {
+      pengirim: "Widiya Karim",
+      masuk: "15/09/2024",
+      selesai: "16/09/2024",
+      kategori: "Email",
+      jenis: "Non-IT",
+      bentuk: "Fisik",
+      rating: 2,
+      foto: "/assets/Suika.jpg",
+    },
+    {
+      pengirim: "Doni Ridho",
+      masuk: "18/09/2024",
+      selesai: "18/09/2024",
+      kategori: "Sistem Operasi",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
+      rating: 5,
+      foto: "/assets/Suika.jpg",
+    },
+    {
+      pengirim: "Rio Widoro",
+      masuk: "18/09/2024",
+      selesai: "18/09/2024",
+      kategori: "Jaringan",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
+      rating: 4,
+      foto: "/assets/Bokuto.jpg",
+    },
+    {
+      pengirim: "Lia Yustia",
+      masuk: "17/09/2024",
+      selesai: "18/09/2024",
+      kategori: "Aplikasi",
+      jenis: "Non-IT",
+      bentuk: "Fisik",
+      rating: 3,
+      foto: "/assets/shizuku.jpg",
+    },
+    {
+      pengirim: "Ella Meisya",
+      masuk: "17/09/2024",
+      selesai: "17/09/2024",
+      kategori: "Aplikasi",
+      jenis: "IT",
+      bentuk: "Fisik",
+      rating: 4,
+      foto: "/assets/Bokuto.jpg",
+    },
+    {
+      pengirim: "Widiya Karim",
+      masuk: "15/09/2024",
+      selesai: "16/09/2024",
+      kategori: "Email",
+      jenis: "Non-IT",
+      bentuk: "Fisik",
+      rating: 2,
+      foto: "/assets/Suika.jpg",
+    },
   ];
 
-  const renderStars = (rating) => {
-    return Array(5)
-      .fill()
-      .map((_, i) => (
-        <Star
-          key={i}
-          size={16}
-          className={i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}
-        />
-      ));
+  const handleFilterChange = (field, value) => {
+    setFilters({ ...filters, [field]: value });
+  };
+
+  const renderStars = (count) => {
+    return Array.from({ length: 5 }).map((_, i) => (
+      <StarIcon
+        key={i}
+        className={`h-4 w-4 ${
+          i < count ? "text-[#0F2C59]" : "text-gray-300"
+        }`}
+      />
+    ));
   };
 
   return (
-    <div className="space-y-6">
-      {/* Judul */}
-      <h1 className="text-3xl font-bold text-gray-800">Rating Kepuasan</h1>
+    <div className="min-h-screen bg-[#f8fafc] py-8 px-6">
+      <div className="bg-white shadow-lg rounded-2xl p-8 max-w-6xl mx-auto">
+        {/* === Judul === */}
+        <h1 className="text-3xl font-bold text-[#0F2C59] mb-6">
+          Rating Kepuasan
+        </h1>
 
-      {/* Tab */}
-      <div className="bg-white rounded-2xl shadow overflow-hidden">
-        <div className="border-b flex items-center justify-between px-6">
-          <div className="flex">
-            <button
-              onClick={() => setActiveTab("pelaporan")}
-              className={`px-5 py-3 text-sm font-semibold border-b-2 ${
-                activeTab === "pelaporan"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-500 hover:text-blue-600"
-              }`}
-            >
-              Pelaporan
-            </button>
-            <button
-              onClick={() => setActiveTab("pelayanan")}
-              className={`px-5 py-3 text-sm font-semibold border-b-2 ${
-                activeTab === "pelayanan"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-500 hover:text-blue-600"
-              }`}
-            >
-              Pelayanan
-            </button>
+        {/* === Tab dengan garis bawah === */}
+        <div className="flex justify-between items-center mb-6 border-b border-gray-300">
+          <div className="flex gap-8">
+            {["Pelaporan", "Pelayanan"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`pb-2 text-base font-semibold transition ${
+                  activeTab === tab
+                    ? "text-[#0F2C59] border-b-4 border-[#0F2C59]"
+                    : "text-gray-400 hover:text-[#0F2C59]"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
           </div>
-          <button className="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
-            <RefreshCcw size={16} /> Refresh
+
+          {/* Tombol Refresh */}
+          <button className="flex items-center gap-2 bg-[#0F2C59] text-white px-4 py-2 rounded-lg hover:bg-[#15397A] transition text-sm font-medium shadow-sm -mt-4">
+            <ArrowPathIcon className="w-4 h-4" />
+            Refresh
           </button>
         </div>
 
-        {/* Filter */}
-        <div className="p-4 border-b flex flex-wrap gap-4 items-center">
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm mb-1">Pilih Perihal</label>
-            <select className="border rounded-lg p-2 text-sm min-w-[150px]">
-              <option>Semua</option>
-              <option>Keamanan</option>
-              <option>Jaringan</option>
-              <option>Email</option>
-            </select>
-          </div>
+        {/* === Filter Pencarian 2x2 === */}
+        <div className="bg-gray-50 rounded-xl p-5 mb-6 border shadow-sm">
+          <h2 className="text-gray-700 font-semibold mb-4">
+            Filter Pencarian
+          </h2>
 
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm mb-1">Pilih Prioritas</label>
-            <select className="border rounded-lg p-2 text-sm min-w-[150px]">
-              <option>Semua</option>
-              <option>Rendah</option>
-              <option>Sedang</option>
-              <option>Tinggi</option>
-            </select>
-          </div>
+          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+            {/* Kategori */}
+            <div className="flex items-center">
+              <label className="text-gray-600 text-sm w-32">Kategori</label>
+              <div className="relative w-full">
+                <select
+                  value={filters.kategori}
+                  onChange={(e) =>
+                    handleFilterChange("kategori", e.target.value)
+                  }
+                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full appearance-none bg-white shadow-sm"
+                >
+                  <option>Semua</option>
+                  <option>Sistem Operasi</option>
+                  <option>Jaringan</option>
+                  <option>Aplikasi</option>
+                  <option>Email</option>
+                </select>
+                <ChevronDownIcon className="w-4 h-4 absolute right-3 top-3 text-gray-400" />
+              </div>
+            </div>
 
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm mb-1">Pilih Rating</label>
-            <select className="border rounded-lg p-2 text-sm min-w-[150px]">
-              <option>Semua</option>
-              <option>⭐</option>
-              <option>⭐⭐</option>
-              <option>⭐⭐⭐</option>
-              <option>⭐⭐⭐⭐</option>
-              <option>⭐⭐⭐⭐⭐</option>
-            </select>
+            {/* Jenis */}
+            <div className="flex items-center">
+              <label className="text-gray-600 text-sm w-32">Jenis</label>
+              <div className="relative w-full">
+                <select
+                  value={filters.jenis}
+                  onChange={(e) => handleFilterChange("jenis", e.target.value)}
+                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full appearance-none bg-white shadow-sm"
+                >
+                  <option>Semua</option>
+                  <option>IT</option>
+                  <option>Non-IT</option>
+                </select>
+                <ChevronDownIcon className="w-4 h-4 absolute right-3 top-3 text-gray-400" />
+              </div>
+            </div>
+
+            {/* Bentuk */}
+            <div className="flex items-center">
+              <label className="text-gray-600 text-sm w-32">Bentuk</label>
+              <div className="relative w-full">
+                <select
+                  value={filters.bentuk}
+                  onChange={(e) => handleFilterChange("bentuk", e.target.value)}
+                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full appearance-none bg-white shadow-sm"
+                >
+                  <option>Semua</option>
+                  <option>Fisik</option>
+                  <option>Non-Fisik</option>
+                </select>
+                <ChevronDownIcon className="w-4 h-4 absolute right-3 top-3 text-gray-400" />
+              </div>
+            </div>
+
+            {/* Rating */}
+            <div className="flex items-center">
+              <label className="text-gray-600 text-sm w-32">Rating</label>
+              <div className="relative w-full">
+                <select
+                  value={filters.rating}
+                  onChange={(e) => handleFilterChange("rating", e.target.value)}
+                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full appearance-none bg-white shadow-sm"
+                >
+                  <option>Semua</option>
+                  <option>5</option>
+                  <option>4</option>
+                  <option>3</option>
+                  <option>2</option>
+                  <option>1</option>
+                </select>
+                <ChevronDownIcon className="w-4 h-4 absolute right-3 top-3 text-gray-400" />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Tabel */}
-        <div className="p-4 overflow-x-auto">
-          <table className="w-full text-sm text-left">
-            <thead>
-              <tr className="bg-blue-900 text-white">
-                <th className="p-3">Pengirim</th>
-                <th className="p-3">Perihal</th>
-                <th className="p-3">Tanggal Masuk</th>
-                <th className="p-3">Tanggal Selesai</th>
-                <th className="p-3">Rating</th>
-                <th className="p-3">Aksi</th>
+        {/* === Tabel Data === */}
+        <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+          <table className="w-full text-sm text-gray-700">
+            <thead className="bg-[#0F2C59] text-white">
+              <tr>
+                <th className="px-4 py-3 text-left">Pengirim</th>
+                <th className="px-4 py-3 text-left">Masuk</th>
+                <th className="px-4 py-3 text-left">Selesai</th>
+                <th className="px-4 py-3 text-left">Kategori</th>
+                <th className="px-4 py-3 text-left">Jenis</th>
+                <th className="px-4 py-3 text-left">Bentuk</th>
+                <th className="px-4 py-3 text-left">Rating</th>
+                <th className="px-4 py-3 text-left">Aksi</th>
               </tr>
             </thead>
-            <tbody>
-              {dataRating.map((item) => (
-                <tr key={item.id} className="border-b hover:bg-gray-50 transition">
-                  <td className="p-3 flex items-center gap-2">
+            <tbody className="divide-y divide-gray-100">
+              {data.map((item, i) => (
+                <tr key={i} className="hover:bg-gray-50 transition">
+                  <td className="px-4 py-3 flex items-center gap-2">
                     <img
                       src={item.foto}
-                      alt={item.nama}
+                      alt={item.pengirim}
                       className="w-8 h-8 rounded-full object-cover"
                     />
-                    {item.nama}
+                    {item.pengirim}
                   </td>
-                  <td className="p-3">{item.perihal}</td>
-                  <td className="p-3">{item.masuk}</td>
-                  <td className="p-3">{item.selesai}</td>
-                  <td className="p-3 flex gap-1">{renderStars(item.rating)}</td>
-                  <td className="p-3">
-                    <Eye size={18} className="text-gray-600 cursor-pointer hover:text-blue-700" />
+                  <td className="px-4 py-3">{item.masuk}</td>
+                  <td className="px-4 py-3">{item.selesai}</td>
+                  <td className="px-4 py-3">{item.kategori}</td>
+                  <td className="px-4 py-3">{item.jenis}</td>
+                  <td className="px-4 py-3">{item.bentuk}</td>
+                  <td className="px-4 py-3 flex">{renderStars(item.rating)}</td>
+                  <td className="px-4 py-3">
+                    <button
+                      className="text-[#0F2C59] hover:text-[#15397A]"
+                      onClick={() => navigate("/detailrating")} // ✅ Tambahan navigasi
+                    >
+                      <EyeIcon className="w-5 h-5" />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -137,9 +299,11 @@ export default function RatingSeksi() {
           </table>
         </div>
 
-        {/* Pagination */}
-        <div className="flex justify-between items-center p-4 border-t text-sm text-gray-600">
-          <p>Menampilkan data 1 sampai 10 dari 42 data</p>
+        {/* === Pagination Info === */}
+        <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
+          <span>
+            Menampilkan data 1 sampai {data.length} dari 30 data
+          </span>
           <div className="flex gap-2">
             <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">&lt;</button>
             <button className="px-3 py-1 border rounded-lg bg-blue-600 text-white">1</button>

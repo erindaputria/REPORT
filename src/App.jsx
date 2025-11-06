@@ -60,6 +60,15 @@ import BuatPengumumanKota from "./pages/beranda/AdminKota/BuatPengumumanKota";
 
 //*-- Masyarakat --*/
 import SidebarMasyarakat from "./pages/masyarakat/SidebarMasyarakat";
+import PengajuanBidang from "./pages/beranda/Seksi/PengajuanBidang";
+import MonitoringTiketSeksi from "./pages/beranda/Seksi/MonitoringTiketSeksi"
+import DetailRating from "./pages/beranda/Seksi/DetailRating";
+import LayananChat from "./pages/beranda/Seksi/LayananChat"
+import LayananPesan from "./pages/beranda/Seksi/LayananPesan";
+import RFCTeknisi from "./pages/beranda/Teknisi/RFCTeknisi"
+import BuatFormRFC from "./pages/beranda/Teknisi/BuatFormRFC"
+import EditFormRFC from "./pages/beranda/Teknisi/EditFormRFC";
+import LihatFormRFC from "./pages/beranda/Teknisi/LihatFormRFC";
 import ProfilMasyarakat from "./pages/profil/ProfilMasyarakat";
 import FormMasyarakat from "./pages/masyarakat/FormMasyarakat";
 
@@ -79,6 +88,7 @@ import KnowledgeBaseDraft from "./pages/adminopd/KnowledgeBaseDraft";
 import KnowledgeBaseDiajukan from "./pages/adminopd/KnowledgeBaseDiajukan";
 import DraftBaru from "./pages/adminopd/DraftBaru";
 import RatingKepuasanOpd from "./pages/adminopd/RatingKepuasanOpd";
+import LayananChatSeksi from "./pages/beranda/Seksi/LayananChat";
 import StatistikKategori from "./pages/adminopd/StatistikKategori";
 import StatistikPrioritas from "./pages/adminopd/StatistikPrioritas";
 import StatistikTahunan from "./pages/adminopd/StatistikTahunan";
@@ -105,6 +115,12 @@ function App() {
           <Route path="arsipseksi" element={<ArsipSeksi />} />
           <Route path="reopenseksi" element={<ReopenSeksi />} />
           <Route path="ratingseksi" element={<RatingSeksi />} />
+          <Route path="pengajuanbidang" element={<PengajuanBidang />} />
+          <Route path="monitoringtiketseksi" element={<MonitoringTiketSeksi />} />
+          <Route path="/monitoring-tiket/:id" element={<MonitoringTiketSeksi />} />
+          <Route path="detailrating" element={<DetailRating />} />
+          <Route path="layananchat" element={<LayananChat />} />
+          <Route path="layananpesan" element={<LayananPesan />} />
         </Route>
 
         {/* Layout TEKNISI */}
@@ -116,6 +132,10 @@ function App() {
             element={<UpdateProgressTeknisi />}
           />
           <Route path="ratingteknisi" element={<RatingTeknisi />} />
+          <Route path="rfcteknisi" element={<RFCTeknisi />} />
+          <Route path="buatformrfc" element={<BuatFormRFC />} />
+          <Route path="editformrfc" element={<EditFormRFC />} />
+          <Route path="lihatformrfc" element={<LihatFormRFC />} />
         </Route>
 
         {/* Layout KOTA */}

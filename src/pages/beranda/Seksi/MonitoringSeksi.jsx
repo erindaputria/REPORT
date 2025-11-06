@@ -1,78 +1,77 @@
 import React, { useState } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { format, addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, isSameMonth, isSameDay } from "date-fns";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/solid";
+import {
+  format,
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  addDays,
+  isSameMonth,
+} from "date-fns";
 import { id } from "date-fns/locale";
+import { useNavigate } from "react-router-dom";
 
 export default function MonitoringSeksi() {
+  const navigate = useNavigate();
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [filter, setFilter] = useState("Semua");
+  const [level, setLevel] = useState("Semua");
 
-  // Dummy data teknisi
-  const data = [
+  const dataTeknisi = [
     {
       nama: "Sri Wulandari",
       bidang: "Keamanan",
-      progress: 80,
-      start: new Date(2025, 8, 2),
-      end: new Date(2025, 8, 5),
       foto: "/assets/shizuku.jpg",
+      level: "1",
+      laporan: [
+        { id: "LPR831938", progress: 80, start: new Date(2025, 10, 2), end: new Date(2025, 10, 4) },
+        { id: "LPR931728", progress: 100, start: new Date(2025, 10, 9), end: new Date(2025, 10, 11) },
+        { id: "LPR931720", progress: 10, start: new Date(2025, 10, 8), end: new Date(2025, 10, 12) },
+      ],
     },
     {
       nama: "Galang Wardi",
-      bidang: "Keamanan",
-      progress: 100,
-      start: new Date(2025, 8, 15),
-      end: new Date(2025, 8, 15),
+      bidang: "Jaringan",
       foto: "/assets/Bokuto.jpg",
+      level: "2",
+      laporan: [
+        { id: "LPR907276", progress: 50, start: new Date(2025, 10, 2), end: new Date(2025, 10, 3) },
+        { id: "LPR826792", progress: 100, start: new Date(2025, 10, 10), end: new Date(2025, 10, 11) },
+      ],
     },
     {
       nama: "Albert Madara",
-      bidang: "Jaringan",
-      progress: 40,
-      start: new Date(2025, 8, 25),
-      end: new Date(2025, 8, 25),
+      bidang: "Perangkat Keras",
       foto: "/assets/Suika.jpg",
+      level: "3",
+      laporan: [
+        { id: "LPR802476", progress: 100, start: new Date(2025, 10, 3), end: new Date(2025, 10, 5) },
+        { id: "LPR937282", progress: 40, start: new Date(2025, 10, 9), end: new Date(2025, 10, 10) },
+      ],
     },
   ];
 
-  // Format bulan
-  const renderHeader = () => (
-    <div className="flex justify-between items-center mb-6">
-      <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-        <span className="text-blue-900">📊</span> Monitoring
-      </h1>
-      <div className="flex items-center gap-4">
-        <ChevronLeftIcon
-          onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-          className="w-5 h-5 text-gray-600 cursor-pointer"
-        />
-        <span className="font-semibold text-gray-700">
-          {format(currentMonth, "MMMM yyyy", { locale: id })}
-        </span>
-        <ChevronRightIcon
-          onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-          className="w-5 h-5 text-gray-600 cursor-pointer"
-        />
-      </div>
-    </div>
-  );
+  const [selectedTeknisi, setSelectedTeknisi] = useState(dataTeknisi[0]);
 
-  // Nama hari
   const renderDays = () => {
-    const days = [];
-    const date = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
-    for (let i = 0; i < 7; i++) {
-      days.push(
-        <div key={i} className="text-center font-semibold text-blue-900 py-2">
-          {date[i]}
-        </div>
-      );
-    }
-    return <div className="grid grid-cols-7">{days}</div>;
+    const days = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
+    return (
+      <div className="grid grid-cols-7 text-center font-semibold text-[#0F2C59] mb-3">
+        {days.map((day) => (
+          <div key={day} className="py-2">
+            {day}
+          </div>
+        ))}
+      </div>
+    );
   };
 
-  // Grid tanggal dinamis
   const renderCells = () => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
@@ -82,58 +81,57 @@ export default function MonitoringSeksi() {
     const rows = [];
     let days = [];
     let day = startDate;
+    const laporanList = selectedTeknisi.laporan;
 
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         const formattedDate = format(day, "d");
-        const cloneDay = day;
-        const task = data.find(
-          (t) => day >= t.start && day <= t.end
-            );
-
+        const laporanHariIni = laporanList.filter(
+          (lap) => day >= lap.start && day <= lap.end
+        );
+        const laporanFiltered = laporanHariIni.filter((lap) => {
+          if (filter === "Draft") return lap.progress < 100;
+          if (filter === "Progress") return lap.progress === 100;
+          return true;
+        });
 
         days.push(
           <div
-            key={day}
-            onClick={() => setSelectedDate(cloneDay)}
-            className={`relative border rounded-lg min-h-[100px] p-1 transition ${
+            key={day.toISOString()}
+            className={`relative border rounded-xl min-h-[100px] p-2 text-sm transition ${
               !isSameMonth(day, monthStart)
-                ? "bg-gray-100 text-gray-400"
+                ? "bg-gray-50 text-gray-400"
                 : "bg-white hover:bg-gray-50"
             }`}
           >
-            <span className="text-xs text-gray-500 absolute top-1 right-2">
+            <span className="absolute top-1 right-2 text-xs text-gray-400">
               {formattedDate}
             </span>
 
-            {task && (
-              <div
-                className={`mt-6 text-left text-white p-2 rounded-lg ${
-                task.progress === 100 ? "bg-blue-900" : "bg-blue-700"
-                }`}
-              >
-              <div className="flex items-center gap-2">
-                <img
-                  src={task.foto}
-                  alt={task.nama}
-                  className="w-6 h-6 rounded-full object-cover"
-              />
-              <div>
-                <p className="text-xs font-semibold">{task.nama}</p>
-                <p className="text-[11px] opacity-90">{task.bidang}</p>
-                <p className="text-[10px] opacity-75 mt-1">
-                {task.progress}% selesai
-                </p>
-              </div>
+            <div className="flex flex-col gap-1 mt-5">
+              {laporanFiltered.map((lap) => (
+            <div
+              key={lap.id}
+              onClick={() => navigate(`/monitoring-tiket/${lap.id}`)}
+              className={`cursor-pointer text-white text-xs px-2 py-1 rounded-md w-fit transition ${
+                lap.progress === 100 ? "bg-[#0F2C59] hover:bg-[#1e448a]" : "bg-blue-700 hover:bg-blue-800"
+              }`}
+            >
+              {lap.id}
             </div>
-          </div>
-          )}
+          ))}
 
+            </div>
           </div>
         );
         day = addDays(day, 1);
       }
-      rows.push(<div key={day} className="grid grid-cols-7 gap-2">{days}</div>);
+
+      rows.push(
+        <div key={day.toISOString()} className="grid grid-cols-7 gap-2 mb-2">
+          {days}
+        </div>
+      );
       days = [];
     }
 
@@ -143,59 +141,107 @@ export default function MonitoringSeksi() {
   return (
     <div className="min-h-screen bg-[#f8fafc] py-8 px-6">
       <div className="bg-white shadow-lg rounded-2xl p-8 max-w-6xl mx-auto">
-        {renderHeader()}
+        {/* === Judul Monitoring === */}
+        <h1 className="text-3xl font-bold text-[#0F2C59] mb-2">Monitoring</h1>
 
-        {/* Filter */}
-        <div className="flex flex-wrap justify-between items-center mb-6">
-          <div className="flex flex-wrap gap-6">
-            <div className="flex flex-col">
-              <label className="text-gray-600 text-sm mb-1">Level Teknisi</label>
-              <select className="border rounded-lg p-2 text-sm min-w-[150px]">
-                <option>Semua</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-              </select>
-            </div>
+        {/* === Tombol Filter Status === */}
+       {/* === Tombol Filter Status (dalam box) === */}
+<div className="flex justify-end mb-6">
+  <div className="flex gap-2 border border-gray-300 rounded-2xl px-3 py-2 bg-gray-50 shadow-sm">
+    {["Semua", "Progress", "Selesai"].map((item) => (
+      <button
+        key={item}
+        onClick={() => setFilter(item)}
+        className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+          filter === item
+            ? "bg-[#0F2C59] text-white"
+            : "text-gray-700 hover:bg-gray-200"
+        }`}
+      >
+        {item}
+      </button>
+    ))}
+  </div>
+</div>
 
-            <div className="flex flex-col">
-              <label className="text-gray-600 text-sm mb-1">Bidang Teknisi</label>
-              <select className="border rounded-lg p-2 text-sm min-w-[150px]">
-                <option>Semua</option>
-                <option>Keamanan</option>
-                <option>Jaringan</option>
-                <option>Perangkat Keras</option>
-              </select>
-            </div>
 
-            <div className="flex flex-col">
-              <label className="text-gray-600 text-sm mb-1">Lihat Pekerjaan</label>
-              <select className="border rounded-lg p-2 text-sm min-w-[150px]">
-                <option>Semua</option>
-                <option>Sri Wulandari</option>
-                <option>Galang Wardi</option>
-              </select>
-            </div>
+        {/* === Navigasi Bulan === */}
+        <div className="flex items-center gap-2 mb-8">
+          <button
+            onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+            className="bg-[#0F2C59] text-white p-2 rounded-lg hover:bg-[#15397A] transition"
+          >
+            <ChevronLeftIcon className="w-2 h-2" />
+          </button>
+          <span className="text-gray-700 font-semibold text-lg capitalize">
+            {format(currentMonth, "MMMM", { locale: id })}
+          </span>
+          <button
+            onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+            className="bg-[#0F2C59] text-white p-2 rounded-lg hover:bg-[#15397A] transition"
+          >
+            <ChevronRightIcon className="w-2 h-2" />
+          </button>
+        </div>
+
+        {/* === Filter Dropdowns (Full Width, 3 Kolom) === */}
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          {/* Level Teknisi */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm mb-1">Level Teknisi</label>
+            <select
+              value={level}
+              onChange={(e) => setLevel(e.target.value)}
+              className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full"
+            >
+              <option>Semua</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
           </div>
 
-          <div className="flex gap-2">
-            {["Semua", "Progress", "Selesai"].map((item) => (
-              <button
-                key={item}
-                onClick={() => setFilter(item)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium ${
-                  filter === item
-                    ? "bg-blue-900 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
+          {/* Bidang Teknisi */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm mb-1">Bidang Teknisi</label>
+            <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full">
+              <option>Semua</option>
+              <option>Keamanan</option>
+              <option>Jaringan</option>
+              <option>Perangkat Keras</option>
+            </select>
+          </div>
+
+          {/* Lihat Pekerjaan */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm mb-1">Lihat Pekerjaan</label>
+            <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 w-full bg-white">
+              <img
+                src={selectedTeknisi.foto}
+                alt={selectedTeknisi.nama}
+                className="w-6 h-6 rounded-full mr-2 object-cover"
+              />
+              <select
+                value={selectedTeknisi.nama}
+                onChange={(e) => {
+                  const teknisi = dataTeknisi.find(
+                    (t) => t.nama === e.target.value
+                  );
+                  setSelectedTeknisi(teknisi);
+                }}
+                className="bg-transparent text-sm w-full outline-none"
               >
-                {item}
-              </button>
-            ))}
+                {dataTeknisi.map((t) => (
+                  <option key={t.nama} value={t.nama}>
+                    {t.nama}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
-        {/* Kalender */}
+        {/* === Kalender === */}
         {renderDays()}
         {renderCells()}
       </div>
