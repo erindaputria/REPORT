@@ -1,60 +1,120 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, X, Bell, Lock, Users, Smartphone } from "lucide-react";
+import { Menu, X, Bell, FileText } from "lucide-react";
 import Header from "../../../components/Header";
 import LeftSidebar from "../../../components/LeftSidebar";
 
-const ServiceApplication = () => {
+const Pengajuan = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [selectedOpd, setSelectedOpd] = useState(null);
   const navigate = useNavigate();
 
-  const services = [
+  const opdList = [
+    { id: 1, name: "Dinas Kesehatan", logo: "/assets/Dinas Kesehatan.png" },
+    { id: 2, name: "Dinas Perhubungan", logo: "/assets/Dinas Perhubungan.png" },
+    { id: 3, name: "Dinas Pendidikan", logo: "/assets/Dinas Pendidikan.png" },
     {
-      title: "Reset Password",
-      titleDisplay: (
-        <>
-          Reset
-          <br />
-          Password
-        </>
-      ),
-      bgColor: "bg-[#226597]",
-      image: "/assets/Reset Password.png",
-      route: "/ResetPassword",
+      id: 4,
+      name: "Dinas Pekerjaan Umum dan Penataan Ruang",
+      logo: "/assets/Dinas Pekerjaan Umum dan Penataan Ruang.png",
     },
     {
-      title: "Akses Sistem",
-      titleDisplay: (
-        <>
-          Akses
-          <br />
-          Sistem
-        </>
-      ),
-      color: "from-purple-400 to-purple-600",
-      bgColor: "bg-[#226597]",
-      image: "/assets/Akses Sistem.png",
-      route: "/AksesSistem",
+      id: 5,
+      name: "Dinas Sosial",
+      logo: "/assets/Dinas Sosial.png",
     },
     {
-      title: "Permintaan Perangkat",
-      titleDisplay: (
-        <>
-          Permintaan
-          <br />
-          Perangkat
-        </>
-      ),
-      color: "from-orange-400 to-orange-600",
-      bgColor: "bg-[#226597]",
-      image: "/assets/Permintaan Perangkat.png",
-      route: "/Permintaan",
+      id: 6,
+      name: "Dinas Lingkungan Hidup",
+      logo: "/assets/Dinas Lingkungan Hidup.png",
+    },
+    {
+      id: 7,
+      name: "Dinas Komunikasi dan Informatika",
+      logo: "/assets/Dinas Komunikasi dan Informatika.png",
+    },
+    {
+      id: 8,
+      name: "Dinas Pariwisata dan Ekonomi Kreatif",
+      logo: "/assets/Dinas Pariwisata & Ekonomi Kreatif.png",
+    },
+    {
+      id: 9,
+      name: "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu",
+      logo: "/assets/Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu.png",
+    },
+    {
+      id: 10,
+      name: "Dinas Tenaga Kerja",
+      logo: "/assets/Dinas Tenaga Kerja.png",
+    },
+    {
+      id: 11,
+      name: "Dinas Pertanian",
+      logo: "/assets/Dinas Pertanian.png",
+    },
+    {
+      id: 12,
+      name: "Dinas Perindustrian dan Perdagangan",
+      logo: "/assets/Dinas Perindustrian dan Perdagangan.png",
+    },
+    {
+      id: 13,
+      name: "Dinas Kependudukan dan Pencatatan Sipil",
+      logo: "/assets/Dinas Kependudukan dan Pencatatan Sipil.png",
+    },
+    {
+      id: 14,
+      name: "Dinas Ketahanan Pangan",
+      logo: "/assets/Dinas Ketahanan Pangan.png",
+    },
+    {
+      id: 15,
+      name: "Dinas Pemuda dan Olahraga",
+      logo: "/assets/Dinas Pemuda dan Olahraga.png",
+    },
+    {
+      id: 16,
+      name: "Dinas Perumahan dan Kawasan Permukiman",
+      logo: "/assets/Dinas Perumahan dan Kawasan Permukiman.png",
+    },
+    {
+      id: 17,
+      name: "Dinas Perpustakaan dan Kearsipan",
+      logo: "/assets/Dinas Perpustakaan dan Kearsipan.png",
+    },
+    {
+      id: 18,
+      name: "Dinas Pengendalian Penduduk, Perlindungan Perempuan dan Anak",
+      logo: "/assets/Dinas Pengendalian Penduduk, Perlindungan Perempuan dan Anak.png",
+    },
+    {
+      id: 19,
+      name: "Dinas Pertahanan atau Tata Ruang",
+      logo: "/assets/Dinas Pertahanan atau Tata Ruang.png",
+    },
+    {
+      id: 20,
+      name: "Dinas Kepemudaan, Olahraga, dan Pariwisata",
+      logo: "/assets/Dinas Kepemudaan, Olahraga, dan Pariwisata.png",
     },
   ];
 
-  // Fungsi untuk handle navigasi
-  const handleServiceClick = (route) => {
-    navigate(route);
+  // Split OPD list into two columns (9 each)
+  const leftColumnOpd = opdList.slice(0, 10);
+  const rightColumnOpd = opdList.slice(10, 20);
+
+  const handleOpdSelect = (opd) => {
+    setSelectedOpd(opd);
+    console.log(`OPD selected: ${opd.name}`);
+
+    // Navigasi ke FormPengajuan dengan membawa data OPD
+    navigate("/FormPengajuan", {
+      state: {
+        selectedOpd: opd,
+      },
+    });
   };
 
   return (
@@ -73,7 +133,7 @@ const ServiceApplication = () => {
           </div>
           <div className="w-8 h-8 rounded-full overflow-hidden">
             <img
-              src="/professional-woman-avatar.png"
+              src="/assets/Haechan.jpg"
               alt="Profil"
               className="w-full h-full object-cover"
             />
@@ -159,47 +219,84 @@ const ServiceApplication = () => {
 
           <div className="relative z-10 container mx-auto px-4 py-6 md:py-8">
             {/* Page Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold text-[#226597] mb-4">
+            <div className="text-center mb-8">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#226597] mb-3">
                 Pengajuan Pelayanan
               </h1>
-              <p className="text-gray-500 text-lg">
-                Pilih permohonan yang Anda butuhkan
-              </p>
+              <p className="text-gray-600 text-lg">Pilih OPD tujuan Anda</p>
             </div>
 
-            {/* Service Cards */}
-            <div className="flex flex-col md:flex-row gap-6 justify-center items-center max-w-4xl mx-auto">
-              {services.map((service, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleServiceClick(service.route)}
-                  className="group cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                >
-                  <div
-                    className={`${service.bgColor} rounded-2xl p-6 text-center text-white shadow-lg min-h-[220px] w-64 flex flex-col items-center justify-center relative`}
-                  >
-                    {/* Gambar di atas */}
-                    <div className="mb-4">
-                      <div className="w-20 h-20 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-3 overflow-hidden">
-                        {service.image ? (
-                          <img
-                            src={service.image}
-                            alt={service.title}
-                            className="w-12 h-12 object-contain"
-                          />
-                        ) : (
-                          <service.icon className="w-8 h-8 text-white" />
-                        )}
+            {/* OPD Selection Grid - 2 Kolom dengan 9 OPD masing-masing */}
+            <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                {/* Kolom Kiri */}
+                <div className="space-y-3 md:space-y-4">
+                  {leftColumnOpd.map((opd) => (
+                    <div
+                      key={opd.id}
+                      className="group cursor-pointer"
+                      onClick={() => handleOpdSelect(opd)}
+                    >
+                      <div className="bg-gradient-to-r from-[#226597] to-[#226597] rounded-lg p-3 md:p-4 border border-transparent group-hover:border-blue-300 group-hover:shadow-lg transition-all duration-300">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors flex-shrink-0 overflow-hidden">
+                              {opd.logo ? (
+                                <img
+                                  src={opd.logo}
+                                  alt={`Logo ${opd.name}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <FileText className="text-[#226597] w-4 h-4 md:w-5 md:h-5" />
+                              )}
+                            </div>
+                            <div className="min-w-0">
+                              <h3 className="font-semibold text-white text-sm leading-tight">
+                                {opd.name}
+                              </h3>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-
-                    <h3 className="text-xl font-semibold mb-2 text-center leading-tight">
-                      {service.titleDisplay || service.title}
-                    </h3>
-                  </div>
+                  ))}
                 </div>
-              ))}
+
+                {/* Kolom Kanan */}
+                <div className="space-y-3 md:space-y-4">
+                  {rightColumnOpd.map((opd) => (
+                    <div
+                      key={opd.id}
+                      className="group cursor-pointer"
+                      onClick={() => handleOpdSelect(opd)}
+                    >
+                      <div className="bg-gradient-to-r from-[#226597] to-[#226597] rounded-lg p-3 md:p-4 border border-transparent group-hover:border-blue-300 group-hover:shadow-lg transition-all duration-300">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors flex-shrink-0 overflow-hidden">
+                              {opd.logo ? (
+                                <img
+                                  src={opd.logo}
+                                  alt={`Logo ${opd.name}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <FileText className="text-[#226597] w-4 h-4 md:w-5 md:h-5" />
+                              )}
+                            </div>
+                            <div className="min-w-0">
+                              <h3 className="font-semibold text-white text-sm leading-tight">
+                                {opd.name}
+                              </h3>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -208,4 +305,4 @@ const ServiceApplication = () => {
   );
 };
 
-export default ServiceApplication;
+export default Pengajuan;

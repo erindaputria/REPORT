@@ -7,7 +7,7 @@ import {
   LineChart,
   Line,
   XAxis,
-  YAxis,
+  YAxis, 
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";

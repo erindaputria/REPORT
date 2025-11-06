@@ -39,7 +39,7 @@ const KataSandiBaru = () => {
     }));
   };
 
-  // ✅ FUNGSI VALIDASI PASSWORD
+  // FUNGSI VALIDASI PASSWORD
   const validatePassword = (password) => {
     const minLength = 8;
     const hasUpperCase = /[A-Z]/.test(password);
@@ -77,14 +77,14 @@ const KataSandiBaru = () => {
 
     let hasError = false;
 
-    // ✅ VALIDASI PASSWORD BARU
+    // VALIDASI PASSWORD BARU
     const passwordError = validatePassword(formData.newPassword);
     if (passwordError) {
       setErrors((prev) => ({ ...prev, newPassword: passwordError }));
       hasError = true;
     }
 
-    // ✅ VALIDASI KONFIRMASI PASSWORD
+    // VALIDASI KONFIRMASI PASSWORD
     if (formData.newPassword !== formData.confirmPassword) {
       setErrors((prev) => ({
         ...prev,
@@ -102,7 +102,7 @@ const KataSandiBaru = () => {
       // Simulasi API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // ✅ LANGSUNG NAVIGASI KE LOGIN
+      // LANGSUNG NAVIGASI KE LOGIN
       navigate("/login");
     } catch (error) {
       console.error("Error:", error);

@@ -30,7 +30,7 @@ export function BerandaMasyarakat() {
     setIsDropdownOpen(false);
 
     if (item === "Profil Saya") {
-      navigate("/profilsaya");
+      navigate("/profilmasyarakat");
     } else if (item === "Tampilan") {
       navigate("/tampilan");
     } else if (item === "Keluar") {

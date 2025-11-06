@@ -172,9 +172,11 @@ const ProfilePage = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-black mb-1">
-                  Tanggal Penerimaan
+                  Divisi
                 </label>
-                <p className="text-gray-500 text-sm md:text-base">18-06-2023</p>
+                <p className="text-gray-500 text-sm md:text-base">
+                  Divisi Sumber Daya Manusia
+                </p>
               </div>
               <div className="hidden lg:block">
                 {/* Empty div untuk menjaga alignment grid di desktop */}
@@ -187,10 +189,10 @@ const ProfilePage = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-black mb-1">
-                  Divisi
+                  OPD
                 </label>
                 <p className="text-gray-500 text-sm md:text-base">
-                  Divisi Sumber Daya Manusia
+                  Dinas Kependudukan dan Pencatatan Sipil
                 </p>
               </div>
             </div>
