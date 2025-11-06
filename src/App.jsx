@@ -47,6 +47,15 @@ import AksiKBKota from "./pages/beranda/AdminKota/AksiKBKota";
 import KBEditorKota from "./pages/beranda/AdminKota/KBEditorKota";
 import LihatArtikelKota from "./pages/beranda/AdminKota/LihatArtikelKota";
 import PengumumanKota from "./pages/beranda/AdminKota/PengumumanKota";
+import PengajuanBidang from "./pages/beranda/Seksi/PengajuanBidang";
+import MonitoringTiketSeksi from "./pages/beranda/Seksi/MonitoringTiketSeksi"
+import DetailRating from "./pages/beranda/Seksi/DetailRating";
+import LayananChat from "./pages/beranda/Seksi/LayananChat"
+import LayananPesan from "./pages/beranda/Seksi/LayananPesan";
+import RFCTeknisi from "./pages/beranda/Teknisi/RFCTeknisi"
+import BuatFormRFC from "./pages/beranda/Teknisi/BuatFormRFC"
+import EditFormRFC from "./pages/beranda/Teknisi/EditFormRFC";
+import LihatFormRFC from "./pages/beranda/Teknisi/LihatFormRFC";
 
 //*-- Helpdesk --*/
 import HelpdeskChat from "./components/beranda/Helpdesk";
@@ -55,6 +64,7 @@ import HelpdeskChat from "./components/beranda/Helpdesk";
 import DashboardBidang from "./pages/bidang/DashboardBidang";
 import AksiTiket from "./pages/bidang/AksiTiket";
 import BuatPengumumanKota from "./pages/beranda/AdminKota/BuatPengumumanKota";
+import LayananChatSeksi from "./pages/beranda/Seksi/LayananChat";
 
 function App() {
   return (
@@ -71,6 +81,12 @@ function App() {
           <Route path="arsipseksi" element={<ArsipSeksi />} />
           <Route path="reopenseksi" element={<ReopenSeksi />} />
           <Route path="ratingseksi" element={<RatingSeksi />} />
+          <Route path="pengajuanbidang" element={<PengajuanBidang />} />
+          <Route path="monitoringtiketseksi" element={<MonitoringTiketSeksi />} />
+          <Route path="/monitoring-tiket/:id" element={<MonitoringTiketSeksi />} />
+          <Route path="detailrating" element={<DetailRating />} />
+          <Route path="layananchat" element={<LayananChat />} />
+          <Route path="layananpesan" element={<LayananPesan />} />
         </Route>
 
         {/* Layout TEKNISI */}
@@ -79,6 +95,10 @@ function App() {
           <Route path="cekdetailteknisi" element={<CekDetailTeknisi />} />
           <Route path="updateprogresteknisi" element={<UpdateProgressTeknisi />} />
           <Route path="ratingteknisi" element={<RatingTeknisi />} />
+          <Route path="rfcteknisi" element={<RFCTeknisi />} />
+          <Route path="buatformrfc" element={<BuatFormRFC />} />
+          <Route path="editformrfc" element={<EditFormRFC />} />
+          <Route path="lihatformrfc" element={<LihatFormRFC />} />
         </Route>
 
         {/* Layout KOTA */}

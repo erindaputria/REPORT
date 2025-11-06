@@ -1,50 +1,76 @@
 import React from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   HomeIcon,
-  ClipboardDocumentListIcon,
+  ClipboardDocumentCheckIcon,
   ChartBarIcon,
   StarIcon,
-  ChatBubbleLeftEllipsisIcon,
-} from "@heroicons/react/24/solid";
+  ChatBubbleLeftRightIcon,
+} from "@heroicons/react/24/outline";
 
-import { Link, useLocation } from "react-router-dom";
+export default function SidebarSeksi() {
+  const location = useLocation();
 
-const items = [
-  {label: "Dashboard", icon: HomeIcon, path:"/berandaseksi" },
-  {label: "Penugasan", icon: ClipboardDocumentListIcon, path:"/penugasanseksi" },
-  {label: "Monitoring", icon: ChartBarIcon },
-  {label: "Rating", icon: StarIcon },
-  {label: "Layanan Chat", icon: ChatBubbleLeftEllipsisIcon },
-];
+  // Deteksi jika user berada di salah satu halaman Monitoring
+  const isMonitoringActive = location.pathname.startsWith("/monitoringseksi");
 
-export default function Sidebar() {
-  const loc = useLocation();
+  const menuItems = [
+    { 
+      name: "Dashboard", 
+      icon: <HomeIcon className="w-5 h-5" />, 
+      path: "/berandaseksi" 
+    },
+    { 
+      name: "Penugasan", 
+      icon: <ClipboardDocumentCheckIcon className="w-5 h-5" />, 
+      path: "/penugasanseksi" 
+    },
+    { 
+      name: "Monitoring", 
+      icon: <ChartBarIcon className="w-5 h-5" />, 
+      path: "/monitoringseksi",
+      isActive: isMonitoringActive 
+    },
+    { 
+      name: "Rating", 
+      icon: <StarIcon className="w-5 h-5" />, 
+      path: "/ratingseksi" 
+    },
+    { 
+      name: "Layanan Chat", 
+      icon: <ChatBubbleLeftRightIcon className="w-5 h-5" />, 
+      path: "/layananchat" 
+    },
+  ];
+
   return (
-    <aside className="w-64 min-h-screen bg-white/90 shadow-lg p-6 sticky top-0">
-      <div className="flex items-center gap-3 mb-6 px-2">
-        <img
-          src="/assets/Logo Report.png"
-          alt="Logo"
-          className="w-10 h-10 object-contain"
-        />
-        <h1 className="text-xl font-extrabold bg-gradient-to-r from-[#d92e2e] to-[#6a0dad] bg-clip-text text-transparent tracking-wide">
-          REPORT
+    <aside className="w-64 h-screen bg-white shadow-md flex flex-col">
+      {/* === Logo === */}
+      <div className="flex items-center gap-4 px-6 py-5">
+        <img src="/assets/Logo Report.png" alt="Logo" className="w-12 h-12" />
+        <h1 className="font-bold text-2xl bg-gradient-to-r from-[#D32F2F] to-[#0F2C59] text-transparent bg-clip-text tracking-wide"> 
+          REPORT 
         </h1>
       </div>
 
-
-
-      <nav className="space-y-2">
-        {items.map((it) => {
-          const Active = it.icon;
-          const active = loc.pathname.startsWith(it.to);
-          return (
-            <Link key={it.to} to={it.to} className={`flex items-center gap-3 p-3 rounded-lg ${active ? "bg-blue-700 text-white shadow-md" : "text-slate-700 hover:bg-slate-100"}`}>
-              <Active className="w-5 h-5" />
-              <span className="font-medium text-sm">{it.label}</span>
-            </Link>
-          );
-        })}
+      {/* === Menu Navigasi === */}
+      <nav className="flex-1 mt-1">
+        {menuItems.map((item, index) => (
+          <NavLink
+            key={index}
+            to={item.path}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-5 py-3 mx-3 mb-2 text-sm font-medium transition-all ${
+                isActive || item.isActive
+                  ? "bg-[#0F2C59] text-white rounded-full shadow-sm"
+                  : "text-gray-700 hover:bg-gray-100 rounded-full"
+              }`
+            }
+          >
+            {item.icon}
+            <span>{item.name}</span>
+          </NavLink>
+        ))}
       </nav>
     </aside>
   );

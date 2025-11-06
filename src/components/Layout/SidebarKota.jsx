@@ -25,13 +25,15 @@ export default function SidebarKota() {
   return (
     <aside className="w-64 h-screen bg-white shadow-md flex flex-col">
       {/* Logo */}
-      <div className="flex items-center gap-2 px-6 py-5 border-b">
-        <img src="/assets/Logo Report.png" alt="Logo" className="w-8 h-8" />
-        <h1 className="font-bold text-lg text-[#D32F2F]">REPORT</h1>
+      <div className="flex items-center gap-4 px-6 py-5">
+        <img src="/assets/Logo Report.png" alt="Logo" className="w-12 h-12" />
+        <h1 className="font-bold text-2xl bg-gradient-to-r from-[#D32F2F] to-[#0F2C59] text-transparent bg-clip-text tracking-wide">
+          REPORT
+        </h1>
       </div>
 
       {/* Menu */}
-      <nav className="flex-1 mt-4">
+      <nav className="flex-1 mt-1">
         {menuItems.map((item, index) => (
           <NavLink
             key={index}

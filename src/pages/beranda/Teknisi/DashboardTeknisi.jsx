@@ -8,13 +8,13 @@ export default function DashboardTeknisi() {
   const navigate = useNavigate();
 
   const dataTiket = [
-    { id: 1, pengirim: "Doni Ridho", kategori: "Sistem Operasi", jenis: "IT", bentuk: "Non-Fisik", status: "Diproses", foto: "/assets/shizuku.jpg" },
+    { id: 1, pengirim: "Doni Ridho", kategori: "Sistem Operasi", jenis: "IT", bentuk: "Non-Fisik", Ket:"Reopen", status: "Diproses", foto: "/assets/shizuku.jpg" },
     { id: 2, pengirim: "Rio Widoro", kategori: "Jaringan", jenis: "IT", bentuk: "Non-Fisik", status: "Draft", foto: "/assets/Suika.jpg" },
     { id: 3, pengirim: "Lia Yustia", kategori: "Aplikasi", jenis: "Non-IT", bentuk: "Fisik", status: "Diproses", foto: "/assets/Bokuto.jpg" },
     { id: 4, pengirim: "Ridwan Yusuf", kategori: "Email", jenis: "IT", bentuk: "Fisik", status: "Draft", foto: "/assets/shizuku.jpg" },
     { id: 5, pengirim: "Ella Meisya", kategori: "Aplikasi", jenis: "IT", bentuk: "Fisik", status: "Draft", foto: "/assets/Suika.jpg" },
-    { id: 6, pengirim: "Sri Wulandari", kategori: "Sistem Operasi", jenis: "IT", bentuk: "Fisik", status: "Diproses", foto: "/assets/Bokuto.jpg" },
-    { id: 7, pengirim: "Supriatno", kategori: "Aplikasi", jenis: "Non-IT", bentuk: "Non-Fisik", status: "Draft", foto: "/assets/Suika.jpg" },
+    { id: 6, pengirim: "Sri Wulandari", kategori: "Sistem Operasi", jenis: "IT", bentuk: "Fisik", Ket:"Reopen", status: "Diproses", foto: "/assets/Bokuto.jpg" },
+    { id: 7, pengirim: "Supriatno", kategori: "Aplikasi", jenis: "Non-IT", bentuk: "Non-Fisik", Ket:"Reopen", status: "Draft", foto: "/assets/Suika.jpg" },
     { id: 8, pengirim: "Anya Rosalina", kategori: "Jaringan", jenis: "Non-IT", bentuk: "Non-Fisik", status: "Diproses", foto: "/assets/shizuku.jpg" },
     { id: 9, pengirim: "Widya Karim", kategori: "Email", jenis: "Non-IT", bentuk: "Fisik", status: "Draft", foto: "/assets/Bokuto.jpg" },
     { id: 10, pengirim: "Rudiono", kategori: "Sistem Operasi", jenis: "IT", bentuk: "Non-Fisik", status: "Draft", foto: "/assets/Suika.jpg" },
@@ -137,6 +137,7 @@ export default function DashboardTeknisi() {
                 <th className="p-3">Bentuk</th>
                 <th className="p-3 text-center">Lampiran</th>
                 <th className="p-3">Status</th>
+                <th className="p-3">Ket</th>
                 <th className="p-3 text-center">Aksi</th>
               </tr>
             </thead>
@@ -159,6 +160,7 @@ export default function DashboardTeknisi() {
                       {item.status}
                     </span>
                   </td>
+                  <td className="p-3">{item.Ket}</td>
                   <td className="p-3 text-center">
                     <button onClick={handleEdit} className="text-[#0F2C59] hover:text-[#15397A] transition">
                       <PencilSquareIcon className="w-5 h-5" />

@@ -1,84 +1,132 @@
 import React, { useState } from "react";
-import { FileText, RefreshCcw} from "lucide-react";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import {
+  DocumentIcon,
+  PencilSquareIcon,
+  ArrowPathIcon,
+} from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 export default function PenugasanSeksi() {
-  const [tab, setTab] = useState("pelaporan");
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("pelaporan");
 
   const data = [
     {
+      id: 1,
       nama: "Doni Ridho",
-      perihal: "Perangkat Keras",
-      tanggal: "18/09/2024",
+      kategori: "Sistem Operasi",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
       prioritas: "Rendah",
+      status: "Draft",
       foto: "/assets/Suika.jpg",
+      Ket:"Reopen",
+      lampiran: ["/assets/doc1.pdf"],
     },
     {
+      id: 2,
       nama: "Rio Widoro",
-      perihal: "Jaringan & Konektivitas",
-      tanggal: "18/09/2024",
+      kategori: "Jaringan",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
       prioritas: "Tinggi",
+      status: "Draft",
       foto: "/assets/shizuku.jpg",
+      lampiran: ["/assets/doc1.pdf", "/assets/doc2.pdf"],
     },
     {
+      id: 3,
       nama: "Lia Yustia",
-      perihal: "Perangkat Keras",
-      tanggal: "17/09/2024",
-      prioritas: "Rendah",
-      foto: "/assets/Suika.jpg",
-    },
-    {
-      nama: "Ridwan Yusuf",
-      perihal: "Email & Komunikasi",
-      tanggal: "17/09/2024",
-      prioritas: "Rendah",
-      foto: "/assets/shizuku.jpg",
-    },
-    {
-      nama: "Ella Meisya",
-      perihal: "Jaringan & Konektivitas",
-      tanggal: "17/09/2024",
-      prioritas: "Tinggi",
-      foto: "/assets/Suika.jpg",
-    },
-    {
-      nama: "Sri Wulandari",
-      perihal: "Keamanan",
-      tanggal: "16/09/2024",
-      prioritas: "Rendah",
-      foto: "/assets/shizuku.jpg",
-    },
-    {
-      nama: "Supriatno",
-      perihal: "Email & Komunikasi",
-      tanggal: "16/09/2024",
-      prioritas: "Rendah",
-      foto: "/assets/Suika.jpg",
-    },
-    {
-      nama: "Anya Rosalina",
-      perihal: "Email & Komunikasi",
-      tanggal: "16/09/2024",
-      prioritas: "Rendah",
-      foto: "/assets/shizuku.jpg",
-    },
-    {
-      nama: "Widya Karim",
-      perihal: "Keamanan",
-      tanggal: "16/09/2024",
+      kategori: "Aplikasi",
+      jenis: "Non-IT",
+      bentuk: "Fisik",
       prioritas: "Sedang",
+      status: "Diproses",
       foto: "/assets/Suika.jpg",
+      lampiran: ["/assets/doc1.pdf", "/assets/doc2.pdf", "/assets/doc3.pdf"],
     },
     {
-      nama: "Rudiono",
-      perihal: "Perangkat Keras",
-      tanggal: "15/09/2024",
+      id: 4,
+      nama: "Ridwan Yusuf",
+      kategori: "Email",
+      jenis: "IT",
+      bentuk: "Fisik",
       prioritas: "Rendah",
+      status: "Diproses",
       foto: "/assets/shizuku.jpg",
+      lampiran: [],
+    },
+    {
+      id: 5,
+      nama: "Ridwan Yusuf",
+      kategori: "Email",
+      jenis: "IT",
+      bentuk: "Fisik",
+      prioritas: "Rendah",
+      Ket: "reopen",
+      status: "Diproses",
+      foto: "/assets/shizuku.jpg",
+      lampiran: [],
+    },
+    {
+      id: 6,
+      nama: "Lia Yustia",
+      kategori: "Aplikasi",
+      jenis: "Non-IT",
+      bentuk: "Fisik",
+      prioritas: "Sedang",
+      status: "Diproses",
+      foto: "/assets/Suika.jpg",
+      lampiran: ["/assets/doc1.pdf", "/assets/doc2.pdf", "/assets/doc3.pdf"],
+    },
+    {
+      id: 7,
+      nama: "Doni Ridho",
+      kategori: "Sistem Operasi",
+      jenis: "IT",
+      bentuk: "Non-Fisik",
+      prioritas: "Rendah",
+      status: "Draft",
+      foto: "/assets/Suika.jpg",
+      lampiran: ["/assets/doc1.pdf"],
+    },
+    {
+      id: 8,
+      nama: "Rio Widoro",
+      kategori: "Jaringan",
+      jenis: "IT",
+      Ket:"Reopen",
+      bentuk: "Non-Fisik",
+      prioritas: "Tinggi",
+      status: "Draft",
+      foto: "/assets/shizuku.jpg",
+      lampiran: ["/assets/doc1.pdf", "/assets/doc2.pdf"],
+    },
+    {
+      id: 9,
+      nama: "Lia Yustia",
+      kategori: "Aplikasi",
+      Ket:"Reopen",
+      jenis: "Non-IT",
+      bentuk: "Fisik",
+      prioritas: "Sedang",
+      status: "Diproses",
+      foto: "/assets/Suika.jpg",
+      lampiran: ["/assets/doc1.pdf", "/assets/doc2.pdf", "/assets/doc3.pdf"],
+    },
+    {
+      id: 10,
+      nama: "Ridwan Yusuf",
+      kategori: "Email",
+      jenis: "IT",
+      bentuk: "Fisik",
+      prioritas: "Rendah",
+      status: "Diproses",
+      foto: "/assets/shizuku.jpg",
+      lampiran: [],
     },
   ];
 
-  // === Warna badge prioritas ===
   const getPriorityColor = (level) => {
     switch (level) {
       case "Tinggi":
@@ -92,116 +140,170 @@ export default function PenugasanSeksi() {
     }
   };
 
-  // === Jika gambar error, pakai default ===
-  const handleImageError = (e) => {
-    e.target.src = "/assets/default.jpg"; // pastikan kamu punya default.jpg di /public/assets/
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Diproses":
+        return "bg-orange-400";
+      default:
+        return "bg-gray-400";
+    }
   };
-  
+
   return (
-    <div className="bg-white shadow-lg rounded-2xl p-8 mt-4">
-      {/* Header + Tombol Refresh */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold">Penugasan</h1>
-        <button className="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
-          <RefreshCcw size={16} />
+    <div className="p-6 space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-[#0F2C59]">Penugasan</h1>
+      </div>
+
+      {/* Tabs + Refresh button in one row */}
+      <div className="flex items-center justify-between border-b mb-4">
+        <div className="flex">
+          {["pelaporan", "pelayanan"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-5 py-2 text-sm font-semibold capitalize rounded-t-lg ${
+                activeTab === tab
+                  ? "text-[#0F2C59] border-b-4 border-[#0F2C59]"
+                  : "text-gray-400 hover:text-[#0F2C59]"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        <button className="flex items-center gap-2 bg-[#0F2C59] hover:bg-[#15397A] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+          <ArrowPathIcon className="w-4 h-4" />
           Refresh
         </button>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-6 border-b border-gray-300 mb-6">
-        <button
-          onClick={() => setTab("pelaporan")}
-          className={`pb-2 font-medium ${
-            tab === "pelaporan"
-              ? "text-blue-700 border-b-2 border-blue-700"
-              : "text-gray-500 hover:text-gray-700"
-          }`}
-        >
-          Pelaporan
-        </button>
-        <button
-          onClick={() => setTab("pelayanan")}
-          className={`pb-2 font-medium ${
-            tab === "pelayanan"
-              ? "text-blue-700 border-b-2 border-blue-700"
-              : "text-gray-500 hover:text-gray-700"
-          }`}
-        >
-          Pelayanan
-        </button>
-      </div>
-
       {/* Filter */}
-      <div className="bg-gray-50 rounded-xl p-4 mb-6 shadow-sm">
-        <div className="flex items-center gap-6">
-          <div className="flex flex-col">
-            <label className="text-sm text-gray-600 mb-1">Perihal</label>
-            <select className="border border-gray-300 rounded-md p-2 text-sm">
+      <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm mb-5">
+        <h2 className="text-[#0F2C59] font-semibold mb-6 text-sm">
+          Filter pencarian
+        </h2>
+
+        {/* 2 kolom ke kanan, 3 baris ke bawah */}
+        <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          {/* Kategori */}
+          <div className="flex items-center justify-between">
+            <label className="w-24 text-sm font-medium text-gray-700">
+              Kategori
+            </label>
+            <select className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#0F2C59]">
               <option>Semua</option>
-              <option>Perangkat Keras</option>
-              <option>Keamanan</option>
-              <option>Jaringan & Konektivitas</option>
+              <option>Sistem Operasi</option>
+              <option>Aplikasi</option>
+              <option>Jaringan</option>
             </select>
           </div>
 
-          <div className="flex flex-col">
-            <label className="text-sm text-gray-600 mb-1">Prioritas</label>
-            <select className="border border-gray-300 rounded-md p-2 text-sm">
-                <option>Semua</option>
-                <option>Rendah</option>
-                <option>Sedang</option>
-                <option>Tinggi</option>
+          {/* Jenis */}
+          <div className="flex items-center justify-between">
+            <label className="w-24 text-sm font-medium text-gray-700">
+              Jenis
+            </label>
+            <select className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#0F2C59]">
+              <option>Semua</option>
+              <option>IT</option>
+              <option>Non-IT</option>
+            </select>
+          </div>
+
+          {/* Bentuk */}
+          <div className="flex items-center justify-between">
+            <label className="w-24 text-sm font-medium text-gray-700">
+              Bentuk
+            </label>
+            <select className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#0F2C59]">
+              <option>Semua</option>
+              <option>Fisik</option>
+              <option>Non-Fisik</option>
+            </select>
+          </div>
+
+          {/* Prioritas */}
+          <div className="flex items-center justify-between">
+            <label className="w-24 text-sm font-medium text-gray-700">
+              Prioritas
+            </label>
+            <select className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#0F2C59]">
+              <option>Semua</option>
+              <option>Rendah</option>
+              <option>Sedang</option>
+              <option>Tinggi</option>
+            </select>
+          </div>
+
+          {/* Status */}
+          <div className="flex items-center justify-between">
+            <label className="w-24 text-sm font-medium text-gray-700">
+              Status
+            </label>
+            <select className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#0F2C59]">
+              <option>Semua</option>
+              <option>Draft</option>
+              <option>Diproses</option>
             </select>
           </div>
         </div>
       </div>
 
-      {/* === Tabel === */}
+      {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full border-separate border-spacing-y-2">
-          <thead>
-            <tr className="bg-blue-900 text-white text-sm">
-              <th className="py-3 px-4 text-left rounded-l-lg">Pengirim</th>
-              <th className="py-3 px-4 text-left">Perihal</th>
-              <th className="py-3 px-4 text-left">Tanggal Masuk</th>
-              <th className="py-3 px-4 text-left">Lampiran</th>
-              <th className="py-3 px-4 text-left">Prioritas</th>
-              <th className="py-3 px-4 text-left rounded-r-lg">Aksi</th>
+        <table className="min-w-full text-sm text-left border-collapse">
+          <thead className="bg-[#0F2C59] text-white text-xs uppercase">
+            <tr>
+              <th className="py-3 px-4 rounded-tl-lg">Pengirim</th>
+              <th className="py-3 px-4">Kategori</th>
+              <th className="py-3 px-4">Jenis</th>
+              <th className="py-3 px-4">Bentuk</th>
+              <th className="py-3 px-4">Lampiran</th>
+              <th className="py-3 px-4">Prioritas</th>
+              <th className="py-3 px-4">Status</th>
+              <th className="py-3 px-4">Ket</th>
+              <th className="py-3 px-4 rounded-tr-lg">Aksi</th>
             </tr>
           </thead>
-          <tbody>
-            {data.map((item, i) => (
+          <tbody className="text-gray-700">
+            {data.map((item) => (
               <tr
-                key={i}
-                className="bg-gray-50 hover:bg-gray-100 transition rounded-lg"
+                key={item.id}
+                className="border-b last:border-none hover:bg-gray-50"
               >
-                <td className="py-3 px-4 flex items-center gap-3">
+                <td className="py-3 px-4 flex items-center gap-2">
                   <img
                     src={item.foto}
                     alt={item.nama}
-                    onError={handleImageError}
                     className="w-8 h-8 rounded-full object-cover"
                   />
-                  <span className="text-gray-800 text-sm font-medium">
-                    {item.nama}
-                  </span>
+                  <span>{item.nama}</span>
                 </td>
-                <td className="py-3 px-4 text-sm text-gray-700">
-                  {item.perihal}
-                </td>
-                <td className="py-3 px-4 text-sm text-gray-700">
-                  {item.tanggal}
-                </td>
+                <td className="py-3 px-4">{item.kategori}</td>
+                <td className="py-3 px-4">{item.jenis}</td>
+                <td className="py-3 px-4">{item.bentuk}</td>
                 <td className="py-3 px-4">
-                  <FileText
-                    size={18}
-                    className="text-blue-600 cursor-pointer hover:text-blue-800 transition"
-                  />
+                  <div className="flex gap-2">
+                    {item.lampiran.length > 0 ? (
+                      item.lampiran.slice(0, 3).map((_, idx) => (
+                        <DocumentIcon
+                          key={idx}
+                          className="w-5 h-5 text-[#0F2C59] hover:text-[#15397A] cursor-pointer"
+                        />
+                      ))
+                    ) : (
+                      <span className="text-gray-400 text-xs italic">
+                        Tidak ada
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td className="py-3 px-4">
                   <span
-                    className={`text-white text-xs px-3 py-1 rounded-full font-medium ${getPriorityColor(
+                    className={`text-xs text-white px-3 py-1 rounded-full ${getPriorityColor(
                       item.prioritas
                     )}`}
                   >
@@ -209,10 +311,22 @@ export default function PenugasanSeksi() {
                   </span>
                 </td>
                 <td className="py-3 px-4">
-                  <PencilSquareIcon
-                    size={16}
-                    className="w-5 h-5 text-blue-600 hover:text-blue-600 cursor-pointer transition"
-                  />
+                  <span
+                    className={`text-xs text-white px-3 py-1 rounded-full ${getStatusColor(
+                      item.status
+                    )}`}
+                  >
+                    {item.status}
+                  </span>
+                </td>
+                <td className="py-3 px-4">{item.Ket}</td>
+                <td className="py-3 px-4">
+                  <button
+                    onClick={() => navigate("/formpenugasanseksi")}
+                    className="text-[#0F2C59] hover:text-[#15397A]"
+                  >
+                    <PencilSquareIcon className="w-5 h-5" />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -220,15 +334,27 @@ export default function PenugasanSeksi() {
         </table>
       </div>
 
-      {/* Pagination */}
-      <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
-        <p>Menampilkan 1 - 10 dari 50 data</p>
-        <div className="flex items-center gap-2">
-          <button className="px-2 py-1 rounded-md hover:bg-gray-200">&lt;</button>
-          <button className="px-3 py-1 bg-blue-700 text-white rounded-md">1</button>
-          <button className="px-2 py-1 rounded-md hover:bg-gray-200">2</button>
-          <button className="px-2 py-1 rounded-md hover:bg-gray-200">3</button>
-          <button className="px-2 py-1 rounded-md hover:bg-gray-200">&gt;</button>
+      {/* Footer */}
+      <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
+        <span>
+          Menampilkan data 1 sampai {data.length} dari 23 data
+        </span>
+        <div className="flex gap-2">
+          <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
+            &lt;
+          </button>
+          <button className="px-3 py-1 border rounded-lg bg-blue-600 text-white">
+            1
+          </button>
+          <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
+            2
+          </button>
+          <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
+            3
+          </button>
+          <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
+            &gt;
+          </button>
         </div>
       </div>
     </div>
