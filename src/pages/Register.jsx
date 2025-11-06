@@ -57,7 +57,6 @@ const Register = () => {
       const data = await response.json();
       console.log("Register success:", data);
 
-      // ✅ LANGSUNG NAVIGASI KE LOGIN SETELAH BERHASIL
       navigate("/login");
     } catch (error) {
       console.error("Error:", error);

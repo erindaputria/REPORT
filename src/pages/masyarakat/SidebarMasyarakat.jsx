@@ -7,7 +7,7 @@ const SidebarMasyarakat = () => {
 
   const [activeItem, setActiveItem] = useState("");
 
-  // Deteksi item aktif berdasarkan path URL - FIXED
+  // Deteksi item aktif berdasarkan path URL - IMPROVED
   useEffect(() => {
     const path = location.pathname;
     console.log("Current path:", path); // Debugging
@@ -15,12 +15,13 @@ const SidebarMasyarakat = () => {
     if (
       path === "/" ||
       path === "/BerandaMasyarakat" ||
-      path === "/berandamasyarakat"
+      path === "/berandamasyarakat" ||
+      path === "/BerandaMasyarakat.jsx" // Tambahan untuk handle kemungkinan path
     ) {
       setActiveItem("berandamasyarakat");
-    } else if (path === "/kotakmasuk") {
+    } else if (path === "/kotakmasuk" || path === "/KotakMasuk") {
       setActiveItem("kotakmasuk");
-    } else if (path === "/riwayat") {
+    } else if (path === "/riwayat" || path === "/Riwayat") {
       setActiveItem("riwayat");
     } else {
       setActiveItem("");
@@ -29,10 +30,10 @@ const SidebarMasyarakat = () => {
 
   const navItems = [
     {
-      id: "berandamasyarakat", // ID harus sama dengan yang di useEffect
+      id: "berandamasyarakat",
       label: "Beranda",
       icon: "/assets/Logo Beranda.png",
-      path: "/BerandaMasyarakat", // Path harus sama dengan route di App.js
+      path: "/BerandaMasyarakat", // Pastikan path ini sama dengan route di App.js
     },
     {
       id: "kotakmasuk",
@@ -51,7 +52,6 @@ const SidebarMasyarakat = () => {
   const handleNavigation = (item) => {
     console.log("Navigating to:", item.path); // Debugging
     navigate(item.path);
-    // Tidak perlu setActiveItem di sini, karena useEffect akan menanganinya
   };
 
   return (

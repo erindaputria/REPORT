@@ -179,7 +179,6 @@ const LogIn = () => {
               </div>
             </div>
 
-            {/* PERUBAHAN DI SINI: Mengganti <a> dengan <Link> */}
             <div className="text-right mb-4">
               <Link
                 to="/lupapassword"

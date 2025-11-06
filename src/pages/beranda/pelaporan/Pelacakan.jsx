@@ -1,39 +1,43 @@
 import { useState } from "react";
-import { Menu, X, Bell, Search, Eye, EyeOff } from "lucide-react";
+import { Menu, X, Bell, Search } from "lucide-react";
 import Header from "../../../components/Header";
 import LeftSidebar from "../../../components/LeftSidebar";
+import { useNavigate } from "react-router-dom";
 
 const Pelacakan = () => {
+  const navigate = useNavigate();
   const [reportId, setReportId] = useState("");
-  const [pin, setPin] = useState("");
-  const [showPin, setShowPin] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
-  const [errors, setErrors] = useState({ reportId: "", pin: "" });
+  const [errors, setErrors] = useState({ reportId: "" });
 
   const handleSearch = () => {
     // Reset errors
-    const newErrors = { reportId: "", pin: "" };
+    const newErrors = { reportId: "" };
 
     // Validasi
     if (!reportId) {
       newErrors.reportId = "Harap isi ID Laporan dengan benar";
     }
-    if (!pin) {
-      newErrors.pin = "Harap isi Pin dengan benar";
-    }
 
     setErrors(newErrors);
 
     // Jika ada error, stop execution
-    if (!reportId || !pin) {
+    if (!reportId) {
       return;
     }
 
-    console.log("Searching for report:", { reportId, pin });
+    console.log("Searching for report:", { reportId });
 
-    // Simulasi: data tidak ditemukan
-    setShowErrorPopup(true);
+    // Validasi khusus: hanya ID LPR318728 yang dianggap benar
+    if (reportId === "LPR318728") {
+      // ID benar, navigasi ke halaman data ditemukan
+      console.log("ID LPR318728 ditemukan! Navigasi ke halaman data ditemukan");
+      navigate("/dataditemukan"); // Pastikan route ini ada di App.js
+    } else {
+      // ID salah, tampilkan error popup
+      setShowErrorPopup(true);
+    }
   };
 
   const closeErrorPopup = () => {
@@ -45,13 +49,6 @@ const Pelacakan = () => {
     setReportId(e.target.value);
     if (errors.reportId) {
       setErrors((prev) => ({ ...prev, reportId: "" }));
-    }
-  };
-
-  const handlePinChange = (e) => {
-    setPin(e.target.value);
-    if (errors.pin) {
-      setErrors((prev) => ({ ...prev, pin: "" }));
     }
   };
 
@@ -161,15 +158,17 @@ const Pelacakan = () => {
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#226597] mb-3 md:py-4">
                 Pelacakan Laporan
               </h1>
-              <p className="text-gray-500 text-lg">Lacak status laporan Anda</p>
+              <p className="text-gray-500 text-sm md:text-lg">
+                Lacak status laporan Anda
+              </p>
             </div>
 
             {/* Tracking Form */}
             <div className="max-w-xl mx-auto">
-              {/* ID Laporan Section - Outside Card */}
+              {/* ID Laporan Section - Responsive Layout */}
               <div className="mb-6">
-                <div className="flex items-center space-x-4 mb-2">
-                  <label className="text-sm font-medium text-gray-700 whitespace-nowrap min-w-[120px]">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
+                  <label className="text-sm font-medium text-gray-700 whitespace-nowrap sm:min-w-[120px] text-left">
                     ID Laporan
                   </label>
                   <div className="flex-1">
@@ -182,13 +181,14 @@ const Pelacakan = () => {
                         type="text"
                         value={reportId}
                         onChange={handleReportIdChange}
-                        className="w-full px-3 py-2 border-0 focus:ring-0 focus:outline-none bg-transparent"
+                        className="w-full px-3 py-2 border-0 focus:ring-0 focus:outline-none bg-transparent text-sm md:text-base"
+                        placeholder="Masukkan ID Laporan"
                       />
                     </div>
                   </div>
                 </div>
                 {errors.reportId && (
-                  <div className="text-left ml-[136px]">
+                  <div className="text-left sm:ml-[136px]">
                     <p className="text-red-500 text-sm mt-1">
                       {errors.reportId}
                     </p>
@@ -196,48 +196,11 @@ const Pelacakan = () => {
                 )}
               </div>
 
-              {/* PIN Card */}
-              <div className="mb-6">
-                <div className="flex items-center space-x-4 mb-2">
-                  <label className="text-sm font-medium text-gray-700 whitespace-nowrap min-w-[120px]">
-                    PIN
-                  </label>
-                  <div className="flex-1">
-                    <div
-                      className={`bg-white rounded-2xl shadow-xl p-4 border ${
-                        errors.pin ? "border-red-300" : "border-blue-100"
-                      }`}
-                    >
-                      <div className="relative">
-                        <input
-                          type={showPin ? "text" : "password"}
-                          value={pin}
-                          onChange={handlePinChange}
-                          className="w-full px-3 py-2 pr-12 border-0 focus:ring-0 focus:outline-none bg-transparent"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPin(!showPin)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#226597] hover:text-[#226597]"
-                        >
-                          {showPin ? <EyeOff size={20} /> : <Eye size={20} />}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {errors.pin && (
-                  <div className="text-left ml-[136px]">
-                    <p className="text-red-500 text-sm mt-1">{errors.pin}</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Search Button */}
-              <div className="flex justify-start mt-6 ml-36">
+              {/* Search Button - Responsive Positioning */}
+              <div className="flex justify-center sm:justify-start mt-6 sm:ml-36">
                 <button
                   onClick={handleSearch}
-                  className="bg-[#226597] hover:bg-[#1a507a] text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                  className="bg-[#226597] hover:bg-[#1a507a] text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2 w-full sm:w-auto justify-center"
                 >
                   <Search size={20} />
                   Cari
@@ -248,41 +211,44 @@ const Pelacakan = () => {
         </div>
       </div>
 
-      {/* Error Popup */}
+      {/* Error Popup - Responsive */}
       {showErrorPopup && (
         <>
           {/* Overlay */}
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
             {/* Popup Content */}
-            <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full mx-auto">
+            <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 max-w-sm w-full mx-auto">
               <div className="text-center">
-                {/* Warning Icon */}
+                {/* Warning Icon - Center aligned */}
                 <div className="flex justify-center mb-4">
                   <svg
-                    width="80"
-                    height="80"
-                    viewBox="0 0 100 100"
+                    width="60"
+                    height="60"
+                    className="w-12 h-12 md:w-16 md:h-16"
+                    viewBox="0 0 100 110"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M50 0C77.615 0 100 22.385 100 50C100 77.615 77.615 100 50 100C22.385 100 0 77.615 0 50C0 22.385 22.385 0 50 0ZM50 10C39.3913 10 29.2172 14.2143 21.7157 21.7157C14.2143 29.2172 10 39.3913 10 50C10 60.6087 14.2143 70.7828 21.7157 78.2843C29.2172 85.7857 39.3913 90 50 90C60.6087 90 70.7828 85.7857 78.2843 78.2843C85.7857 70.7828 90 60.6087 90 50C90 39.3913 85.7857 29.2172 78.2843 21.7157C70.7828 14.2143 60.6087 10 50 10ZM50 65C51.3261 65 52.5979 65.5268 53.5355 66.4645C54.4732 67.4021 55 68.6739 55 70C55 71.3261 54.4732 72.5979 53.5355 73.5355C52.5979 74.4732 51.3261 75 50 75C48.6739 75 47.4021 74.4732 46.4645 73.5355C45.5268 72.5979 45 71.3261 45 70C45 68.6739 45.5268 67.4021 46.4645 66.4645C47.4021 65.5268 48.6739 65 50 65ZM50 20C51.3261 20 52.5979 20.5268 53.5355 21.4645C54.4732 22.4021 55 23.6739 55 25V55C55 56.3261 54.4732 57.5979 53.5355 58.5355C52.5979 59.4732 51.3261 60 50 60C48.6739 60 47.4021 59.4732 46.4645 58.5355C45.5268 57.5979 45 56.3261 45 55V25C45 23.6739 45.5268 22.4021 46.4645 21.4645C47.4021 20.5268 48.6739 20 50 20Z"
-                      fill="#113F67"
+                      d="M50 9.34961C77.615 9.34961 100 31.7346 100 59.3496C100 86.9646 77.615 109.35 50 109.35C22.385 109.35 0 86.9646 0 59.3496C0 31.7346 22.385 9.34961 50 9.34961ZM50 19.3496C39.3913 19.3496 29.2172 23.5639 21.7157 31.0653C14.2143 38.5668 10 48.7409 10 59.3496C10 69.9583 14.2143 80.1324 21.7157 87.6339C29.2172 95.1353 39.3913 99.3496 50 99.3496C60.6087 99.3496 70.7828 95.1353 78.2843 87.6339C85.7857 80.1324 90 69.9583 90 59.3496C90 48.7409 85.7857 38.5668 78.2843 31.0653C70.7828 23.5639 60.6087 19.3496 50 19.3496ZM50 74.3496C51.3261 74.3496 52.5979 74.8764 53.5355 75.8141C54.4732 76.7518 55 78.0235 55 79.3496C55 80.6757 54.4732 81.9475 53.5355 82.8851C52.5979 83.8228 51.3261 84.3496 50 84.3496C48.6739 84.3496 47.4021 83.8228 46.4645 82.8851C45.5268 81.9475 45 80.6757 45 79.3496C45 78.0235 45.5268 76.7518 46.4645 75.8141C47.4021 74.8764 48.6739 74.3496 50 74.3496ZM50 29.3496C51.3261 29.3496 52.5979 29.8764 53.5355 30.8141C54.4732 31.7518 55 33.0235 55 34.3496V64.3496C55 65.6757 54.4732 66.9475 53.5355 67.8851C52.5979 68.8228 51.3261 69.3496 50 69.3496C48.6739 69.3496 47.4021 68.8228 46.4645 67.8851C45.5268 66.9475 45 65.6757 45 64.3496V34.3496C45 33.0235 45.5268 31.7518 46.4645 30.8141C47.4021 29.8764 48.6739 29.3496 50 29.3496Z"
+                      fill="#FF5F57"
                     />
                   </svg>
                 </div>
 
                 {/* Error Message */}
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2">
                   Data tidak ditemukan!
                 </h3>
-                <p className="text-gray-600 mb-6">Cek kembali inputan Anda</p>
+                <p className="text-gray-600 text-sm md:text-base mb-6">
+                  Cek kembali inputan Anda
+                </p>
 
-                {/* OK Button - Smaller */}
+                {/* OK Button - Responsive */}
                 <div className="flex justify-center">
                   <button
                     onClick={closeErrorPopup}
-                    className="bg-[#226597] hover:bg-[#1a507a] text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+                    className="bg-[#226597] hover:bg-[#1a507a] text-white font-semibold py-2 px-6 rounded-lg transition-colors text-sm md:text-base w-full sm:w-auto"
                   >
                     Oke
                   </button>

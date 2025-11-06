@@ -1,93 +1,49 @@
-import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Menu, X, Bell, XCircle } from "lucide-react";
-import Header from "../../../components/Header";
-import LeftSidebar from "../../../components/LeftSidebar";
+import { useState, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Menu, X, Bell, FileText, XCircle } from "lucide-react";
+import Header from "../../components/Header";
+import LeftSidebar from "../../components/LeftSidebar";
 
-export default function ResetPassword() {
+export default function FormMasyarakat() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [formData, setFormData] = useState({
-    nama: "",
-    nip: "",
-    divisi: "",
-    perangkat: "",
-    masalah: "",
-    informasiTambahan: "",
+    nama: "Lomon Kahiel",
+    nik: "3578651360230002",
+    email: "lomonkahiel@gmail.com",
+    rincianMasalah: "",
   });
+
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Ambil data profil dari localStorage saat komponen mount
-  useEffect(() => {
-    const userProfile = localStorage.getItem("userProfile");
-    if (userProfile) {
-      const profileData = JSON.parse(userProfile);
-      setFormData((prev) => ({
-        ...prev,
-        nama: profileData.nama || "",
-        nip: profileData.nip || "",
-        divisi: profileData.divisi || "",
-      }));
-    }
-  }, []);
+  const selectedOpd = location.state?.selectedOpd || {
+    name: "Dinas Pendidikan",
+    logo: "/assets/Dinas Pendidikan.png",
+  };
 
   const isFormValid = () => {
     return (
       formData.nama.trim() !== "" &&
-      formData.nip.trim() !== "" &&
-      formData.divisi.trim() !== "" &&
-      formData.perangkat.trim() !== "" &&
-      formData.masalah.trim() !== "" &&
-      uploadedFiles.length > 0 // Tambahkan validasi untuk file
+      formData.nik.trim() !== "" &&
+      formData.email.trim() !== "" &&
+      formData.rincianMasalah.trim() !== "" &&
+      uploadedFiles.length > 0
     );
   };
 
   const handleInputChange = (field, value) => {
-    // Hanya izin perubahan untuk field yang bukan nama, nip, divisi
-    if (field !== "nama" && field !== "nip" && field !== "divisi") {
-      setFormData((prev) => ({ ...prev, [field]: value }));
-    }
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
-
-    const allowedTypes = [
-      "image/jpeg",
-      "image/jpg",
-      "image/png",
-      "image/gif",
-      "application/pdf",
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "text/plain",
-    ];
-
-    const maxSize = 5 * 1024 * 1024;
-
-    const validFiles = files.filter((file) => {
-      if (!allowedTypes.includes(file.type)) {
-        alert(
-          `File ${file.name} tidak didukung. Hanya file gambar, PDF, Word, dan text yang diperbolehkan.`
-        );
-        return false;
-      }
-
-      if (file.size > maxSize) {
-        alert(
-          `File ${file.name} terlalu besar. Maksimal ukuran file adalah 5MB.`
-        );
-        return false;
-      }
-
-      return true;
-    });
-
     setUploadedFiles((prev) => [
       ...prev,
-      ...validFiles.map((file) => ({
+      ...files.map((file) => ({
         file,
         id: Math.random().toString(36).substr(2, 9),
         name: file.name,
@@ -95,7 +51,6 @@ export default function ResetPassword() {
         type: file.type,
       })),
     ]);
-
     event.target.value = "";
   };
 
@@ -111,38 +66,16 @@ export default function ResetPassword() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
-  const getFileIcon = (fileType) => {
-    if (fileType.startsWith("image/")) {
-      return "🖼️";
-    } else if (fileType === "application/pdf") {
-      return "📄";
-    } else if (fileType.includes("word") || fileType.includes("document")) {
-      return "📝";
-    } else if (fileType === "text/plain") {
-      return "📃";
-    } else {
-      return "📎";
-    }
-  };
-
   const handleKonfirmasiKirim = () => {
     if (isFormValid()) {
       setShowConfirmation(true);
     } else {
-      const missingFields = [];
-      if (!formData.nama.trim()) missingFields.push("Nama");
-      if (!formData.nip.trim()) missingFields.push("NIP");
-      if (!formData.divisi.trim()) missingFields.push("Divisi");
-      if (!formData.perangkat.trim()) missingFields.push("Jenis Akun/Sistem");
-      if (!formData.masalah.trim()) missingFields.push("Deskripsi Masalah");
-      if (uploadedFiles.length === 0) missingFields.push("Lampiran File"); // Tambahkan validasi file di alert
-
-      alert(`Harap lengkapi field berikut:\n${missingFields.join("\n")}`);
+      alert("Harap lengkapi semua field yang wajib diisi!");
     }
   };
 
-  const handleKirimPermohonan = () => {
-    const permohonanData = {
+  const handleKirimLaporan = () => {
+    const laporanData = {
       ...formData,
       uploadedFiles: uploadedFiles.map((file) => ({
         name: file.name,
@@ -151,13 +84,28 @@ export default function ResetPassword() {
       })),
       tanggal: new Date().toISOString(),
       status: "dikirim",
+      opdTujuan: selectedOpd.name,
     };
 
-    console.log("Data permohonan:", permohonanData);
+    console.log("Data laporan:", laporanData);
+    setShowConfirmation(false);
+    setShowSuccessPopup(true);
+  };
 
-    navigate("/suksespelayanan", {
+  const handleSuccessOk = () => {
+    navigate("/SuksesPelaporan", {
       state: {
-        permohonanData: permohonanData,
+        laporanData: {
+          ...formData,
+          uploadedFiles: uploadedFiles.map((file) => ({
+            name: file.name,
+            size: file.size,
+            type: file.type,
+          })),
+          tanggal: new Date().toISOString(),
+          status: "dikirim",
+          opdTujuan: selectedOpd.name,
+        },
       },
     });
   };
@@ -172,10 +120,11 @@ export default function ResetPassword() {
       })),
       tanggal: new Date().toISOString(),
       status: "draft",
+      opdTujuan: selectedOpd.name,
     };
 
     console.log("Data draft:", draftData);
-    localStorage.setItem("draftPermohonan", JSON.stringify(draftData));
+    localStorage.setItem("draftLaporan", JSON.stringify(draftData));
     alert("Draft berhasil disimpan!");
   };
 
@@ -213,7 +162,7 @@ export default function ResetPassword() {
         </div>
       </div>
 
-      {/* Left Sidebar - Hidden on mobile unless toggled */}
+      {/* Left Sidebar */}
       <div
         className={`${
           isMobileSidebarOpen ? "block" : "hidden"
@@ -240,7 +189,6 @@ export default function ResetPassword() {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col">
-        {/* Header */}
         <Header />
 
         {/* Main Content */}
@@ -290,117 +238,82 @@ export default function ResetPassword() {
           </div>
 
           <div className="relative z-10 container mx-auto px-4 py-6 md:py-8">
-            {/* Form Permohonan dalam Card */}
+            {/* Form Pelaporan dalam Card */}
             <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md border border-gray-200">
-              <div className="p-6 border-gray-200 text-center">
+              {/* Header Form */}
+              <div className="p-6 border-b border-gray-200 text-center">
                 <h2 className="text-2xl font-bold text-[#226597]">
-                  Permohonan Reset Password
+                  Pelaporan Online
                 </h2>
               </div>
 
               <div className="p-6 space-y-6">
-                {/* Form Fields - Semua sejajar */}
-                <div className="space-y-4">
-                  {/* Nama */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
-                      Nama
+                {/* Kirim laporan ke */}
+                <div className="space-y-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-start w-full gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                      Kirim laporan ke
                     </label>
-                    <input
-                      type="text"
-                      placeholder="Nama pengirim"
-                      value={formData.nama}
-                      readOnly
-                      className="flex-1 px-3 py-2 bg-gray-200 border border-gray-300 rounded-md text-sm cursor-not-allowed"
-                    />
-                  </div>
-
-                  {/* NIP */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
-                      NIP
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Nomor Induk Pegawai"
-                      value={formData.nip}
-                      readOnly
-                      className="flex-1 px-3 py-2 bg-gray-200 border border-gray-300 rounded-md text-sm cursor-not-allowed"
-                    />
-                  </div>
-
-                  {/* Divisi */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
-                      Divisi
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Divisi tempat bekerja"
-                      value={formData.divisi}
-                      readOnly
-                      className="flex-1 px-3 py-2 bg-gray-200 border border-gray-300 rounded-md text-sm cursor-not-allowed"
-                    />
-                  </div>
-
-                  {/* Jenis akun/sistem */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
-                      Jenis akun/sistem
-                    </label>
-                    <div className="flex-1 relative">
-                      <select
-                        value={formData.perangkat}
-                        onChange={(e) =>
-                          handleInputChange("perangkat", e.target.value)
-                        }
-                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm appearance-none"
-                      >
-                        <option value="" disabled>
-                          Pilih akun/sistem
-                        </option>
-                        <option value="akun sso opd">Akun SSO OPD</option>
-                        <option value="password perangkat">
-                          Password Perangkat
-                        </option>
-                        <option value="password aplikasi">
-                          Password Aplikasi
-                        </option>
-                      </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      </div>
+                    <div className="bg-[#226597] text-white px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2 justify-center sm:justify-start">
+                      {selectedOpd.logo && (
+                        <img
+                          src={selectedOpd.logo}
+                          alt={`Logo ${selectedOpd.name}`}
+                          className="w-5 h-5 object-cover rounded"
+                        />
+                      )}
+                      <span className="text-sm">{selectedOpd.name}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Deskripsi Masalah */}
+                {/* Form Fields */}
+                <div className="space-y-4">
+                  {/* Nama */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 sm:w-24 text-left whitespace-nowrap">
+                      Nama
+                    </label>
+                    <div className="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                      {formData.nama}
+                    </div>
+                  </div>
+
+                  {/* NIK */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 sm:w-24 text-left whitespace-nowrap">
+                      NIK
+                    </label>
+                    <div className="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                      {formData.nik}
+                    </div>
+                  </div>
+
+                  {/* Email */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 sm:w-24 text-left whitespace-nowrap">
+                      Email
+                    </label>
+                    <div className="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                      {formData.email}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Rincian Masalah */}
                 <div className="space-y-2 text-left">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Apa alasan Anda melakukan reset password?
+                    Apa yang ingin Anda laporkan?
                   </label>
-                  <p className="text-xs text-gray-500">
-                    Jelaskan lebih rinci terkait masalah tersebut agar kami
-                    dapat menindaklanjuti sesuai prosedur keamanan!
+                  <p className="text-xs text-gray-500 mb-2">
+                    Jelaskan rinci terkait masalah Anda agar kami dapat memahami
+                    masalah tersebut!
                   </p>
                   <textarea
                     placeholder="Ketik disini..."
-                    value={formData.masalah}
+                    value={formData.rincianMasalah}
                     onChange={(e) =>
-                      handleInputChange("masalah", e.target.value)
+                      handleInputChange("rincianMasalah", e.target.value)
                     }
                     className="w-full px-3 py-2 min-h-[120px] bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-left text-sm"
                   />
@@ -409,11 +322,11 @@ export default function ResetPassword() {
                 {/* Upload File */}
                 <div className="space-y-2 text-left">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Tambahkan file 
+                    Tambahkan file
                   </label>
-                  <p className="text-xs text-gray-500">
-                    Lampirkan bukti foto atau video terkait untuk membantu kami
-                    dalam menindaklanjuti sesuai prosedur keamanan!
+                  <p className="text-xs text-gray-500 mb-2">
+                    Lampirkan screenshot, log, atau dokumen terkait untuk
+                    membantu kami memahami masalah Anda lebih cepat!
                   </p>
 
                   <input
@@ -421,45 +334,44 @@ export default function ResetPassword() {
                     ref={fileInputRef}
                     onChange={handleFileUpload}
                     multiple
-                    accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt"
                     className="hidden"
                   />
 
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="bg-[#226597] hover:bg-[#1a507a] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center sm:justify-start w-full sm:w-auto"
+                    className="bg-[#226597] hover:bg-[#1a507a] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center w-full sm:w-auto gap-2"
                   >
                     <svg
-                      className="w-4 h-4 mr-2"
+                      width="7"
+                      height="13"
+                      viewBox="0 0 7 13"
                       fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
+                        d="M2.2375 4.04576V8.54107C2.24269 8.86979 2.37692 9.18328 2.61121 9.41391C2.84551 9.64453 3.16109 9.77379 3.48984 9.77379C3.8186 9.77379 4.13418 9.64453 4.36847 9.41391C4.60277 9.18328 4.73699 8.86979 4.74219 8.54107L4.74625 2.64888C4.74966 2.36792 4.69726 2.08908 4.5921 1.82852C4.48694 1.56796 4.33111 1.33087 4.13364 1.13098C3.93616 0.931099 3.70098 0.7724 3.44171 0.664087C3.18245 0.555773 2.90426 0.5 2.62328 0.5C2.3423 0.5 2.06412 0.555773 1.80485 0.664087C1.54559 0.7724 1.3104 0.931099 1.11293 1.13098C0.915452 1.33087 0.759618 1.56796 0.654458 1.82852C0.549298 2.08908 0.496904 2.36792 0.500313 2.64888V8.58076C0.494588 8.9763 0.567552 9.36904 0.714962 9.73614C0.862372 10.1032 1.08129 10.4374 1.35898 10.7191C1.63667 11.0009 1.9676 11.2246 2.33253 11.3773C2.69746 11.53 3.0891 11.6086 3.48469 11.6086C3.88028 11.6086 4.27192 11.53 4.63685 11.3773C5.00177 11.2246 5.3327 11.0009 5.61039 10.7191C5.88809 10.4374 6.107 10.1032 6.25441 9.73614C6.40182 9.36904 6.47479 8.9763 6.46906 8.58076V3.03763"
+                        stroke="white"
+                        strokeWidth="1"
+                        strokeMiterlimit="10"
                         strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                       />
                     </svg>
-                    Lampirkan File
+                    Lampirkan file
                   </button>
 
-                  {uploadedFiles.length > 0 ? (
+                  {uploadedFiles.length > 0 && (
                     <div className="mt-4 space-y-2">
-                      <p className="text-sm font-medium text-gray-700">
-                        File yang diupload ({uploadedFiles.length}):
-                      </p>
-                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                      <div className="space-y-2">
                         {uploadedFiles.map((file) => (
                           <div
                             key={file.id}
                             className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-md p-3"
                           >
                             <div className="flex items-center space-x-3 min-w-0 flex-1">
-                              <span className="text-lg flex-shrink-0">
-                                {getFileIcon(file.type)}
-                              </span>
+                              <FileText
+                                size={16}
+                                className="text-gray-400 flex-shrink-0"
+                              />
                               <div className="min-w-0 flex-1">
                                 <p className="text-sm font-medium text-gray-700 truncate">
                                   {file.name}
@@ -479,40 +391,18 @@ export default function ResetPassword() {
                         ))}
                       </div>
                     </div>
-                  ) : (
-                    <p className="text-xs text-red-500 mt-2">
-                    </p>
                   )}
                 </div>
 
-                {/* Informasi Tambahan */}
-                <div className="space-y-2 text-left">
-                  <label className="text-sm font-medium text-gray-700 block">
-                    Informasi Tambahan
-                  </label>
-                  <p className="text-xs text-gray-500">
-                    Tambahkan detail tambahan yang mungkin membantu kami dalam
-                    memahami masalah atau permintaan Anda!
-                  </p>
-                  <textarea
-                    placeholder="Ketik disini (opsional)..."
-                    value={formData.informasiTambahan}
-                    onChange={(e) =>
-                      handleInputChange("informasiTambahan", e.target.value)
-                    }
-                    className="w-full px-3 py-2 min-h-[120px] bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-left text-sm"
-                  />
-                </div>
-
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row justify-between pt-4 gap-3 sm:gap-0">
+                <div className="flex flex-col sm:flex-row justify-between pt-6 gap-3 sm:gap-0 border-t border-gray-200">
                   <button
                     onClick={handleBatalkan}
-                    className="text-black border border-gray-300 bg-transparent px-4 py-2 rounded-md text-sm font-medium hover:bg-red-50 transition-colors text-center order-2 sm:order-1"
+                    className="px-6 py-2 border border-gray-300 bg-white text-gray-700 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors text-center"
                   >
                     Batalkan
                   </button>
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 order-1 sm:order-2">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <button
                       onClick={handleSimpanDraft}
                       className="text-black bg-transparent px-0 py-0 text-sm font-medium hover:text-black underline transition-colors text-center sm:text-left"
@@ -521,14 +411,14 @@ export default function ResetPassword() {
                     </button>
                     <button
                       onClick={handleKonfirmasiKirim}
-                      className={`px-4 py-2 rounded-md text-sm font-medium transition-colors text-center ${
+                      className={`px-6 py-2 rounded-md text-sm font-medium transition-colors text-center ${
                         isFormValid()
                           ? "bg-[#226597] hover:bg-[#1a507a] text-white cursor-pointer"
                           : "bg-gray-300 text-gray-500 cursor-not-allowed"
                       }`}
                       disabled={!isFormValid()}
                     >
-                      Ajukan Permohonan
+                      Kirim
                     </button>
                   </div>
                 </div>
@@ -543,18 +433,17 @@ export default function ResetPassword() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4 p-6">
             <div className="text-center">
-              {/* Logo Peringatan */}
               <div className="flex justify-center mb-4">
                 <svg
-                  width="60"
-                  height="60"
-                  viewBox="0 0 120 120"
+                  width="70"
+                  height="70"
+                  viewBox="0 0 100 100"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M60 19.3495C87.615 19.3495 110 41.7345 110 69.3495C110 96.9645 87.615 119.349 60 119.349C32.385 119.349 10 96.9645 10 69.3495C10 41.7345 32.385 19.3495 60 19.3495ZM60 29.3495C49.3913 29.3495 39.2172 33.5638 31.7157 41.0652C24.2143 48.5667 20 58.7408 20 69.3495C20 79.9581 24.2143 90.1323 31.7157 97.6338C39.2172 105.135 49.3913 109.349 60 109.349C70.6087 109.349 80.7828 105.135 88.2843 97.6338C95.7857 90.1323 100 79.9581 100 69.3495C100 58.7408 95.7857 48.5667 88.2843 41.0652C80.7828 33.5638 70.6087 29.3495 60 29.3495ZM60 84.3495C61.3261 84.3495 62.5979 84.8763 63.5355 85.814C64.4732 86.7516 65 88.0234 65 89.3495C65 90.6756 64.4732 91.9473 63.5355 92.885C62.5979 93.8227 61.3261 94.3495 60 94.3495C58.6739 94.3495 57.4021 93.8227 56.4645 92.885C55.5268 91.9473 55 90.6756 55 89.3495C55 88.0234 55.5268 86.7516 56.4645 85.814C57.4021 84.8763 58.6739 84.3495 60 84.3495ZM60 39.3495C61.3261 39.3495 62.5979 39.8763 63.5355 40.814C64.4732 41.7516 65 43.0234 65 44.3495V74.3495C65 75.6756 64.4732 76.9473 63.5355 77.885C62.5979 78.8227 61.3261 79.3495 60 79.3495C58.6739 79.3495 57.4021 78.8227 56.4645 77.885C55.5268 76.9473 55 75.6756 55 74.3495V44.3495C55 43.0234 55.5268 41.7516 56.4645 40.814C57.4021 39.8763 58.6739 39.3495 60 39.3495Z"
-                    fill="#113F67"
+                    d="M50 0C77.615 0 100 22.385 100 50C100 77.615 77.615 100 50 100C22.385 100 0 77.615 0 50C0 22.385 22.385 0 50 0ZM50 10C39.3913 10 29.2172 14.2143 21.7157 21.7157C14.2143 29.2172 10 39.3913 10 50C10 60.6087 14.2143 70.7828 21.7157 78.2843C29.2172 85.7857 39.3913 90 50 90C60.6087 90 70.7828 85.7857 78.2843 78.2843C85.7857 70.7828 90 60.6087 90 50C90 39.3913 85.7857 29.2172 78.2843 21.7157C70.7828 14.2143 60.6087 10 50 10ZM50 65C51.3261 65 52.5979 65.5268 53.5355 66.4645C54.4732 67.4021 55 68.6739 55 70C55 71.3261 54.4732 72.5979 53.5355 73.5355C52.5979 74.4732 51.3261 75 50 75C48.6739 75 47.4021 74.4732 46.4645 73.5355C45.5268 72.5979 45 71.3261 45 70C45 68.6739 45.5268 67.4021 46.4645 66.4645C47.4021 65.5268 48.6739 65 50 65ZM50 20C51.3261 20 52.5979 20.5268 53.5355 21.4645C54.4732 22.4021 55 23.6739 55 25V55C55 56.3261 54.4732 57.5979 53.5355 58.5355C52.5979 59.4732 51.3261 60 50 60C48.6739 60 47.4021 59.4732 46.4645 58.5355C45.5268 57.5979 45 56.3261 45 55V25C45 23.6739 45.5268 22.4021 46.4645 21.4645C47.4021 20.5268 48.6739 20 50 20Z"
+                    fill="#FF5F57"
                   />
                 </svg>
               </div>
@@ -568,7 +457,7 @@ export default function ResetPassword() {
 
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <button
-                  onClick={handleKirimPermohonan}
+                  onClick={handleKirimLaporan}
                   className="px-4 py-2 bg-[#226597] text-white rounded-md text-sm font-medium hover:bg-[#1a5078] transition-colors"
                 >
                   Ya, saya yakin
@@ -578,6 +467,53 @@ export default function ResetPassword() {
                   className="px-4 py-2 bg-red-600 border border-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700 transition-colors"
                 >
                   Batalkan
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Popup Berhasil Dikirim */}
+      {showSuccessPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4 p-6">
+            <div className="text-center">
+              <div className="flex justify-center mb-4">
+                <svg
+                  width="70"
+                  height="70"
+                  viewBox="0 0 90 90"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M44.6667 86.3333C56.1725 86.3333 66.5892 81.6696 74.1294 74.1294C81.6696 66.5892 86.3333 56.1725 86.3333 44.6667C86.3333 33.1608 81.6696 22.7442 74.1294 15.2039C66.5892 7.66371 56.1725 3 44.6667 3C33.1608 3 22.7442 7.66371 15.2039 15.2039C7.66371 22.7442 3 33.1608 3 44.6667C3 56.1725 7.66371 66.5892 15.2039 74.1294C22.7442 81.6696 33.1608 86.3333 44.6667 86.3333Z"
+                    fill="white"
+                    stroke="#27C840"
+                    strokeWidth="6"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M28 46.3333L39.6667 58L62 35.6667"
+                    stroke="#27C840"
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+
+              <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                Laporan berhasil terkirim!
+              </h3>
+
+              <div className="flex justify-center">
+                <button
+                  onClick={handleSuccessOk}
+                  className="px-6 py-2 bg-[#226597] text-white rounded-md text-sm font-medium hover:bg-[#1a5078] transition-colors mt-6"
+                >
+                  Oke
                 </button>
               </div>
             </div>

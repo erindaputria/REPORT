@@ -1,42 +1,132 @@
-import { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { ArrowRight, X, Menu, Bell } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import Header from "../../components/Header";
 import LeftSidebar from "../../components/LeftSidebar";
-import { Menu, X, Bell } from "lucide-react";
 
-const KnowledgeBase = () => {
+export default function KnowledgeBase() {
+  const navigate = useNavigate();
+  const [deleteMode, setDeleteMode] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("Semua");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showArticlePopup, setShowArticlePopup] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const searchRef = useRef(null);
 
-  const faqItems = [
+  const data = [
     {
-      id: 1,
-      question: "Bagaimana cara membuat tiket baru?",
+      judul: "Cara Login ke Sistem Menggunakan Akun SSO",
+      kategori: "Akun dan SSO",
     },
     {
-      id: 2,
-      question: "Bagaimana cara mengecek status tiket saya?",
+      judul: "Panduan Aktivasi Akun Email Dinas Baru",
+      kategori: "Akun dan SSO",
     },
     {
-      id: 3,
-      question: "Bagaimana panduan untuk menghubungi support langsung?",
+      judul: "Cara Reset Password untuk Akun SSO",
+      kategori: "Akun dan SSO",
     },
     {
-      id: 4,
-      question: "Bagaimana panduan untuk reset password?",
+      judul: "Cara Membuat Tiket Laporan Baru di Sistem",
+      kategori: "Pelaporan dan Pelayanan",
     },
     {
-      id: 5,
-      question: "Berapa lama tiket biasanya ditanggani?",
+      judul: "Langkah-Langkah Melihat Status Tiket",
+      kategori: "Pelaporan dan Pelayanan",
     },
     {
-      id: 6,
-      question: "Apa yang harus dilakukan jika tiket belum mendapat respon?",
+      judul: "Cara Melihat Riwayat Laporan Tiket Sebelumnya",
+      kategori: "Pelaporan dan Pelayanan",
+    },
+    {
+      judul: "Arti Warna dan Status Tiket",
+      kategori: "Pelaporan dan Pelayanan",
+    },
+    {
+      judul: "Langkah-Langkah untuk Permohonan Pelayanan",
+      kategori: "Pelaporan dan Pelayanan",
+    },
+    {
+      judul: "Cara Melaporkan Tiket yang Salah Kategori",
+      kategori: "Pelaporan dan Pelayanan",
+    },
+    {
+      judul: "Tambah Dokumen Pendukung Permintaan",
+      kategori: "Layanan dan Formulir",
+    },
+    {
+      judul: "Cara Mengisi Formulir Pelaporan",
+      kategori: "Layanan dan Formulir",
+    },
+    {
+      judul: "Cara Mengisi Formulir Pelayanan",
+      kategori: "Layanan dan Formulir",
     },
   ];
 
-  const handleFaqClick = (id) => {
-    console.log(`FAQ item ${id} clicked`);
-    // Add your logic here to expand/show answer
+  const categories = [
+    "Semua",
+    "Pelaporan dan Pelayanan",
+    "Akun dan SSO",
+    "Layanan dan Formulir",
+  ];
+
+  // Filter suggestions berdasarkan pencarian
+  const filteredSuggestions = data.filter((item) => {
+    const judulText =
+      typeof item.judul === "string"
+        ? item.judul
+        : item.judul.props.children.join(" ");
+    return judulText.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
+  const filteredData =
+    activeCategory === "Semua"
+      ? data
+      : data.filter((item) => item.kategori === activeCategory);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setShowSuggestions(e.target.value.length > 0);
+  };
+
+  const handleSuggestionClick = (judul) => {
+    const judulText =
+      typeof judul === "string" ? judul : judul.props.children.join(" ");
+    setSearchQuery(judulText);
+    setShowSuggestions(false);
+  };
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleDeleteMode = () => {
+  };
+
+  const toggleSelect = (judul) => {
+    setSelected((prev) =>
+      prev.includes(judul)
+        ? prev.filter((item) => item !== judul)
+        : [...prev, judul]
+    );
+  };
+
+  const handleArrowClick = () => {
+    setShowArticlePopup(true);
   };
 
   return (
@@ -94,122 +184,139 @@ const KnowledgeBase = () => {
         <Header />
 
         {/* Main Content */}
-        <div className="flex-1 relative overflow-hidden">
-          {/* Custom SVG Background */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <svg
-              width="100%"
-              height="100%"
-              viewBox="0 0 1065 351"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-              className="min-h-[200px] md:min-h-[350px]"
-            >
-              <mask
-                id="mask0_135_1312"
-                style={{ maskType: "alpha" }}
-                maskUnits="userSpaceOnUse"
-                x="0"
-                y="0"
-                width="1065"
-                height="351"
-              >
-                <rect
-                  width="1065"
-                  height="351"
-                  transform="matrix(-1 0 0 1 1065 0)"
-                  fill="#C4C4C4"
-                />
-              </mask>
-              <g mask="url(#mask0_135_1312)">
-                <g opacity="0.1">
-                  <path
-                    d="M-41.6782 68.2948C-41.6782 68.2948 -11.9803 97.8027 210.646 104.858C379.127 110.195 696.24 12.9597 888.09 19.2171C1085.55 25.5972 1064.34 90.1343 1064.34 46.8847V111.544C1064.34 111.544 998.397 50.7495 883.776 51.3017C715.224 52.2219 368.556 184.609 202.88 188.719C41.3033 192.707 -41.6782 111.544 -41.6782 111.544V68.2948Z"
-                    fill="#226597"
-                  />
-                </g>
-                <g opacity="0.2">
-                  <path
-                    d="M-4.97253 67.2116C376.62 306.122 638.244 -6.8645 841.318 0.115997C1050.41 7.34143 1065 129.454 1065 80.7744V153.58C1065 153.58 996.235 123.465 878.373 114.241C450.722 80.7744 425.791 380.116 227.03 348.135C28.2697 316.155 -110.155 1.35828 -4.97253 67.2116Z"
-                    fill="#226597"
-                  />
-                </g>
-              </g>
-            </svg>
-          </div>
-
-          <div className="relative z-10 container mx-auto px-4 py-6 md:py-8">
-            {/* Page Header */}
-            <div className="text-center mb-6 md:mb-8">
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#226597] mb-3 md:mb-4">
-                Knowledge Base
-              </h1>
-              <p className="text-gray-500 text-sm md:text-base lg:text-lg">
-                Pelajari dan cari solusi yang Anda butuhkan
-              </p>
-            </div>
-
-            {/* Search Bar */}
-            <div className="max-w-md md:max-w-2xl mx-auto mb-6 md:mb-8">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Cari di sini"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 md:px-6 py-2 md:py-3 lg:py-4 bg-white rounded-full shadow-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700 placeholder-gray-400 text-sm md:text-base"
-                />
-                <button className="absolute right-3 md:right-4 top-1/2 transform -translate-y-1/2 p-1 md:p-2 text-gray-400 hover:text-[#226597] transition-colors">
-                  <svg
-                    className="w-4 h-4 md:w-5 md:h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                </button>
+        <div className="flex-1 py-4 md:py-8">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            {/* Container utama di tengah */}
+            <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 lg:p-8">
+              {/* Header dengan judul dan deskripsi */}
+              <div className="text-center space-y-2 md:space-y-3 mb-6 md:mb-8">
+                <h1 className="text-2xl md:text-3xl font-bold text-[#226597]">
+                  Knowledge Base
+                </h1>
+                <p className="text-gray-600 text-sm md:text-lg">
+                  Pelajari dan cari solusi yang Anda butuhkan
+                </p>
               </div>
-            </div>
 
-            {/* FAQ Grid */}
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 lg:gap-6">
-                {faqItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className="bg-white rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-3 md:p-4 lg:p-6 cursor-pointer group"
-                    onClick={() => handleFaqClick(item.id)}
-                  >
-                    <div className="flex items-start justify-between">
-                      {/* Teks pertanyaan dibuat fleksibel biar full kiri */}
-                      <div className="flex-1">
-                        <p className="text-gray-700 text-xs md:text-sm lg:text-base leading-relaxed group-hover:text-gray-900 transition-colors text-left">
-                          {item.question}
-                        </p>
-                      </div>
+              {/* Search Bar */}
+              <div className="max-w-2xl mx-auto mb-6 md:mb-8">
+                <div className="relative" ref={searchRef}>
+                  <input
+                    type="text"
+                    placeholder="Cari di sini"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    onFocus={() => setShowSuggestions(searchQuery.length > 0)}
+                    className="w-full text-left px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-300 rounded-2xl md:rounded-3xl shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#226597] transition-all text-sm md:text-lg pr-12 md:pr-16"
+                  />
+                  <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_1639_3478)">
+                        <path
+                          d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z"
+                          stroke="#113F67"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M18.9999 18.9999L14.6499 14.6499"
+                          stroke="#113F67"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_1639_3478">
+                          <rect width="20" height="20" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </div>
 
-                      {/* Tombol plus */}
-                      <button className="flex-shrink-0 w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-blue-100 transition-colors ml-2">
-                        <svg
-                          className="w-2.5 h-2.5 md:w-3 md:h-3 lg:w-4 lg:h-4 text-gray-600 group-hover:text-blue-600 transition-colors"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                  {/* Suggestions Dropdown */}
+                  {showSuggestions && filteredSuggestions.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-xl md:rounded-2xl shadow-lg mt-2 z-50 max-h-60 overflow-y-auto">
+                      {filteredSuggestions.map((item, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleSuggestionClick(item.judul)}
+                          className="w-full text-left px-4 md:px-6 py-2 md:py-3 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                          />
-                        </svg>
+                          <div className="font-medium text-gray-800 text-sm md:text-base">
+                            {item.judul}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Kategori Filter */}
+              <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-6 md:mb-8">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    className={`px-3 py-2 md:px-6 md:py-3 rounded-lg transition-all font-medium text-xs md:text-sm ${
+                      activeCategory === category
+                        ? "bg-[#226597] text-white shadow-md"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+
+              {/* Grid Artikel */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                {filteredData.map((item, index) => (
+                  <div
+                    key={index}
+                    className={`relative bg-white border border-gray-200 rounded-xl md:rounded-2xl shadow-md p-4 md:p-6 flex flex-col justify-between hover:shadow-lg transition-all min-h-[140px] md:h-48 ${
+                      selected.includes(item.judul) ? "ring-2 ring-red-400" : ""
+                    }`}
+                  >
+                    {/* Checkbox hanya muncul saat delete mode */}
+                    {deleteMode && (
+                      <input
+                        type="checkbox"
+                        checked={selected.includes(item.judul)}
+                        onChange={() => toggleSelect(item.judul)}
+                        className="absolute top-3 left-3 md:top-4 md:left-4 w-4 h-4 md:w-5 md:h-5 accent-red-500 cursor-pointer"
+                      />
+                    )}
+
+                    <div className={`${deleteMode ? "pl-6 md:pl-8" : ""}`}>
+                      <h3 className="font-semibold text-gray-800 mb-2 md:mb-3 text-sm md:text-base leading-tight">
+                        {item.judul}
+                      </h3>
+                      <span className="inline-block px-2 py-1 md:px-3 md:py-1 text-xs font-medium rounded-lg bg-[#226597] text-white">
+                        {item.kategori}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-end mt-3 md:mt-4">
+                      <button
+                        onClick={handleArrowClick}
+                        disabled={deleteMode}
+                        className={`flex items-center text-[#226597] hover:text-[#1a507a] transition-all ${
+                          deleteMode ? "opacity-30 cursor-not-allowed" : ""
+                        }`}
+                      >
+                        <ArrowRight
+                          size={18}
+                          className="w-4 h-4 md:w-5 md:h-5"
+                        />
                       </button>
                     </div>
                   </div>
@@ -219,8 +326,103 @@ const KnowledgeBase = () => {
           </div>
         </div>
       </div>
+
+      {/* Article Popup */}
+      {showArticlePopup && (
+        <>
+          {/* Overlay */}
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            {/* Popup Content */}
+            <div className="bg-white rounded-xl md:rounded-2xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+              {/* Header */}
+              <div className="bg-white text-[#226597] p-4 md:p-6">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <h2 className="text-lg md:text-2xl font-bold">
+                      Panduan Cek Knowledge Base
+                    </h2>
+                    <div className="mt-1 md:mt-2 text-xs md:text-sm text-black opacity-90">
+                      <p>Dari: Friska Farinda</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end gap-2 ml-4">
+                    {/* Button X di atas, card Akun dan SSO di bawah */}
+                    <button
+                      onClick={() => setShowArticlePopup(false)}
+                      className="text-black hover:bg-black hover:bg-opacity-10 rounded-full p-1 md:p-2 transition-all"
+                    >
+                      <X size={20} className="w-4 h-4 md:w-6 md:h-6" />
+                    </button>
+                    <span className="bg-[#226597] text-white px-2 py-1 md:px-3 md:py-1 rounded-lg text-xs md:text-sm font-medium">
+                      Akun dan SSO
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-4 md:p-6 max-h-[60vh] overflow-y-auto">
+                <div className="prose max-w-none">
+                  {/* Gambar ilustrasi */}
+                  <img
+                    src="/assets/konten.png"
+                    alt="Konten ilustrasi"
+                    className="w-full rounded-xl mb-4 md:mb-6 object-cover"
+                  />
+
+                  {/* Paragraf isi konten */}
+                  <p className="mb-3 md:mb-4 text-sm md:text-base leading-relaxed text-gray-700">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Nunc nec nibh faucibus, vehicula justo vel, eleifend lentor.
+                    Donec molestie tortor justo, ut posuere tortor efficitur i
+                    sed. Suspendisse velit magna, commodo id enim sed, elementum
+                    ultricies erat. Duis feugiat ligula o volutpat molestie.
+                    Donec non elit ac est viverra tincidunt in eget lorem. Eliam
+                    condimentum ante o consequat cursus. Sed efficitur maximus
+                    pharetra. Curabitur dui metus, koreet in consectetur quis,
+                    blandit sed velit. Nunc sapien tellus, semper id est ut,
+                    egestra depulsa lacus. Nunc pretium vehicula efficitur.
+                    Mordi sed orci ultramcorper, poran mi eu, volutpat crasi.
+                    Cras non finibus nisi. Donec et urma or punta accumsan
+                    molestie.
+                  </p>
+
+                  <p className="mb-3 md:mb-4 text-sm md:text-base leading-relaxed text-gray-700">
+                    Pellentesque suscipit nunc vel orci rutrum vulputate. Sed
+                    sit amet ex congue augue vestibulum disquent. Pellentesque
+                    hebdom mordi tristique senectus et netus et malesuado forma
+                    eci turpis egestas. Nam et dulce quem finibus rhoncus quis
+                    et enim. Nullam vel viverra felis, sed vehicula vitae. Duis
+                    pretium ipsum dolor, imperdiet velit quis gravida massa.
+                    Nunc quis ex ac metus eleifend imperdiet eu ut est. Nullam
+                    eleifend vehicula metus ac egestas. Sed sit amet risus
+                    lectus. Sed vehicula, risus vulputate convollis blandit,
+                    sapien lacus sollicitudin libero, o disquam enim justo oc
+                    orne.
+                  </p>
+
+                  <p className="mb-4 md:mb-6 text-sm md:text-base leading-relaxed text-gray-700">
+                    Pellentesque hebdom mordi tristique senectus et netus et
+                    malesuado forma eci turpis egestas. Nunc finibus uma eget
+                    faucibus imperdiet. Proseluis lectus odio, disquet vitae ex
+                    vel, consectetur eleifend ipsam. Proseluis euismod ligula eu
+                    efficitur laicus. Sed pretium tempor nullis. Aenean non
+                    bibendum velit. Donec viverra tortor a tristique maximus.
+                    Mouris non metus metus. Integer ex dolor, locula in leo et,
+                    facilisis ornero tellus. Sed et purus velit. Proseluis
+                    efficita venenatis felis, a semper quem cursus a ham
+                    lobortis ultricies est vitae locerot. Afiquam non magna
+                    vitae odio vehicula venenatis. Fusce tiringilla dolor quis
+                    risus mattis, sit amet egestas sem dignissim.
+                  </p>
+
+                  <hr className="my-4 md:my-6 border-gray-300" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
-};
-
-export default KnowledgeBase;
+}

@@ -301,7 +301,7 @@ const ReportForm = () => {
                   {/* Seksi Pengirim */}
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                     <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
-                      Seksi pengirim
+                      Pengirim
                     </label>
                     <div className="flex-1 flex items-center gap-3 text-left">
                       <img
@@ -315,23 +315,6 @@ const ReportForm = () => {
                     </div>
                   </div>
 
-                  {/* Pelapor */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
-                      Pelapor
-                    </label>
-                    <div className="flex-1 flex items-center gap-3 text-left">
-                      <img
-                        src={formData.pelapor.gambar}
-                        alt="Profile Pelapor"
-                        className="w-6 h-6 md:w-8 md:h-8 rounded-full object-cover"
-                      />
-                      <span className="text-gray-800 font-semibold text-sm md:text-base">
-                        {formData.pelapor.nama}
-                      </span>
-                    </div>
-                  </div>
-
                   {/* ID Laporan */}
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                     <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
@@ -340,18 +323,6 @@ const ReportForm = () => {
                     <div className="flex-1 bg-gray-100 p-2 md:p-3 rounded border border-gray-300 text-center">
                       <span className="text-gray-800 text-sm md:text-base">
                         {formData.idLaporan}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Perihal */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
-                      Perihal
-                    </label>
-                    <div className="flex-1 bg-gray-100 p-2 md:p-3 rounded border border-gray-300 text-center">
-                      <span className="text-gray-800 text-sm md:text-base">
-                        {formData.perihal}
                       </span>
                     </div>
                   </div>
@@ -371,6 +342,18 @@ const ReportForm = () => {
                       }`}
                     >
                       <span>{formData.prioritas}</span>
+                    </div>
+                  </div>
+
+                  {/* Perihal */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
+                      Status
+                    </label>
+                    <div className="flex-1 bg-gray-100 p-2 md:p-3 rounded border border-gray-300 text-center">
+                      <span className="text-gray-800 text-sm md:text-base">
+                        {formData.perihal}
+                      </span>
                     </div>
                   </div>
 

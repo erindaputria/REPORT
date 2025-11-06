@@ -49,16 +49,6 @@ const LupaPassword = () => {
     }
 
     try {
-      // Simulasi pengiriman email - ganti dengan API call yang sesungguhnya
-      // const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/forgot-password`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ email: formData.email }),
-      // });
-
-      // Simulasi delay pengiriman
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Simpan email untuk digunakan di halaman MasukKode

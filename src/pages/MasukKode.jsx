@@ -51,18 +51,15 @@ const MasukKode = () => {
       return;
     }
 
-    // ✅ KODE TEST - ganti dengan kode yang sesuai dari backend
     const correctCode = "1234"; // Contoh kode yang benar
 
     try {
       // Simulasi API call dengan timeout
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // ✅ CEK APAKAH KODE BENAR
       if (verificationCode === correctCode) {
         console.log("Verifikasi berhasil!");
 
-        // ✅ LANGSUNG NAVIGASI KE katasandibaru.jsx
         navigate("/katasandibaru");
       } else {
         setErrors({ code: "Kode verifikasi salah" });
@@ -77,7 +74,6 @@ const MasukKode = () => {
     }
   };
 
-  // ✅ FUNGSI KIRIM ULANG KODE
   const handleResendCode = async () => {
     try {
       // Simulasi pengiriman ulang kode
