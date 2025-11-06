@@ -1,17 +1,19 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { XCircle, Menu, X, Bell } from "lucide-react";
-import HeaderBidang from "./HeaderBidang";
-import SidebarBidang from "./SidebarBidang";
+import HeaderOpd from "./HeaderOpd";
+import SidebarOpd from "./SidebarOpd";
 
-const ReportForm = () => {
+const CekDetail = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [pengerjaanAwal, setPengerjaanAwal] = useState("");
+  const [tenggatPengerjaan, setTenggatPengerjaan] = useState("");
   const [formData, setFormData] = useState({
     seksiPengirim: {
-      nama: "Ikbal Rasyid",
-      gambar: "/assets/Ikbal Rasyid.png",
+      nama: "Jeno Arifin",
+      gambar: "/assets/Jeno.jpg",
     },
     pelapor: {
       nama: "Haikal Saputra",
@@ -22,12 +24,7 @@ const ReportForm = () => {
     prioritas: "Rendah",
     rincianMasalah:
       "Komputer di meja front office tidak dapat menyala meskipun sudah ditekan tambol power, padahal kabel listrik sudah dicek dan tersambung dengan benar. Lampu indikator pada CPU juga tidak menyala, sehingga pengguna tidak bisa mengakses aplikasi pelayanan maupun memproses dokumen masyarakat, dan layanan front office terhenti sementara.",
-    revisi: false,
-    tolak: false,
     lampiranFile: false,
-    revisiTipe: "",
-    tolakAlasan: "",
-    tolakTipe: "",
   });
 
   const fileInputRef = useRef(null);
@@ -143,6 +140,8 @@ const ReportForm = () => {
   const handleKirimPermohonan = () => {
     const laporanData = {
       ...formData,
+      pengerjaanAwal,
+      tenggatPengerjaan,
       uploadedFiles: uploadedFiles.map((file) => ({
         name: file.name,
         size: file.size,
@@ -158,13 +157,15 @@ const ReportForm = () => {
 
     // Kembali ke dashboard setelah 1 detik
     setTimeout(() => {
-      navigate("/dashboardbidang"); // Ganti dengan path dashboard yang sesuai
+      navigate("/dashboardoopd"); // Ganti dengan path dashboard yang sesuai
     }, 1000);
   };
 
   const handleSimpanDraft = () => {
     const draftData = {
       ...formData,
+      pengerjaanAwal,
+      tenggatPengerjaan,
       uploadedFiles: uploadedFiles.map((file) => ({
         name: file.name,
         size: file.size,
@@ -180,13 +181,7 @@ const ReportForm = () => {
   };
 
   const handleBatalkan = () => {
-    if (
-      window.confirm(
-        "Apakah Anda yakin ingin membatalkan? Data yang belum disimpan akan hilang."
-      )
-    ) {
-      navigate("/dashboard"); // Kembali ke dashboard saat batal
-    }
+    navigate("/dashboardopd");
   };
 
   const handleSubmit = (e) => {
@@ -225,7 +220,7 @@ const ReportForm = () => {
         } md:block fixed md:relative inset-0 z-50 md:z-auto bg-white md:bg-transparent w-72 md:w-auto`}
       >
         <div className="h-full">
-          <SidebarBidang />
+          <SidebarOpd />
           <button
             onClick={() => setIsMobileSidebarOpen(false)}
             className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full md:hidden"
@@ -246,7 +241,7 @@ const ReportForm = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <HeaderBidang />
+        <HeaderOpd />
 
         {/* Main Content */}
         <div className="flex-1 relative overflow-hidden">
@@ -301,7 +296,7 @@ const ReportForm = () => {
                   {/* Seksi Pengirim */}
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                     <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
-                      Seksi pengirim
+                      Teknisi Pengerjaan
                     </label>
                     <div className="flex-1 flex items-center gap-3 text-left">
                       <img
@@ -318,7 +313,7 @@ const ReportForm = () => {
                   {/* Pelapor */}
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                     <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
-                      Pelapor
+                      Pengirim
                     </label>
                     <div className="flex-1 flex items-center gap-3 text-left">
                       <img
@@ -374,6 +369,46 @@ const ReportForm = () => {
                     </div>
                   </div>
 
+                  {/* Status */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
+                      Status
+                    </label>
+                    <div className="flex-1 bg-yellow-500 p-2 md:p-3 rounded text-center font-semibold text-white text-sm md:text-base">
+                      <span>Diproses</span>
+                    </div>
+                  </div>
+
+                  {/* Pengerjaan Awal - DITAMBAHKAN */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
+                      Pengerjaan Awal
+                    </label>
+                    <div className="flex-1 flex items-center border border-gray-300 rounded p-2 md:p-3">
+                      <input
+                        type="date"
+                        value={pengerjaanAwal}
+                        onChange={(e) => setPengerjaanAwal(e.target.value)}
+                        className="w-full text-sm text-gray-700 outline-none bg-transparent"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Tenggat Pengerjaan - DITAMBAHKAN */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <label className="text-sm font-medium text-gray-700 sm:w-32 text-left whitespace-nowrap">
+                      Tenggat Pengerjaan
+                    </label>
+                    <div className="flex-1 flex items-center border border-gray-300 rounded p-2 md:p-3">
+                      <input
+                        type="date"
+                        value={tenggatPengerjaan}
+                        onChange={(e) => setTenggatPengerjaan(e.target.value)}
+                        className="w-full text-sm text-gray-700 outline-none bg-transparent"
+                      />
+                    </div>
+                  </div>
+
                   {/* Rincian Masalah */}
                   <div className="space-y-2 text-left">
                     <label className="text-sm font-medium text-gray-700 block">
@@ -393,148 +428,6 @@ const ReportForm = () => {
                     </label>
                     <div className="bg-gray-100 p-3 rounded border border-gray-300 min-h-[60px] md:min-h-[80px]">
                       {/* Konten checkbox akan ditempatkan di sini */}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2 text-left">
-                    <div className="flex flex-col space-y-3 md:space-y-4">
-                      {/* Revisi dengan Dropdown Toggle */}
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between pb-2 border-b border-gray-200">
-                          <div className="flex items-center">
-                            <input
-                              type="checkbox"
-                              id="revision"
-                              checked={formData.revisi}
-                              onChange={() =>
-                                handleInputChange("revisi", !formData.revisi)
-                              }
-                              className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            />
-                            <label
-                              htmlFor="revision"
-                              className="ml-2 text-xs font-semibold text-gray-700"
-                            >
-                              Revisi
-                            </label>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              handleInputChange(
-                                "revisiTipe",
-                                formData.revisiTipe ? "" : "open"
-                              )
-                            }
-                            className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                            disabled={!formData.revisi}
-                          >
-                            <svg
-                              width="14"
-                              height="8"
-                              viewBox="0 0 14 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                              className={`transform ${
-                                formData.revisiTipe ? "rotate-180" : ""
-                              }`}
-                            >
-                              <path
-                                d="M13 1L7 7L1 1H13Z"
-                                fill="#333333"
-                                stroke="#333333"
-                                strokeWidth="2"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-
-                        {/* Card besar untuk mengisi teks - Muncul ketika dropdown diklik */}
-                        {formData.revisi && formData.revisiTipe && (
-                          <div className="space-y-2">
-                            <p className="text-sm font-medium text-gray-700">
-                              Saran Revisi
-                            </p>
-                            <div className="bg-white border border-gray-200 rounded-lg p-3 md:p-4 shadow-md">
-                              <textarea
-                                placeholder="Ketik disini"
-                                className="w-full p-2 md:p-3 rounded text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none min-h-[80px] md:min-h-[100px] bg-gray-50"
-                                rows="3"
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Tolak dengan Dropdown */}
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between pb-2 border-b border-gray-200">
-                          <div className="flex items-center">
-                            <input
-                              type="checkbox"
-                              id="tolak"
-                              checked={formData.tolak}
-                              onChange={() =>
-                                handleInputChange("tolak", !formData.tolak)
-                              }
-                              className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            />
-                            <label
-                              htmlFor="tolak"
-                              className="ml-2 text-xs font-semibold text-gray-700"
-                            >
-                              Tolak
-                            </label>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              handleInputChange(
-                                "tolakTipe",
-                                formData.tolakTipe ? "" : "open"
-                              )
-                            }
-                            className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                            disabled={!formData.tolak}
-                          >
-                            <svg
-                              width="14"
-                              height="8"
-                              viewBox="0 0 14 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                              className={`transform ${
-                                formData.tolakTipe ? "rotate-180" : ""
-                              }`}
-                            >
-                              <path
-                                d="M13 1L7 7L1 1H13Z"
-                                fill="#333333"
-                                stroke="#333333"
-                                strokeWidth="2"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-
-                        {/* Card besar untuk mengisi teks - Muncul ketika dropdown diklik */}
-                        {formData.tolak && formData.tolakTipe && (
-                          <div className="space-y-2">
-                            <p className="text-sm font-medium text-gray-700">
-                              Alasan ditolak
-                            </p>
-                            <div className="bg-white border border-gray-200 rounded-lg p-3 md:p-4 shadow-md">
-                              <textarea
-                                placeholder="Ketik disini"
-                                className="w-full p-2 md:p-3 rounded text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none min-h-[80px] md:min-h-[100px] bg-gray-50"
-                                rows="3"
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </div>
                     </div>
                   </div>
 
@@ -576,46 +469,6 @@ const ReportForm = () => {
                         accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt"
                         className="hidden"
                       />
-
-                      {uploadedFiles.length > 0 && (
-                        <div className="space-y-2">
-                          <p className="text-sm font-medium text-gray-700">
-                            File tambahan ({uploadedFiles.length}):
-                          </p>
-                          <div className="space-y-2 max-h-32 md:max-h-40 overflow-y-auto">
-                            {uploadedFiles.map((file) => (
-                              <div
-                                key={file.id}
-                                className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-md p-2 md:p-3"
-                              >
-                                <div className="flex items-center space-x-2 md:space-x-3 min-w-0 flex-1">
-                                  <span className="text-base md:text-lg flex-shrink-0">
-                                    {getFileIcon(file.type)}
-                                  </span>
-                                  <div className="min-w-0 flex-1">
-                                    <p className="text-xs md:text-sm font-medium text-gray-700 truncate">
-                                      {file.name}
-                                    </p>
-                                    <p className="text-xs text-gray-500">
-                                      {formatFileSize(file.size)}
-                                    </p>
-                                  </div>
-                                </div>
-                                <button
-                                  type="button"
-                                  onClick={() => handleRemoveFile(file.id)}
-                                  className="text-red-500 hover:text-red-700 transition-colors flex-shrink-0 ml-2"
-                                >
-                                  <XCircle
-                                    size={14}
-                                    className="md:w-4 md:h-4"
-                                  />
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </div>
 
@@ -626,28 +479,8 @@ const ReportForm = () => {
                       onClick={handleBatalkan}
                       className="text-black border border-gray-300 bg-transparent px-3 py-2 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium hover:bg-red-50 transition-colors text-center order-2 sm:order-1"
                     >
-                      Batalkan
+                      Kembali
                     </button>
-                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 order-1 sm:order-2">
-                      <button
-                        type="button"
-                        onClick={handleSimpanDraft}
-                        className="text-black bg-transparent px-0 py-0 text-xs md:text-sm font-medium hover:text-black underline transition-colors text-center sm:text-left"
-                      >
-                        Simpan draft
-                      </button>
-                      <button
-                        type="submit"
-                        className={`px-3 py-2 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors text-center ${
-                          isFormValid()
-                            ? "bg-[#226597] hover:bg-blue-700 text-white cursor-pointer"
-                            : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                        }`}
-                        disabled={!isFormValid()}
-                      >
-                        Kirim
-                      </button>
-                    </div>
                   </div>
                 </div>
               </form>
@@ -655,56 +488,8 @@ const ReportForm = () => {
           </div>
         </div>
       </div>
-
-      {/* Popup Konfirmasi */}
-      {showConfirmation && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4 p-4 md:p-6">
-            <div className="text-center">
-              {/* Logo Peringatan */}
-              <div className="flex justify-center mb-3 md:mb-4">
-                <svg
-                  width="50"
-                  height="50"
-                  viewBox="0 0 120 120"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="md:w-16 md:h-16"
-                >
-                  <path
-                    d="M60 19.3495C87.615 19.3495 110 41.7345 110 69.3495C110 96.9645 87.615 119.349 60 119.349C32.385 119.349 10 96.9645 10 69.3495C10 41.7345 32.385 19.3495 60 19.3495ZM60 29.3495C49.3913 29.3495 39.2172 33.5638 31.7157 41.0652C24.2143 48.5667 20 58.7408 20 69.3495C20 79.9581 24.2143 90.1323 31.7157 97.6338C39.2172 105.135 49.3913 109.349 60 109.349C70.6087 109.349 80.7828 105.135 88.2843 97.6338C95.7857 90.1323 100 79.9581 100 69.3495C100 58.7408 95.7857 48.5667 88.2843 41.0652C80.7828 33.5638 70.6087 29.3495 60 29.3495ZM60 84.3495C61.3261 84.3495 62.5979 84.8763 63.5355 85.814C64.4732 86.7516 65 88.0234 65 89.3495C65 90.6756 64.4732 91.9473 63.5355 92.885C62.5979 93.8227 61.3261 94.3495 60 94.3495C58.6739 94.3495 57.4021 93.8227 56.4645 92.885C55.5268 91.9473 55 90.6756 55 89.3495C55 88.0234 55.5268 86.7516 56.4645 85.814C57.4021 84.8763 58.6739 84.3495 60 84.3495ZM60 39.3495C61.3261 39.3495 62.5979 39.8763 63.5355 40.814C64.4732 41.7516 65 43.0234 65 44.3495V74.3495C65 75.6756 64.4732 76.9473 63.5355 77.885C62.5979 78.8227 61.3261 79.3495 60 79.3495C58.6739 79.3495 57.4021 78.8227 56.4645 77.885C55.5268 76.9473 55 75.6756 55 74.3495V44.3495C55 43.0234 55.5268 41.7516 56.4645 40.814C57.4021 39.8763 58.6739 39.3495 60 39.3495Z"
-                    fill="#113F67"
-                  />
-                </svg>
-              </div>
-
-              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2">
-                Apakah Anda yakin ingin mengirim?
-              </h3>
-              <p className="text-xs md:text-sm text-gray-600 mb-4 md:mb-6">
-                Cek kembali inputan Anda sebelum mengirim!
-              </p>
-
-              <div className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4">
-                <button
-                  onClick={handleKirimPermohonan}
-                  className="px-3 py-2 md:px-4 md:py-2 bg-[#226597] text-white rounded-md text-xs md:text-sm font-medium hover:bg-[#1a5078] transition-colors"
-                >
-                  Ya, saya yakin
-                </button>
-                <button
-                  onClick={() => setShowConfirmation(false)}
-                  className="px-3 py-2 md:px-4 md:py-2 bg-red-600 border border-red-600 text-white rounded-md text-xs md:text-sm font-medium hover:bg-red-700 transition-colors"
-                >
-                  Batalkan
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
-export default ReportForm;
+export default CekDetail;

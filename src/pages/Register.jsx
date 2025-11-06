@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,6 +10,8 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setFormData({
@@ -19,9 +22,11 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (formData.password !== formData.confirmPassword) {
       alert("Password dan Confirm Password tidak sama!");
+      setIsLoading(false);
       return;
     }
 
@@ -51,10 +56,14 @@ const Register = () => {
 
       const data = await response.json();
       console.log("Register success:", data);
-      alert("Akun berhasil dibuat!");
+
+      // ✅ LANGSUNG NAVIGASI KE LOGIN SETELAH BERHASIL
+      navigate("/login");
     } catch (error) {
       console.error("Error:", error);
       alert("Terjadi kesalahan saat register.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,9 +88,9 @@ const Register = () => {
             </h1>
             <p className="text-sm md:text-base text-gray-600">
               Sudah punya akun?{" "}
-              <a href="#" className="text-[#226597] hover:underline">
+              <Link to="/login" className="text-[#226597] hover:underline">
                 Masuk
-              </a>
+              </Link>
             </p>
           </div>
 
@@ -125,6 +134,31 @@ const Register = () => {
                   required
                 />
               </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="nik"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Nomor Induk Kependudukan
+              </label>
+              <input
+                type="text"
+                id="nik"
+                name="nik"
+                value={formData.nik}
+                onChange={handleInputChange}
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                  if (e.target.value.length > 16) {
+                    e.target.value = e.target.value.slice(0, 16);
+                  }
+                }}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                maxLength={16}
+                required
+              />
             </div>
 
             <div>
@@ -204,17 +238,18 @@ const Register = () => {
             </div>
 
             <div className="flex flex-col-reverse sm:flex-row items-center justify-between pt-4 gap-4 sm:gap-0">
-              <a
-                href="/Login"
+              <Link
+                to="/login"
                 className="text-[#226597] hover:underline text-sm"
               >
                 Masuk
-              </a>
+              </Link>
               <button
                 type="submit"
-                className="w-full sm:w-auto bg-[#226597] hover:bg-slate-700 text-white px-6 py-3 rounded-full font-medium transition-colors"
+                disabled={isLoading}
+                className="w-full sm:w-auto bg-[#226597] hover:bg-[#1a507a] disabled:bg-gray-400 text-white px-6 py-3 rounded-full font-medium transition-colors"
               >
-                Buat akun
+                {isLoading ? "Membuat Akun..." : "Buat akun"}
               </button>
             </div>
           </form>

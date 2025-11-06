@@ -1,30 +1,51 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LeftSidebar = () => {
-  const [activeItem, setActiveItem] = useState("beranda"); // Perbaiki jadi "beranda" (huruf kecil)
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Deteksi item aktif berdasarkan path URL
+  const getActiveItem = () => {
+    const path = location.pathname;
+    if (path === "/beranda" || path === "/") return "beranda";
+    if (path === "/kotakmasuk") return "kotakmasuk";
+    if (path === "/riwayat") return "riwayat";
+    return "beranda";
+  };
+
+  const [activeItem, setActiveItem] = useState(getActiveItem());
 
   const navItems = [
     {
       id: "beranda",
       label: "Beranda",
       icon: "/assets/Logo Beranda.png",
-    },
-    {
-      id: "riwayat",
-      label: "Riwayat",
-      icon: "/assets/Logo Riwayat.png",
+      path: "/beranda",
     },
     {
       id: "kotakmasuk",
       label: "Kotak Masuk",
       icon: "/assets/Logo Kotak Masuk.png",
+      path: "/kotakmasuk",
+    },
+    {
+      id: "riwayat",
+      label: "Riwayat",
+      icon: "/assets/Logo Riwayat.png",
+      path: "/riwayat",
     },
   ];
 
+  const handleNavigation = (item) => {
+    setActiveItem(item.id);
+    navigate(item.path);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar Navigation */}
-      <div className="w-64 bg-white shadow-sm border-r p-6">
+      {/* Sidebar Navigation - Fixed dan full height */}
+      <div className="w-64 bg-white shadow-sm border-r p-6 fixed left-0 top-0 h-screen overflow-y-auto">
         {/* Logo */}
         <div className="flex items-center gap-3 mb-8">
           {/* Logo kiri */}
@@ -71,7 +92,7 @@ const LeftSidebar = () => {
           {navItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveItem(item.id)}
+              onClick={() => handleNavigation(item)}
               className={`w-full flex items-center gap-3 px-3 py-4 rounded-full transition-all duration-200 ${
                 activeItem === item.id
                   ? "bg-[#226597] text-white"
@@ -83,15 +104,18 @@ const LeftSidebar = () => {
                 src={item.icon}
                 alt={item.label}
                 className={`w-5 h-5 object-contain transition-all ${
-                  activeItem === item.id
-                    ? "brightness-0 invert" // INI YANG BIKIN LOGO JADI PUTIH
-                    : ""
+                  activeItem === item.id ? "brightness-0 invert" : ""
                 }`}
               />
               <span className="font-medium">{item.label}</span>
             </button>
           ))}
         </nav>
+      </div>
+
+      {/* Spacer untuk konten utama */}
+      <div className="flex-1 ml-64">
+        {/* Konten akan di-render oleh React Router */}
       </div>
     </div>
   );

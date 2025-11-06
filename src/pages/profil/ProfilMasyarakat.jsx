@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Home, Heart, Folder, Settings, FileText, X } from "lucide-react";
 import LeftSidebar from "../../components/LeftSidebar";
-import HeaderMasyarakat from "../../components/HeaderMasyarakat";
+import HeaderMasyarakat from "../masyarakat/HeaderMasyarakat";
 
 const ProfilePage = () => {
   const [activeItem, setActiveItem] = useState("beranda");

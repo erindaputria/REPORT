@@ -151,12 +151,17 @@ export default function SuksesPelayanan() {
                 <h1 className="text-2xl font-semibold text-[#000000] text-center">
                   Laporan Anda Telah Berhasil Dikirim
                 </h1>
-                <p className="text-gray-600 text-sm text-center mt-3">
-                  Terima kasih atas laporan Anda. Laporan telah tercatat, kami
-                  akan menindaklanjuti sesuai prosedur dalam waktu yang
-                  ditentukan. Silakan pantau perkembangan laporan melalui menu
-                  Cek Status Layanan.
-                </p>
+                <div className="text-gray-600 text-sm text-center mt-3">
+                  <p>
+                    Terima kasih atas laporan Anda. Laporan telah tercatat, kami
+                    akan menindaklanjuti sesuai
+                  </p>
+                  <p>
+                    prosedur dalam waktu yang ditentukan. Silakan pantau
+                    perkembangan laporan melalui menu
+                  </p>
+                  <p>Cek Status Layanan.</p>
+                </div>
               </div>
 
               {/* Content */}

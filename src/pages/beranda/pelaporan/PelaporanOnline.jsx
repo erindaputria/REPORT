@@ -11,49 +11,53 @@ const PelaporanOnline = () => {
   const navigate = useNavigate();
 
   const opdList = [
-    { id: 1, name: "Dinas Pendidikan", logo: "/assets/Dinas Pendidikan.png" },
-    { id: 2, name: "Dinas Kesehatan", logo: "/assets/Dinas Kesehatan.png" },
-    { id: 3, name: "Dinas Perhubungan", logo: "/assets/Dinas Perhubungan.png" },
-    { id: 4, name: "Dinas Sosial", logo: "/assets/Dinas Sosial.png" },
+    { id: 1, name: "Dinas Kesehatan", logo: "/assets/Dinas Kesehatan.png" },
+    { id: 2, name: "Dinas Perhubungan", logo: "/assets/Dinas Perhubungan.png" },
+    { id: 3, name: "Dinas Pendidikan", logo: "/assets/Dinas Pendidikan.png" },
+    {
+      id: 4,
+      name: "Dinas Pekerjaan Umum dan Penataan Ruang",
+      logo: "/assets/Dinas Pekerjaan Umum dan Penataan Ruang.png",
+    },
     {
       id: 5,
-      name: "Dinas Sumber Daya Air dan Bina Marga",
-      logo: "/assets/Dinas Sumber Daya Air dan Bina Marga.png",
+      name: "Dinas Sosial",
+      logo: "/assets/Dinas Sosial.png",
     },
     {
       id: 6,
-      name: "Dinas Perumahan Rakyat dan Kawasan Permukiman serta Pertahanan",
-      logo: "/assets/Dinas Perumahan Rakyat dan Kawasan Permukiman serta Pertahanan.png",
+      name: "Dinas Lingkungan Hidup",
+      logo: "/assets/Dinas Lingkungan Hidup.png",
     },
     {
       id: 7,
-      name: "Dinas Pemadam Kebakaran dan Penyelamatan",
-      logo: "/assets/Dinas Pemadam Kebakaran dan Penyelamatan.png",
-    },
-    {
-      id: 8,
-      name: "Dinas Perindustrian dan Tenaga Kerja",
-      logo: "/assets/Dinas Perindustrian dan Tenaga Kerja.png",
-    },
-    {
-      id: 9,
-      name: "Dinas Ketahanan Pangan dan Pertanian",
-      logo: "/assets/Dinas Ketahanan Pangan dan Pertanian.png",
-    },
-    {
-      id: 10,
-      name: "Dinas Perpustakaan dan Kearsipan",
-      logo: "/assets/Dinas Perpustakaan dan Kearsipan.png",
-    },
-    {
-      id: 11,
       name: "Dinas Komunikasi dan Informatika",
       logo: "/assets/Dinas Komunikasi dan Informatika.png",
     },
     {
+      id: 8,
+      name: "Dinas Pariwisata dan Ekonomi Kreatif",
+      logo: "/assets/Dinas Pariwisata & Ekonomi Kreatif.png",
+    },
+    {
+      id: 9,
+      name: "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu",
+      logo: "/assets/Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu.png",
+    },
+    {
+      id: 10,
+      name: "Dinas Tenaga Kerja",
+      logo: "/assets/Dinas Tenaga Kerja.png",
+    },
+    {
+      id: 11,
+      name: "Dinas Pertanian",
+      logo: "/assets/Dinas Pertanian.png",
+    },
+    {
       id: 12,
-      name: "Dinas Lingkungan Hidup",
-      logo: "/assets/Dinas Lingkungan Hidup.png",
+      name: "Dinas Perindustrian dan Perdagangan",
+      logo: "/assets/Dinas Perindustrian dan Perdagangan.png",
     },
     {
       id: 13,
@@ -62,34 +66,44 @@ const PelaporanOnline = () => {
     },
     {
       id: 14,
-      name: "Dinas Koperasi Usaha Kecil dan Menengah dan Perdagangan",
-      logo: "/assets/Dinas Koperasi Usaha Kecil dan Menengah dan Perdagangan.png",
+      name: "Dinas Ketahanan Pangan",
+      logo: "/assets/Dinas Ketahanan Pangan.png",
     },
     {
       id: 15,
-      name: "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu",
-      logo: "/assets/Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu.png",
+      name: "Dinas Pemuda dan Olahraga",
+      logo: "/assets/Dinas Pemuda dan Olahraga.png",
     },
     {
       id: 16,
-      name: "Dinas Kebudayaan, Kepemudaan dan Olah Raga serta Pariwisata",
-      logo: "/assets/Dinas Kebudayaan, Kepemudaan dan Olah Raga serta Pariwisata.png",
+      name: "Dinas Perumahan dan Kawasan Permukiman",
+      logo: "/assets/Dinas Perumahan dan Kawasan Permukiman.png",
     },
     {
       id: 17,
-      name: "Satuan Polisi Pamong Praja",
-      logo: "/assets/Satuan Polisi Pamong Praja.png",
+      name: "Dinas Perpustakaan dan Kearsipan",
+      logo: "/assets/Dinas Perpustakaan dan Kearsipan.png",
     },
     {
       id: 18,
       name: "Dinas Pengendalian Penduduk, Perlindungan Perempuan dan Anak",
       logo: "/assets/Dinas Pengendalian Penduduk, Perlindungan Perempuan dan Anak.png",
     },
+    {
+      id: 19,
+      name: "Dinas Pertahanan atau Tata Ruang",
+      logo: "/assets/Dinas Pertahanan atau Tata Ruang.png",
+    },
+    {
+      id: 20,
+      name: "Dinas Kepemudaan, Olahraga, dan Pariwisata",
+      logo: "/assets/Dinas Kepemudaan, Olahraga, dan Pariwisata.png",
+    },
   ];
 
   // Split OPD list into two columns (9 each)
-  const leftColumnOpd = opdList.slice(0, 9);
-  const rightColumnOpd = opdList.slice(9, 18);
+  const leftColumnOpd = opdList.slice(0, 10);
+  const rightColumnOpd = opdList.slice(10, 20);
 
   const handleOpdSelect = (opd) => {
     setSelectedOpd(opd);
