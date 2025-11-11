@@ -22,6 +22,12 @@ import FormPengajuan from "./pages/beranda/pengajuan/FormPengajuan";
 import SuksesPelayanan from "./pages/beranda/pengajuan/SuksesPelayanan";
 import SuksesPelaporan from "./pages/beranda/pelaporan/SuksesPelaporan";
 import DataDitemukan from "./pages/beranda/pelaporan/DataDitemukan";
+import Riwayat from "./pages/masyarakat/riwayat";
+import LihatHistory from "./pages/masyarakat/LihatHistory";
+import LihatRating from "./pages/masyarakat/LihatRating";
+import BeriRating from "./pages/masyarakat/BeriRating";
+import ReopenPegawai from "./pages/masyarakat/ReopenPegawai";
+import ReopenMasyarakat from "./pages/masyarakat/ReopenMasyarakat";
 
 //*-- Seksi --*/
 import BerandaSeksi from "./pages/beranda/Seksi/BerandaSeksi";
@@ -203,6 +209,12 @@ function App() {
         <Route path="/notifmaintenance" element={<NotifMaintenance />} />
         <Route path="/notifdarurat" element={<NotifDarurat />} />
         <Route path="/notifumum" element={<NotifUmum />} />
+        <Route path="riwayat" element={<Riwayat />} />
+        <Route path="lihathistory" element={<LihatHistory />} />
+        <Route path="lihatrating" element={<LihatRating />} />
+        <Route path="berirating" element={<BeriRating />} />
+        <Route path="reopenpegawai" element={<ReopenPegawai />} />
+        <Route path="reopenmasyarakat" element={<ReopenMasyarakat />} />
       </Routes>
     </Router>
   );

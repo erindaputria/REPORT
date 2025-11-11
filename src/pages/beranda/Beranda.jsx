@@ -3,6 +3,7 @@ import { Calender } from "../../components/beranda/Calender";
 import LeftSidebar from "../../components/LeftSidebar";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FileText, Eye } from "lucide-react";
 
 export function Beranda() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -12,6 +13,9 @@ export function Beranda() {
   const dropdownRef = useRef(null);
   const notificationRef = useRef(null);
   const navigate = useNavigate();
+  const handleTampilkanSemua = () => {
+  navigate("/riwayat");
+};
 
   // Menutup dropdown ketika klik di luar
   useEffect(() => {
@@ -102,6 +106,25 @@ export function Beranda() {
   const handlePelacakan = () => {
     navigate("/Pelacakan");
   };
+
+  // === Tambahkan di atas return ===
+const riwayatLaporan = [
+  {
+    id: "LPR321336",
+    nama: "Gangguan Router",
+    tanggalSelesai: "17-07-2025",
+  },
+  {
+    id: "LYN651289",
+    nama: "Permintaan Printer",
+    tanggalSelesai: "17-07-2025",
+  },
+  // kamu bisa tambahkan data lain di sini untuk testing
+];
+
+// Ambil hanya 2 data terbaru
+const dataTerbaru = riwayatLaporan.slice(0, 2);
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -440,24 +463,79 @@ export function Beranda() {
           </div>
         </div>
 
-        {/* Riwayat Laporan */}
+        {/* riwayat laporan */}
         <div className="mt-6 md:mt-8">
-          <hr className="border-gray-300 mb-4" />
-          <h2 className="text-xl md:text-2xl font-semibold mb-4 text-left">
-            Riwayat Laporan
-          </h2>
+  <hr className="border-gray-300 mb-4" />
+  <div className="flex justify-between items-center mb-4">
+    <h2 className="text-lg md:text-xl font-semibold text-left">
+      Riwayat Laporan
+    </h2>
+    <button
+  onClick={handleTampilkanSemua}
+  className="text-[#226597] text-sm font-medium hover:underline transition"
+>
+  Tampilkan semua
+</button>
 
-          {/* Card peringatan */}
-          <div className="bg-white rounded-xl md:rounded-2xl p-3 flex items-center mb-4 shadow-sm border border-gray-200">
-            {/* Logo peringatan */}
-            <div className="w-5 h-5 md:w-6 md:h-6 flex items-center justify-center border-2 border-gray-400 rounded-full mr-3 font-bold text-gray-600 text-xs md:text-sm">
-              !
+  </div>
+
+  {/* Jika tidak ada data */}
+  {dataTerbaru.length === 0 ? (
+    <div className="bg-white rounded-xl md:rounded-2xl p-3 flex items-center mb-4 shadow-sm border border-gray-200">
+      <div className="w-5 h-5 md:w-6 md:h-6 flex items-center justify-center border-2 border-gray-400 rounded-full mr-3 font-bold text-gray-600 text-xs md:text-sm">
+        !
+      </div>
+      <p className="text-gray-600 text-xs md:text-sm text-left">
+        Tidak ada riwayat laporan untuk ditampilkan
+      </p>
+    </div>
+  ) : (
+    <div className="bg-white rounded-xl md:rounded-2xl p-4 shadow-sm border border-gray-200">
+      {dataTerbaru.slice(0, 2).map((laporan, index) => (
+        <div
+          key={index}
+          className="flex justify-between items-center border-b last:border-0 py-4"
+        >
+          {/* Bagian kiri (info laporan) */}
+          <div className="grid grid-cols-3 gap-4 w-full">
+            <div>
+              <p className="text-xs text-gray-500 mb-1">ID:</p>
+              <p className="text-sm font-semibold text-gray-800">
+                {laporan.id}
+              </p>
             </div>
-            <p className="text-gray-600 text-xs md:text-sm text-left">
-              Tidak ada riwayat laporan untuk ditampilkan
-            </p>
+            <div>
+              <p className="text-xs text-gray-500 mb-1">Nama:</p>
+              <p className="text-sm font-semibold text-gray-800">
+                {laporan.nama}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 mb-1">Tanggal Selesai:</p>
+              <p className="text-sm font-semibold text-gray-800">
+                {laporan.tanggalSelesai}
+              </p>
+            </div>
+          </div>
+
+          {/* Aksi di kanan */}
+          <div className="flex gap-4 ml-6 pr-2">
+            <button
+              className="text-[#226597] hover:text-[#153d6a] transition transform hover:scale-110"
+              title="Lihat Detail"
+            >
+              <Eye size={20} />
+            </button>
           </div>
         </div>
+      ))}
+    </div>
+  )}
+</div>
+
+
+
+
       </div>
 
       {/* Right Sidebar - Responsif untuk semua perangkat */}
