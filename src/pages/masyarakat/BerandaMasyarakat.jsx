@@ -1,8 +1,9 @@
 import { Plus, Menu, X, Bell, Calendar } from "lucide-react";
 import { Calender } from "../../components/beranda/Calender";
-import LeftSidebar from "../../components/LeftSidebar";
+import SidebarMasyarakat from "./SidebarMasyarakat";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import HelpdeskPopup from "../../components/HelpdeskPopup";
 
 export function BerandaMasyarakat() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -88,6 +89,8 @@ export function BerandaMasyarakat() {
   const handlePelacakan = () => {
     navigate("/Pelacakan");
   };
+
+  
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -225,7 +228,7 @@ export function BerandaMasyarakat() {
         } md:block fixed md:relative inset-0 z-50 md:z-auto bg-white md:bg-transparent w-72 md:w-auto`}
       >
         <div className="h-full">
-          <LeftSidebar />
+          <SidebarMasyarakat />
           <button
             onClick={() => setIsMobileSidebarOpen(false)}
             className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full md:hidden"
@@ -398,21 +401,103 @@ export function BerandaMasyarakat() {
         {/* Riwayat Laporan */}
         <div className="mt-6 md:mt-8">
           <hr className="border-gray-300 mb-4" />
-          <h2 className="text-xl md:text-2xl font-semibold mb-4 text-left">
-            Riwayat Laporan
-          </h2>
 
-          {/* Card peringatan */}
-          <div className="bg-white rounded-xl md:rounded-2xl p-3 flex items-center mb-4 shadow-sm border border-gray-200">
-            {/* Logo peringatan */}
-            <div className="w-5 h-5 md:w-6 md:h-6 flex items-center justify-center border-2 border-gray-400 rounded-full mr-3 font-bold text-gray-600 text-xs md:text-sm">
-              !
-            </div>
-            <p className="text-gray-600 text-xs md:text-sm text-left">
-              Tidak ada riwayat laporan untuk ditampilkan
-            </p>
+          {/* Header Section */}
+          <div className="flex justify-between items-center mb-3">
+            <h2 className="text-xl md:text-2xl font-semibold text-left">
+              Riwayat Laporan
+            </h2>
+            <button
+              onClick={() => navigate("/riwayatmasyarakat")}
+              className="text-[#226597] text-sm font-semibold hover:underline"
+            >
+              Tampilkan semua
+            </button>
           </div>
+
+          {/* Data Riwayat */}
+          {(() => {
+            const riwayatData = [
+              // contoh: isi atau kosongkan array ini untuk tes
+              { id: "LPR321336", nama: "Gangguan Router", tanggal: "17-07-2025" },
+              { id: "LYN651289", nama: "Permintaan Printer", tanggal: "17-07-2025" },
+            ];
+
+            if (riwayatData.length === 0) {
+              return (
+                <div className="bg-white rounded-xl md:rounded-2xl p-4 flex items-center shadow-sm border border-gray-200">
+                  <div className="w-6 h-6 flex items-center justify-center border-2 border-gray-400 rounded-full mr-3 font-bold text-gray-600 text-sm">
+                    !
+                  </div>
+                  <p className="text-gray-600 text-sm md:text-base">
+                    Tidak ada riwayat laporan untuk ditampilkan
+                  </p>
+                </div>
+              );
+            }
+
+            return (
+              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                {riwayatData.map((item, index, arr) => (
+                  <div
+                    key={index}
+                    className={`flex justify-between items-center px-5 py-4 ${
+                      index !== arr.length - 1 ? "border-b border-gray-200" : ""
+                    }`}
+                  >
+                    {/* Isi Data */}
+                    <div className="flex-1 grid grid-cols-3 text-sm md:text-base">
+                      <div>
+                        <p className="text-gray-500 font-medium">ID:</p>
+                        <p className="text-gray-800 font-semibold">{item.id}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-500 font-medium">Nama:</p>
+                        <p className="text-gray-800 font-semibold">{item.nama}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-500 font-medium">Tanggal Selesai:</p>
+                        <p className="text-gray-800 font-semibold">{item.tanggal}</p>
+                      </div>
+                    </div>
+
+                    {/* Icon Mata */}
+                    <button
+                      onClick={() =>
+                        navigate("/lihatlaporanmasyarakat", { state: { item } })
+                      }
+                      className="ml-3 p-2 hover:bg-gray-100 rounded-full transition"
+                      title="Lihat Detail"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5 text-gray-700"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
         </div>
+
+
+
       </div>
 
       {/* Right Sidebar - Responsif untuk semua perangkat */}
@@ -589,29 +674,7 @@ export function BerandaMasyarakat() {
           <Calender />
         </div>
 
-        {/* ChatBot */}
-        <div className="bg-white rounded-lg border p-3 flex items-center gap-2">
-          {/* Logo custom */}
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 58 59"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-8 h-8 md:w-10 md:h-10"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M52.0548 15.2007V38.2556C52.0548 39.7842 51.4476 41.2502 50.3667 42.3311C49.2858 43.412 47.8198 44.0193 46.2911 44.0193H31.8818L17.4726 55.5467V44.0193H11.7089C10.1802 44.0193 8.71422 43.412 7.63331 42.3311C6.55241 41.2502 5.94516 39.7842 5.94516 38.2556V15.2007C5.94516 13.6721 6.55241 12.2061 7.63331 11.1252C8.71422 10.0443 10.1802 9.43701 11.7089 9.43701H46.2911C47.8198 9.43701 49.2858 10.0443 50.3667 11.1252C51.4476 12.2061 52.0548 13.6721 52.0548 15.2007ZM20.3544 23.8463H14.5907V29.61H20.3544V23.8463ZM26.1181 23.8463H31.8818V29.61H26.1181V23.8463ZM43.4093 23.8463H37.6456V29.61H43.4093V23.8463Z"
-              fill="#226597"
-            />
-          </svg>
-
-          <span className="font-medium text-[#226597] text-sm md:text-base">
-            Tanya Helpdesk
-          </span>
-        </div>
+        
       </div>
 
       {/* Overlay for right sidebar di mobile */}
@@ -621,6 +684,7 @@ export function BerandaMasyarakat() {
           onClick={() => setIsRightSidebarOpen(false)}
         ></div>
       )}
+      <HelpdeskPopup />
     </div>
   );
 }

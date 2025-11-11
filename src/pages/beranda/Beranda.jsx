@@ -4,6 +4,7 @@ import LeftSidebar from "../../components/LeftSidebar";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileText, Eye } from "lucide-react";
+import HelpdeskPopup from "../../components/HelpdeskPopup";
 
 export function Beranda() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -124,6 +125,47 @@ const riwayatLaporan = [
 
 // Ambil hanya 2 data terbaru
 const dataTerbaru = riwayatLaporan.slice(0, 2);
+
+const [isChatOpen, setIsChatOpen] = useState(false);
+
+const popupRef = useRef(null);
+const [isDragging, setIsDragging] = useState(false);
+const [position, setPosition] = useState({
+  x: window.innerWidth - 380, // posisi awal di kanan bawah
+  y: window.innerHeight - 450, 
+});
+const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+const handleMouseDown = (e) => {
+  setIsDragging(true);
+  const rect = popupRef.current.getBoundingClientRect();
+  setOffset({
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top,
+  });
+};
+
+useEffect(() => {
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    setPosition({
+      x: e.clientX - offset.x,
+      y: e.clientY - offset.y,
+    });
+  };
+
+  const handleMouseUp = () => setIsDragging(false);
+
+  document.addEventListener("mousemove", handleMouseMove);
+  document.addEventListener("mouseup", handleMouseUp);
+
+  return () => {
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
+}, [isDragging, offset]);
+
+
 
 
   return (
@@ -853,29 +895,7 @@ const dataTerbaru = riwayatLaporan.slice(0, 2);
           <Calender />
         </div>
 
-        {/* ChatBot */}
-        <div className="bg-white rounded-lg border p-3 flex items-center gap-2">
-          {/* Logo custom */}
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 58 59"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-8 h-8 md:w-10 md:h-10"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M52.0548 15.2007V38.2556C52.0548 39.7842 51.4476 41.2502 50.3667 42.3311C49.2858 43.412 47.8198 44.0193 46.2911 44.0193H31.8818L17.4726 55.5467V44.0193H11.7089C10.1802 44.0193 8.71422 43.412 7.63331 42.3311C6.55241 41.2502 5.94516 39.7842 5.94516 38.2556V15.2007C5.94516 13.6721 6.55241 12.2061 7.63331 11.1252C8.71422 10.0443 10.1802 9.43701 11.7089 9.43701H46.2911C47.8198 9.43701 49.2858 10.0443 50.3667 11.1252C51.4476 12.2061 52.0548 13.6721 52.0548 15.2007ZM20.3544 23.8463H14.5907V29.61H20.3544V23.8463ZM26.1181 23.8463H31.8818V29.61H26.1181V23.8463ZM43.4093 23.8463H37.6456V29.61H43.4093V23.8463Z"
-              fill="#226597"
-            />
-          </svg>
 
-          <span className="font-medium text-[#226597] text-sm md:text-base">
-            Tanya Helpdesk
-          </span>
-        </div>
       </div>
 
       {/* Overlay for right sidebar di mobile */}
@@ -885,6 +905,8 @@ const dataTerbaru = riwayatLaporan.slice(0, 2);
           onClick={() => setIsRightSidebarOpen(false)}
         ></div>
       )}
+      <HelpdeskPopup />
+
     </div>
   );
 }

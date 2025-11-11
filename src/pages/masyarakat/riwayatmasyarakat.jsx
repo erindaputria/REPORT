@@ -1,45 +1,45 @@
 import React from "react";
 import { Paperclip } from "lucide-react";
-import LeftSidebar from "../../components/LeftSidebar";
-import Header from "../../components/Header";
+import SidebarMasyarakat from "./SidebarMasyarakat";
+import HeaderMasyarakat from "./HeaderMasyarakat";
 import { useNavigate } from "react-router-dom";
 
-export default function Riwayat() {
+export default function RiwayatMasyarakat() {
   const navigate = useNavigate();
 
-  // === Data Dummy ===
+  // === Data Dummy (khusus masyarakat) ===
   const dataRiwayat = [
     {
-      id: "LPR321336",
-      nama: "Gangguan Router",
-      tanggalSelesai: "17-07-2025",
-      lampiran: [1],
+      id: "MSY001245",
+      nama: "Sampah Tidak Terangkut",
+      tanggalSelesai: "12-07-2025",
+      lampiran: [1, 2],
       ajukanKembali: true,
     },
     {
-      id: "LPR238129",
-      nama: "Gangguan Printer",
-      tanggalSelesai: "17-07-2025",
+      id: "MSY001312",
+      nama: "Lampu Jalan Padam",
+      tanggalSelesai: "13-07-2025",
+      lampiran: [1],
+      ajukanKembali: false,
+    },
+    {
+      id: "MSY001478",
+      nama: "Selokan Tersumbat",
+      tanggalSelesai: "15-07-2025",
       lampiran: [1, 2, 3],
       ajukanKembali: false,
     },
     {
-      id: "LYN643758",
-      nama: "Permintaan File Bulanan",
-      tanggalSelesai: "17-07-2025",
-      lampiran: [1, 2],
-      ajukanKembali: false,
-    },
-    {
-      id: "LYN918222",
-      nama: "Permintaan Printer",
-      tanggalSelesai: "17-07-2025",
+      id: "MSY001519",
+      nama: "Jalan Berlubang",
+      tanggalSelesai: "16-07-2025",
       lampiran: [1],
       ajukanKembali: true,
     },
     {
-      id: "LPR283471",
-      nama: "Gangguan WiFi",
+      id: "MSY001625",
+      nama: "Pohon Tumbang",
       tanggalSelesai: "17-07-2025",
       lampiran: [1, 2],
       ajukanKembali: false,
@@ -61,9 +61,9 @@ export default function Riwayat() {
 
   return (
     <div className="flex min-h-screen bg-[#F9FAFB]">
-      <LeftSidebar />
+      <SidebarMasyarakat />
       <div className="flex-1 flex flex-col">
-        <Header />
+        <HeaderMasyarakat />
 
         <div className="p-6">
           <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
@@ -81,7 +81,7 @@ export default function Riwayat() {
                   {item.ajukanKembali ? (
                     <>
                       <button
-                        onClick={() => navigate("/reopenpegawai", { state: { item } })}
+                        onClick={() => navigate("/reopenmasyarakat", { state: { item } })}
                         className="border border-red-400 text-red-500 px-3 py-1 rounded-lg text-xs hover:bg-red-50 transition"
                       >
                         Ajukan Kembali
@@ -145,7 +145,7 @@ export default function Riwayat() {
             ))}
 
             <p className="text-xs text-gray-500 mt-4">
-              Menampilkan data 1 sampai 5 dari 5 data
+              Menampilkan data 1 sampai {dataRiwayat.length} dari {dataRiwayat.length} data
             </p>
           </div>
         </div>

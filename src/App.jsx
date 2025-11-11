@@ -28,6 +28,7 @@ import LihatRating from "./pages/masyarakat/LihatRating";
 import BeriRating from "./pages/masyarakat/BeriRating";
 import ReopenPegawai from "./pages/masyarakat/ReopenPegawai";
 import ReopenMasyarakat from "./pages/masyarakat/ReopenMasyarakat";
+import RiwayatMasyarakat from "./pages/masyarakat/riwayatmasyarakat";
 
 //*-- Seksi --*/
 import BerandaSeksi from "./pages/beranda/Seksi/BerandaSeksi";
@@ -215,6 +216,7 @@ function App() {
         <Route path="berirating" element={<BeriRating />} />
         <Route path="reopenpegawai" element={<ReopenPegawai />} />
         <Route path="reopenmasyarakat" element={<ReopenMasyarakat />} />
+        <Route path="riwayatmasyarakat" element={<RiwayatMasyarakat />} />
       </Routes>
     </Router>
   );

@@ -53,7 +53,7 @@ export default function ReopenMasyarakat() {
           timer: 2000,
           timerProgressBar: true,
         }).then(() => {
-          navigate("/riwayat");
+          navigate("/riwayatmasyarakat");
         });
       }
     });
@@ -71,7 +71,7 @@ export default function ReopenMasyarakat() {
       confirmButtonColor: "#0F2C59",
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate("/riwayat");
+        navigate("/riwayatmasyarakat");
       }
     });
   };

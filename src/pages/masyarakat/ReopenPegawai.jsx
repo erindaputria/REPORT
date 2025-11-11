@@ -102,7 +102,7 @@ export default function ReopenPegawai() {
                 <p className="font-semibold text-gray-600 w-40">Pengirim</p>
                 <div className="flex items-center gap-3">
                   <img
-                    src="/assets/profile.png"
+                    src="/assets/Anya.jpg"
                     alt="pengirim"
                     className="w-9 h-9 rounded-full object-cover"
                   />
