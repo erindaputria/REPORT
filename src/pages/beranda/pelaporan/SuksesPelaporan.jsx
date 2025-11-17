@@ -1,21 +1,10 @@
-import {
-  Menu,
-  X,
-  Bell,
-  FileText,
-  Download,
-  Home,
-  ArrowLeft,
-} from "lucide-react";
-import Header from "../../../components/Header";
-import LeftSidebar from "../../../components/LeftSidebar";
+import { Download } from "lucide-react";
+import LayoutPegawai from "../../../components/Layout/LayoutPegawai";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
 
 export default function SuksesPelayanan() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const location = useLocation(); 
 
   // Ambil data dari FormLaporan melalui state navigasi
   const laporanData = location.state?.laporanData || {};
@@ -29,60 +18,10 @@ export default function SuksesPelayanan() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
-      {/* Mobile Header */}
-      <div className="bg-white p-4 flex items-center justify-between md:hidden shadow-sm">
-        <button
-          onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-          className="p-2 rounded-lg bg-gray-100"
-        >
-          {isMobileSidebarOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-            <Bell size={16} className="text-gray-600" />
-          </div>
-          <div className="w-8 h-8 rounded-full overflow-hidden">
-            <img
-              src="/assets/Haechan.jpg"
-              alt="Profil"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Left Sidebar - Hidden on mobile unless toggled */}
-      <div
-        className={`${
-          isMobileSidebarOpen ? "block" : "hidden"
-        } md:block fixed md:relative inset-0 z-50 md:z-auto bg-white md:bg-transparent w-72 md:w-auto`}
-      >
-        <div className="h-full">
-          <LeftSidebar />
-          <button
-            onClick={() => setIsMobileSidebarOpen(false)}
-            className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full md:hidden"
-          >
-            <X size={20} />
-          </button>
-        </div>
-      </div>
-
-      {/* Overlay for mobile sidebar */}
-      {isMobileSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
-          onClick={() => setIsMobileSidebarOpen(false)}
-        ></div>
-      )}
-
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <Header />
-
-        {/* Main Content */}
+    <LayoutPegawai>
+      <div className="min-h-screen bg-gray-50 pt-20">
+        {" "}
+        {/* Main Content Area */}
         <div className="flex-1 relative overflow-hidden">
           {/* Custom SVG Background */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -368,7 +307,7 @@ export default function SuksesPelayanan() {
                 {/* Buat Laporan Baru */}
                 <button
                   onClick={() => navigate("/pelaporanonline")}
-                  className="bg-[#226597] hover:bg-[#f4faff] text-white py-3 rounded-md text-sm font-medium transition-colors text-center"
+                  className="bg-[#226597] hover:bg-[#1a507a] text-white py-3 rounded-md text-sm font-medium transition-colors text-center"
                 >
                   Buat laporan baru
                 </button>
@@ -385,6 +324,6 @@ export default function SuksesPelayanan() {
           </div>
         </div>
       </div>
-    </div>
+    </LayoutPegawai>
   );
 }

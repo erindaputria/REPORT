@@ -5,7 +5,7 @@ import {
   Cell,
   Tooltip,
   LineChart,
-  Line,
+  Line, 
   XAxis,
   YAxis, 
   CartesianGrid,

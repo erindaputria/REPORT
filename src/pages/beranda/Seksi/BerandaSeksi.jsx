@@ -167,22 +167,22 @@ export default function DashboardSeksi() {
         {/* Tabs */}
         <div className="flex justify-between items-center border-b mb-4">
           <div className="flex">
-          {["pelaporan", "pelayanan"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-5 py-2 text-sm font-semibold capitalize rounded-t-lg ${
-                activeTab === tab
-                  ? "text-[#0F2C59] border-b-4 border-[#0F2C59]"
-                  : "text-gray-400 hover:text-[#0F2C59]"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+            {["pelaporan", "pelayanan"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-5 py-2 text-sm font-semibold capitalize rounded-t-lg ${
+                  activeTab === tab
+                    ? "text-[#0F2C59] border-b-4 border-[#0F2C59]"
+                    : "text-gray-400 hover:text-[#0F2C59]"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
 
-        <button className="flex items-center gap-2 bg-[#0F2C59] hover:bg-[#15397A] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+          <button className="flex items-center gap-2 bg-[#0F2C59] hover:bg-[#15397A] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
             <ArrowPathIcon className="w-4 h-4" />
             Refresh
           </button>
@@ -284,12 +284,14 @@ export default function DashboardSeksi() {
                   <td className="py-3 px-4">
                     <div className="flex gap-2">
                       {item.lampiran.length > 0 ? (
-                        item.lampiran.slice(0, 3).map((_, idx) => (
-                          <DocumentIcon
-                            key={idx}
-                            className="w-5 h-5 text-[#0F2C59] hover:text-[#15397A] cursor-pointer"
-                          />
-                        ))
+                        item.lampiran
+                          .slice(0, 3)
+                          .map((_, idx) => (
+                            <DocumentIcon
+                              key={idx}
+                              className="w-5 h-5 text-[#0F2C59] hover:text-[#15397A] cursor-pointer"
+                            />
+                          ))
                       ) : (
                         <span className="text-gray-400 text-xs italic">
                           Tidak ada
@@ -329,11 +331,21 @@ export default function DashboardSeksi() {
             Menampilkan data 1 sampai {dataPelaporan.length} dari 30 data
           </span>
           <div className="flex gap-2">
-            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">&lt;</button>
-            <button className="px-3 py-1 border rounded-lg bg-blue-600 text-white">1</button>
-            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">2</button>
-            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">3</button>
-            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">&gt;</button>
+            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
+              &lt;
+            </button>
+            <button className="px-3 py-1 border rounded-lg bg-blue-600 text-white">
+              1
+            </button>
+            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
+              2
+            </button>
+            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
+              3
+            </button>
+            <button className="px-3 py-1 border rounded-lg hover:bg-gray-100">
+              &gt;
+            </button>
           </div>
         </div>
       </div>

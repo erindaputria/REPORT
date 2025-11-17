@@ -10,18 +10,19 @@ import MasukKode from "./pages/MasukKode";
 import KataSandiBaru from "./pages/KataSandiBaru";
 
 //*-- Pengguna Pegawai --*/
-import Profil from "./pages/profil/ProfilSaya";
-import Tampilan from "./pages/profil/Tampilan";
-import KnowledgeBase from "./pages/beranda/KnowledgeBase";
+import Profil from "./pages/pegawai/ProfilSaya";
+import Tampilan from "./pages/pegawai/Tampilan";
+import KnowledgeBase from "./pages/pegawai/KnowledgeBase";
+// import PelaporanOnline from "./pages/beranda/pelaporan/PelaporanOnline"; // KOMENTARI DULU
 import PelaporanOnline from "./pages/beranda/pelaporan/PelaporanOnline";
 import FormLaporan from "./pages/beranda/pelaporan/FormLaporan";
-import FormScanAset from "./pages/beranda/pelaporan/FormScanAset";
 import Pelacakan from "./pages/beranda/pelaporan/Pelacakan";
 import Pengajuan from "./pages/beranda/pengajuan/Pengajuan";
 import FormPengajuan from "./pages/beranda/pengajuan/FormPengajuan";
 import SuksesPelayanan from "./pages/beranda/pengajuan/SuksesPelayanan";
 import SuksesPelaporan from "./pages/beranda/pelaporan/SuksesPelaporan";
 import DataDitemukan from "./pages/beranda/pelaporan/DataDitemukan";
+import LayoutPegawai from "./components/Layout/LayoutPegawai";
 
 //*-- Seksi --*/
 import BerandaSeksi from "./pages/beranda/Seksi/BerandaSeksi";
@@ -59,18 +60,20 @@ import PengumumanKota from "./pages/beranda/AdminKota/PengumumanKota";
 import BuatPengumumanKota from "./pages/beranda/AdminKota/BuatPengumumanKota";
 
 //*-- Masyarakat --*/
-import SidebarMasyarakat from "./pages/masyarakat/SidebarMasyarakat";
+import SidebarMasyarakat from "./components/Layout/SidebarMasyarakat";
 import PengajuanBidang from "./pages/beranda/Seksi/PengajuanBidang";
-import MonitoringTiketSeksi from "./pages/beranda/Seksi/MonitoringTiketSeksi"
+import MonitoringTiketSeksi from "./pages/beranda/Seksi/MonitoringTiketSeksi";
 import DetailRating from "./pages/beranda/Seksi/DetailRating";
-import LayananChat from "./pages/beranda/Seksi/LayananChat"
+import LayananChat from "./pages/beranda/Seksi/LayananChat";
 import LayananPesan from "./pages/beranda/Seksi/LayananPesan";
-import RFCTeknisi from "./pages/beranda/Teknisi/RFCTeknisi"
-import BuatFormRFC from "./pages/beranda/Teknisi/BuatFormRFC"
+import RFCTeknisi from "./pages/beranda/Teknisi/RFCTeknisi";
+import BuatFormRFC from "./pages/beranda/Teknisi/BuatFormRFC";
 import EditFormRFC from "./pages/beranda/Teknisi/EditFormRFC";
 import LihatFormRFC from "./pages/beranda/Teknisi/LihatFormRFC";
-import ProfilMasyarakat from "./pages/profil/ProfilMasyarakat";
+import ProfilMasyarakat from "./pages/masyarakat/ProfilMasyarakat";
 import FormMasyarakat from "./pages/masyarakat/FormMasyarakat";
+import LandingPage from "./pages/masyarakat/LandingPage";
+import LayoutMasyarakat from "./components/Layout/LayoutMasyarakat";
 
 //*-- Helpdesk --*/
 import HelpdeskChat from "./components/beranda/Helpdesk";
@@ -80,6 +83,7 @@ import DashboardBidang from "./pages/bidang/DashboardBidang";
 import AksiTiket from "./pages/bidang/AksiTiket";
 import MonitoringBidang from "./pages/bidang/MonitoringBidang";
 import RatingKepuasan from "./pages/bidang/RatingKepuasan";
+import DetailBidang from "./pages/bidang/DetailBidang";
 
 //*-- Admin OPD --*/
 import DashboardOpd from "./pages/adminopd/DashboardOpd";
@@ -92,6 +96,7 @@ import LayananChatSeksi from "./pages/beranda/Seksi/LayananChat";
 import StatistikKategori from "./pages/adminopd/StatistikKategori";
 import StatistikPrioritas from "./pages/adminopd/StatistikPrioritas";
 import StatistikTahunan from "./pages/adminopd/StatistikTahunan";
+import StatistikBulanan from "./pages/adminopd/StatistikBulanan";
 
 //*-- Notifikasi --*/
 import NotifDibuat from "./pages/notifikasi/NotifDibuat";
@@ -99,6 +104,24 @@ import NotifDiproses from "./pages/notifikasi/NotifDiproses";
 import NotifMaintenance from "./pages/notifikasi/NotifMaintenance";
 import NotifDarurat from "./pages/notifikasi/NotifDarurat";
 import NotifUmum from "./pages/notifikasi/NotifUmum";
+import LihatRating from "./pages/bidang/LihatRating";
+import LihatRatingOpd from "./pages/adminopd/LihatRatingOpd";
+import KBMasyarakat from "./pages/masyarakat/KBMasyarakat";
+import TampilanMasyarakat from "./pages/masyarakat/TampilanMasyarakat";
+import PelaporanMasyarakat from "./pages/masyarakat/PelaporanMasyarakat";
+import SuksesLapor from "./pages/masyarakat/SuksesLapor";
+import DataDitemukanMasyarakat from "./pages/masyarakat/DataDitemukanMasyarakat";
+import PelacakanMasyarakat from "./pages/masyarakat/PelacakanMasyarakat";
+import LihatArtikel from "./pages/adminopd/LihatArtikel";
+import NotifDaruratMasyarakat from "./pages/masyarakat/NDaruratMasyarakat";
+import NotifDibuatMasyarakat from "./pages/masyarakat/NDibuatMasyarakat";
+import NotifDiprosesMasyarakat from "./pages/masyarakat/NDiprosesMasyarakat";
+import NotifMaintenanceMasyarakat from "./pages/masyarakat/NMaintenanceMasyarakat";
+import NotifUmumMasyarakat from "./pages/masyarakat/NUmumMasyarakat";
+import KotakMasuk from "./pages/kotakmasuk/KotakMasuk";
+import KotakMasukMasyarakat from "./pages/masyarakat/KotakMasukMasyarakat";
+import KotakMasukBidang from "./pages/bidang/KotakMasukBidang";
+import KotakMasukOpd from "./pages/adminopd/KotakMasukOpd";
 
 function App() {
   return (
@@ -116,8 +139,14 @@ function App() {
           <Route path="reopenseksi" element={<ReopenSeksi />} />
           <Route path="ratingseksi" element={<RatingSeksi />} />
           <Route path="pengajuanbidang" element={<PengajuanBidang />} />
-          <Route path="monitoringtiketseksi" element={<MonitoringTiketSeksi />} />
-          <Route path="/monitoring-tiket/:id" element={<MonitoringTiketSeksi />} />
+          <Route
+            path="monitoringtiketseksi"
+            element={<MonitoringTiketSeksi />}
+          />
+          <Route
+            path="/monitoring-tiket/:id"
+            element={<MonitoringTiketSeksi />}
+          />
           <Route path="detailrating" element={<DetailRating />} />
           <Route path="layananchat" element={<LayananChat />} />
           <Route path="layananpesan" element={<LayananPesan />} />
@@ -156,6 +185,11 @@ function App() {
           <Route path="buatpengumumankota" element={<BuatPengumumanKota />} />
         </Route>
 
+        {/* Layout PEGAWAI */}
+        <Route path="/" element={<LayoutPegawai />}>
+          <Route path="/knowledgebase" element={<KnowledgeBase />} />
+        </Route>
+
         {/* Halaman tanpa Layout */}
         <Route path="/beranda" element={<Beranda />} />
         <Route path="/berandamasyarakat" element={<BerandaMasyarakat />} />
@@ -164,11 +198,17 @@ function App() {
         <Route path="/lupapassword" element={<LupaPassword />} />
         <Route path="/masukkode" element={<MasukKode />} />
         <Route path="/katasandibaru" element={<KataSandiBaru />} />
-        <Route path="/profilsaya" element={<Profil />} />
-        <Route path="/tampilan" element={<Tampilan />} />
-        <Route path="/knowledgebase" element={<KnowledgeBase />} />
+
+        <Route path="/" element={<LayoutMasyarakat />}>
+          <Route path="kbmasyarakat" element={<KBMasyarakat />} />
+        </Route>
+
+        {/* HAPUS DUPLIKAT INI: */}
+        {/* <Route path="/beranda" element={<Beranda />} /> */}
+
+        {/* KOMENTARI DULU SAMPAI FILE NYA DIPERBAIKI: */}
+        {/* <Route path="/pelaporanonline" element={<PelaporanOnline />} /> */}
         <Route path="/pelaporanonline" element={<PelaporanOnline />} />
-        <Route path="/formscanaset" element={<FormScanAset />} />
         <Route path="/formlaporan" element={<FormLaporan />} />
         <Route path="/pelacakan" element={<Pelacakan />} />
         <Route path="/pengajuan" element={<Pengajuan />} />
@@ -178,11 +218,13 @@ function App() {
         <Route path="/profilmasyarakat" element={<ProfilMasyarakat />} />
         <Route path="/dashboardbidang" element={<DashboardBidang />} />
         <Route path="/aksibidang" element={<AksiTiket />} />
+        <Route path="/lihatrating" element={<LihatRating />} />
         <Route path="/monitoringbidang" element={<MonitoringBidang />} />
         <Route path="/ratingkepuasan" element={<RatingKepuasan />} />
         <Route path="/dashboardopd" element={<DashboardOpd />} />
         <Route path="/cekdetail" element={<CekDetail />} />
         <Route path="/knowledgebasedraft" element={<KnowledgeBaseDraft />} />
+
         <Route
           path="/knowledgebasediajukan"
           element={<KnowledgeBaseDiajukan />}
@@ -192,6 +234,7 @@ function App() {
         <Route path="/sidebarmasyarakat" element={<SidebarMasyarakat />} />
         <Route path="/dataditemukan" element={<DataDitemukan />} />
         <Route path="/formmasyarakat" element={<FormMasyarakat />} />
+        <Route path="/landingpage" element={<LandingPage />} />
         <Route path="/helpdesk" element={<HelpdeskChat />} />
 
         <Route path="/statistikkategori" element={<StatistikKategori />} />
@@ -203,6 +246,49 @@ function App() {
         <Route path="/notifmaintenance" element={<NotifMaintenance />} />
         <Route path="/notifdarurat" element={<NotifDarurat />} />
         <Route path="/notifumum" element={<NotifUmum />} />
+
+        <Route path="/detailbidang" element={<DetailBidang />} />
+        <Route path="/lihatratingopd" element={<LihatRatingOpd />} />
+
+        <Route path="/layoutpegawai" element={<LayoutPegawai />} />
+
+        <Route path="/profilsaya" element={<Profil />} />
+        <Route path="/tampilan" element={<Tampilan />} />
+        <Route path="/tampilanmasyarakat" element={<TampilanMasyarakat />} />
+        <Route path="/pelaporanmasyarakat" element={<PelaporanMasyarakat />} />
+        <Route path="/sukseslapor" element={<SuksesLapor />} />
+        <Route
+          path="/dataditemukanmasyarakat"
+          element={<DataDitemukanMasyarakat />}
+        />
+        <Route path="/pelacakanmasyarakat" element={<PelacakanMasyarakat />} />
+        <Route path="/statistikbulanan" element={<StatistikBulanan />} />
+        <Route path="/lihatartikel" element={<LihatArtikel />} />
+        <Route
+          path="/ndaruratmasyarakat"
+          element={<NotifDaruratMasyarakat />}
+        />
+        <Route path="/ndibuatmasyarakat" element={<NotifDibuatMasyarakat />} />
+        <Route
+          path="/ndiprosesmasyarakat"
+          element={<NotifDiprosesMasyarakat />}
+        />
+        <Route
+          path="/ndiprosesmasyarakat"
+          element={<NotifDiprosesMasyarakat />}
+        />
+        <Route
+          path="/nmaintenancemasyarakat"
+          element={<NotifMaintenanceMasyarakat />}
+        />
+        <Route path="/numummasyarakat" element={<NotifUmumMasyarakat />} />
+        <Route path="/kotakmasuk" element={<KotakMasuk />} />
+        <Route
+          path="/kotakmasukmasyarakat"
+          element={<KotakMasukMasyarakat />}
+        />
+        <Route path="/kotakmasukbidang" element={<KotakMasukBidang />} />
+        <Route path="/kotakmasukopd" element={<KotakMasukOpd />} />
       </Routes>
     </Router>
   );

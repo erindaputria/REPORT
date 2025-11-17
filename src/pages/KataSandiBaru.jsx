@@ -117,7 +117,6 @@ const KataSandiBaru = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-6xl flex flex-col md:flex-row overflow-hidden">
-        {/* Kolom kiri - Form Reset Password */}
         <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col items-center text-center relative order-2 md:order-1">
           {/* Logo */}
           <div className="mb-4 md:mb-6">
@@ -128,12 +127,9 @@ const KataSandiBaru = () => {
             />
           </div>
 
-          <h1 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">
-            Ubah Password
+          <h1 className="text-xl md:text-2xl font-semibold text-gray-900 mb-8 md:mb-10">
+            Perbarui Kata Sandi
           </h1>
-          <p className="text-gray-600 mb-6 md:mb-8 text-sm">
-            Ubah kata sandi akunmu dengan memasukkan kata sandi baru
-          </p>
 
           {/* Form reset password */}
           <form
@@ -155,7 +151,7 @@ const KataSandiBaru = () => {
                 value={formData.newPassword}
                 onChange={handleInputChange}
                 required
-                className={`w-full px-3 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                className={`w-full px-3 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#226597] focus:border-transparent ${
                   errors.newPassword ? "border-red-500" : "border-gray-300"
                 }`}
               />
@@ -171,7 +167,7 @@ const KataSandiBaru = () => {
                   id="showNewPassword"
                   checked={showPassword.newPassword}
                   onChange={() => toggleShowPassword("newPassword")}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-[#226597] border-gray-300 rounded focus:ring-[#0F2C59]"
                 />
                 <label
                   htmlFor="showNewPassword"
@@ -188,7 +184,7 @@ const KataSandiBaru = () => {
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Konfirmasi kata sandi
+                Kata sandi konfirmasi
               </label>
               <input
                 type={showPassword.confirmPassword ? "text" : "password"}
@@ -197,7 +193,7 @@ const KataSandiBaru = () => {
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
                 required
-                className={`w-full px-3 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                className={`w-full px-3 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#226597] focus:border-transparent ${
                   errors.confirmPassword ? "border-red-500" : "border-gray-300"
                 }`}
               />
@@ -213,7 +209,7 @@ const KataSandiBaru = () => {
                   id="showConfirmPassword"
                   checked={showPassword.confirmPassword}
                   onChange={() => toggleShowPassword("confirmPassword")}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-[#226597] border-gray-300 rounded focus:ring-[#226597]"
                 />
                 <label
                   htmlFor="showConfirmPassword"
@@ -231,7 +227,7 @@ const KataSandiBaru = () => {
                 disabled={isLoading}
                 className="w-full bg-[#226597] hover:bg-[#1a507a] disabled:bg-gray-400 text-white py-3 rounded-full font-medium transition-colors"
               >
-                {isLoading ? "Mengubah Password..." : "Ubah Password"}
+                {isLoading ? "Mengubah Password..." : "Perbarui Kata Sandi"}
               </button>
             </div>
           </form>

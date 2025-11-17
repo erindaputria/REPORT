@@ -1,95 +1,104 @@
 import React, { useState } from "react";
-import HeaderBidang from "./HeaderBidang";
-import SidebarBidang from "./SidebarBidang";
-import { Menu, X, Bell } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import LayoutBidang from "../../components/Layout/LayoutBidang";
 
 const RatingKepuasan = () => {
   const [activeTab, setActiveTab] = useState("pelaporan");
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const stats = [];
 
-  // Data tabel dengan path gambar profil
+  // Data tabel - diubah untuk menyesuaikan dengan gambar
   const tableData = [
     {
-      name: "Haikal Saputra",
-      category: "Perangkat Keras",
+      name: "Doni Ridho",
+      category: "Sistem Operasi",
       date: "18/09/2024",
-      completionDate: "20/09/2024",
+      completionDate: "18/09/2024",
       avatar: "/assets/Haechan.jpg",
+      type: "IT",
       rating: 4,
     },
     {
       name: "Rio Widoro",
-      category: "Jaringan & Konektivitas",
+      category: "Jaringan",
       date: "18/09/2024",
-      completionDate: "19/09/2024",
+      completionDate: "18/09/2024",
       avatar: "/assets/Rio.jpeg",
-      rating: 5,
+      type: "IT",
+      rating: 4,
     },
     {
       name: "Lia Yustia",
-      category: "Perangkat Keras",
+      category: "Aplikasi",
       date: "17/09/2024",
-      completionDate: "22/09/2024",
+      completionDate: "17/09/2024",
       avatar: "/assets/Lia.jpg",
-      rating: 3,
+      type: "Non-IT",
+      rating: 4,
     },
     {
       name: "Ridwan Yusuf",
-      category: "Email & Komunikasi",
+      category: "Email",
       date: "17/09/2024",
-      completionDate: "18/09/2024",
+      completionDate: "17/09/2024",
       avatar: "/assets/Jaemin.jpg",
+      type: "IT",
       rating: 4,
     },
     {
       name: "Ella Meisya",
-      category: "Jaringan & Konektivitas",
+      category: "Aplikasi",
       date: "17/09/2024",
-      completionDate: "20/09/2024",
+      completionDate: "17/09/2024",
       avatar: "/assets/Ella.jpg",
-      rating: 5,
-    },
-    {
-      name: "Sri Wulandari",
-      category: "Keamanan",
-      date: "16/09/2024",
-      completionDate: "20/09/2024",
-      avatar: "/assets/Suzy.jpg",
-      rating: 5,
-    },
-    {
-      name: "Supriatno",
-      category: "Email & Komunikasi",
-      date: "16/09/2024",
-      completionDate: "20/09/2024",
-      avatar: "/assets/Suprianto.jpg",
-      rating: 5,
-    },
-    {
-      name: "Anya Rosalina",
-      category: "Email & Komunikasi",
-      date: "16/09/2024",
-      completionDate: "20/09/2024",
-      avatar: "/assets/Anya.jpg",
-      rating: 5,
-    },
-    {
-      name: "Widya Karim",
-      category: "Keamanan",
-      date: "15/09/2024",
-      completionDate: "20/09/2024",
-      avatar: "/assets/Widya.jpeg",
+      type: "IT",
       rating: 4,
     },
     {
-      name: "Rudiono",
-      category: "Perangkat Keras",
+      name: "Sri Wulandari",
+      category: "Sistem Operasi",
+      date: "16/09/2024",
+      completionDate: "16/09/2024",
+      avatar: "/assets/Suzy.jpg",
+      type: "IT",
+      rating: 4,
+    },
+    {
+      name: "Supriatno",
+      category: "Aplikasi",
+      date: "16/09/2024",
+      completionDate: "16/09/2024",
+      avatar: "/assets/Suprianto.jpg",
+      type: "Non-IT",
+      rating: 4,
+    },
+    {
+      name: "Anya Rosalina",
+      category: "Jaringan",
+      date: "16/09/2024",
+      completionDate: "16/09/2024",
+      avatar: "/assets/Anya.jpg",
+      type: "Non-IT",
+      rating: 4,
+    },
+    {
+      name: "Widya Karim",
+      category: "Email",
       date: "15/09/2024",
-      completionDate: "20/09/2024",
+      completionDate: "15/09/2024",
+      avatar: "/assets/Widya.jpeg",
+      type: "Non-IT",
+      rating: 4,
+    },
+    {
+      name: "Rualono",
+      category: "Sistem Operasi",
+      date: "15/09/2024",
+      completionDate: "15/09/2024",
       avatar: "/assets/Rudiono.jpeg",
-      rating: 5,
+      type: "IT",
+      rating: 4,
     },
   ];
 
@@ -113,101 +122,23 @@ const RatingKepuasan = () => {
     );
   };
 
+  // Fungsi untuk navigasi ke halaman LihatRating
+  const handleLihatRating = (item) => {
+    navigate("/lihatrating", { state: { ratingData: item } });
+  };
+
+  // Bungkus seluruh konten dengan LayoutBidang
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
-      {/* Mobile Header */}
-      <div className="bg-white p-4 flex items-center justify-between md:hidden shadow-sm">
-        <button
-          onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-          className="p-2 rounded-lg bg-gray-100"
-        >
-          {isMobileSidebarOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-            <Bell size={16} className="text-gray-600" />
-          </div>
-          <div className="w-8 h-8 rounded-full overflow-hidden">
-            <img
-              src="/assets/Haechan.jpg"
-              alt="Profil"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Sidebar - Hidden on mobile unless toggled */}
-      <div
-        className={`${
-          isMobileSidebarOpen ? "block" : "hidden"
-        } md:block fixed md:relative inset-0 z-50 md:z-auto bg-white md:bg-transparent w-72 md:w-auto`}
-      >
-        <div className="h-full">
-          <SidebarBidang />
-          <button
-            onClick={() => setIsMobileSidebarOpen(false)}
-            className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full md:hidden"
-          >
-            <X size={20} />
-          </button>
-        </div>
-      </div>
-
-      {/* Overlay for mobile sidebar */}
-      {isMobileSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
-          onClick={() => setIsMobileSidebarOpen(false)}
-        ></div>
-      )}
-
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <HeaderBidang />
-
+    <LayoutBidang>
+      <div className="min-h-screen bg-gray-50">
         {/* Dashboard Content */}
-        <main className="flex-1 p-4 md:p-6">
+        <main className="p-4 md:p-6">
           {/* Dashboard Header Card */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6 mb-4 md:mb-8">
             <h1 className="text-xl md:text-2xl font-bold text-[#226597] text-left">
               Rating Kepuasan
             </h1>
           </div>
-
-          {/* Stats Cards */}
-          {stats.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-lg shadow-sm p-4 md:p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
-                >
-                  <div className="flex flex-col">
-                    <div className="flex items-start space-x-3 mb-3">
-                      <img
-                        src={stat.icon}
-                        alt={stat.label}
-                        className="w-6 h-6 md:w-8 md:h-8 object-contain"
-                      />
-                      <div className="flex-1">
-                        <h3 className="text-sm md:text-base font-semibold text-gray-800 text-left">
-                          {stat.label}
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="text-xl md:text-2xl font-bold text-gray-900 mb-2 text-left">
-                      {stat.number}
-                    </div>
-                    <p className="text-xs md:text-sm text-gray-500 text-left">
-                      {stat.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
 
           {/* Card untuk Pelaporan dan Filter Pencarian */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6 mb-6 md:mb-8">
@@ -262,23 +193,21 @@ const RatingKepuasan = () => {
                 Filter pencarian
               </h2>
 
-              {/* Filter Row */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+              {/* Filter Row - TIGA KOLOM SEJAJAR */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                {/* Filter Kategori */}
                 <div className="text-left">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                    <div className="text-xs md:text-sm font-medium text-gray-700 whitespace-nowrap">
-                      Perihal
+                    <div className="text-xs md:text-sm font-medium text-gray-700 whitespace-nowrap w-20">
+                      Kategori
                     </div>
                     <div className="relative flex-1">
                       <select className="w-full text-xs md:text-sm text-gray-700 p-2 bg-white rounded border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none">
-                        <option value="">Semua</option>
-                        <option value="perangkat-keras">Perangkat Keras</option>
-                        <option value="jaringan-konektivitas">
-                          Jaringan & Konektivitas
-                        </option>
-                        <option value="email-komunikasi">
-                          Email & Komunikasi
-                        </option>
+                        <option value="">Pilih kategori</option>
+                        <option value="sistem-operasi">Sistem Operasi</option>
+                        <option value="jaringan">Jaringan</option>
+                        <option value="aplikasi">Aplikasi</option>
+                        <option value="email">Email</option>
                       </select>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         <svg
@@ -298,14 +227,47 @@ const RatingKepuasan = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Filter Jenis */}
                 <div className="text-left">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                    <div className="text-xs md:text-sm font-medium text-gray-700 whitespace-nowrap">
+                    <div className="text-xs md:text-sm font-medium text-gray-700 whitespace-nowrap w-20">
+                      Jenis
+                    </div>
+                    <div className="relative flex-1">
+                      <select className="w-full text-xs md:text-sm text-gray-700 p-2 bg-white rounded border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none">
+                        <option value="">Pilih jenis</option>
+                        <option value="it">IT</option>
+                        <option value="non-it">Non-IT</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg
+                          className="w-3 h-3 md:w-4 md:h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Filter Rating */}
+                <div className="text-left">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                    <div className="text-xs md:text-sm font-medium text-gray-700 whitespace-nowrap w-20">
                       Rating
                     </div>
                     <div className="relative flex-1">
                       <select className="w-full text-xs md:text-sm text-gray-700 p-2 bg-white rounded border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none">
-                        <option value="">Semua</option>
+                        <option value="">Pilih rating</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -335,12 +297,13 @@ const RatingKepuasan = () => {
 
             {/* Table Section */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-              {/* Desktop Table Header */}
-              <div className="bg-[#226597] rounded-t-lg p-3 md:p-4 grid grid-cols-6 gap-2 md:gap-3 text-xs md:text-sm font-medium text-white text-left hidden md:grid">
+              {/* Desktop Table Header - DIUBAH: 7 kolom tanpa Bentuk */}
+              <div className="bg-[#226597] rounded-t-lg p-3 md:p-4 grid grid-cols-7 gap-2 md:gap-3 text-xs md:text-sm font-medium text-white text-left hidden md:grid">
                 <div className="min-w-[150px]">Pengirim</div>
-                <div className="min-w-[160px]">Perihal</div>
-                <div className="min-w-[100px]">Tanggal masuk</div>
-                <div className="min-w-[100px]">Tanggal selesai</div>
+                <div className="min-w-[100px]">Tanggal Pengerjaan</div>
+                <div className="min-w-[100px]">Tanggal Selesai</div>
+                <div className="min-w-[120px]">Kategori</div>
+                <div className="min-w-[80px]">Jenis</div>
                 <div className="min-w-[80px]">Rating</div>
                 <div className="min-w-[60px]">Aksi</div>
               </div>
@@ -355,13 +318,13 @@ const RatingKepuasan = () => {
                 {tableData.map((item, index) => (
                   <div
                     key={index}
-                    className={`p-3 md:p-4 grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-3 text-sm text-left items-center ${
+                    className={`p-3 md:p-4 grid grid-cols-1 md:grid-cols-7 gap-3 md:gap-3 text-sm text-left items-center ${
                       index !== tableData.length - 1
                         ? "border-b border-gray-200"
                         : ""
                     }`}
                   >
-                    {/* Mobile View */}
+                    {/* Mobile View - DIUBAH: tanpa Bentuk */}
                     <div className="md:hidden space-y-3">
                       {/* Row 1: Pengirim dan Rating */}
                       <div className="flex justify-between items-center">
@@ -394,7 +357,10 @@ const RatingKepuasan = () => {
                           </div>
                         </div>
                         <div className="text-right">
-                          <button className="text-[#113F67] hover:text-[#226597] transition-colors duration-200">
+                          <button
+                            onClick={() => handleLihatRating(item)}
+                            className="text-[#113F67] hover:text-[#226597] transition-colors duration-200"
+                          >
                             <svg
                               width="18"
                               height="18"
@@ -411,9 +377,18 @@ const RatingKepuasan = () => {
                         </div>
                       </div>
 
-                      {/* Row 2: Perihal */}
-                      <div className="text-gray-600 text-sm">
-                        {item.category}
+                      {/* Row 2: Kategori dan Jenis */}
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                          <div className="font-medium text-gray-500">
+                            Kategori
+                          </div>
+                          <div className="text-gray-800">{item.category}</div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-500">Jenis</div>
+                          <div className="text-gray-800">{item.type}</div>
+                        </div>
                       </div>
 
                       {/* Row 3: Tanggal */}
@@ -429,8 +404,7 @@ const RatingKepuasan = () => {
                       </div>
                     </div>
 
-                    {/* Desktop View */}
-                    {/* Pengirim dengan gambar profil */}
+                    {/* Desktop View - DIUBAH: tanpa Bentuk */}
                     <div className="hidden md:flex font-medium text-gray-800 items-center space-x-3 min-w-[150px]">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
                         {item.avatar ? (
@@ -453,20 +427,26 @@ const RatingKepuasan = () => {
                       <span className="truncate">{item.name}</span>
                     </div>
 
-                    <div className="hidden md:block text-gray-600 min-w-[160px] truncate">
-                      {item.category}
-                    </div>
                     <div className="hidden md:block text-gray-600 min-w-[100px]">
                       {item.date}
                     </div>
                     <div className="hidden md:block text-gray-600 min-w-[100px]">
                       {item.completionDate}
                     </div>
+                    <div className="hidden md:block text-gray-600 min-w-[120px]">
+                      {item.category}
+                    </div>
+                    <div className="hidden md:block text-gray-600 min-w-[80px]">
+                      {item.type}
+                    </div>
                     <div className="hidden md:block min-w-[80px]">
                       <StarRating rating={item.rating} />
                     </div>
                     <div className="hidden md:block min-w-[60px]">
-                      <button className="text-[#113F67] hover:text-[#226597] transition-colors duration-200">
+                      <button
+                        onClick={() => handleLihatRating(item)}
+                        className="text-[#113F67] hover:text-[#226597] transition-colors duration-200"
+                      >
                         <svg
                           width="18"
                           height="18"
@@ -485,13 +465,13 @@ const RatingKepuasan = () => {
                 ))}
               </div>
 
-              {/* Pagination Info */}
+              {/* Pagination Info - DIUBAH: sesuai gambar */}
               <div className="flex flex-col sm:flex-row justify-between items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-500 mt-4 p-3 md:p-4 border-t border-gray-200">
                 <div className="text-left order-2 sm:order-1">
-                  Menampilkan data 1 sampai 10 dari 42 data
+                  Menampilkan data 1 sampai 10 dari 33 data
                 </div>
 
-                {/* Pagination Navigation */}
+                {/* Pagination Navigation - DIUBAH: sesuai gambar */}
                 <div className="flex items-center space-x-3 md:space-x-4 order-1 sm:order-2 mb-3 sm:mb-0">
                   <button className="text-[#226597] hover:text-[#113F67] transition-colors duration-200">
                     <svg
@@ -540,7 +520,7 @@ const RatingKepuasan = () => {
           </div>
         </main>
       </div>
-    </div>
+    </LayoutBidang>
   );
 };
 

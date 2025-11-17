@@ -102,7 +102,7 @@ const MasukKode = () => {
             Cek Emailmu
           </h1>
           <p className="text-gray-600 mb-6 md:mb-8 text-sm">
-            Kami telah mengirimkan 4 digit kode ke
+            Kami telah mengirimkan 4 digit kode
           </p>
 
           {/* Form verifikasi */}
@@ -121,7 +121,7 @@ const MasukKode = () => {
                   onChange={(e) => handleCodeChange(index, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
                   maxLength={1}
-                  className={`w-16 h-16 text-center text-xl font-semibold border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  className={`w-16 h-16 text-center text-xl font-semibold border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#226597] focus:border-transparent ${
                     errors.code ? "border-red-500" : "border-gray-300"
                   }`}
                   inputMode="numeric"

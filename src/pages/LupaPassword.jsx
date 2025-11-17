@@ -71,7 +71,6 @@ const LupaPassword = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-6xl flex flex-col md:flex-row overflow-hidden">
-        {/* Kolom kiri - Form Lupa Password */}
         <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col items-center text-center relative order-2 md:order-1">
           {/* Logo */}
           <div className="mb-4 md:mb-6">
@@ -110,7 +109,7 @@ const LupaPassword = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className={`w-full px-3 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                className={`w-full px-3 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#226597] focus:border-transparent ${
                   errors.email ? "border-red-500" : "border-gray-300"
                 }`}
               />
@@ -119,7 +118,6 @@ const LupaPassword = () => {
               )}
             </div>
 
-            {/* Jarak yang pas */}
             <div className="h-6"></div>
 
             <div>
@@ -137,7 +135,6 @@ const LupaPassword = () => {
           <div className="mt-8 pt-4 border-t border-gray-200 w-full md:hidden"></div>
         </div>
 
-        {/* Kolom kanan: gambar */}
         <div className="w-full md:w-1/2 bg-[#226597] flex items-start justify-start order-1 md:order-2">
           <img
             src="/assets/Login.png"

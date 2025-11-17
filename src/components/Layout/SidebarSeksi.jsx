@@ -15,31 +15,31 @@ export default function SidebarSeksi() {
   const isMonitoringActive = location.pathname.startsWith("/monitoringseksi");
 
   const menuItems = [
-    { 
-      name: "Dashboard", 
-      icon: <HomeIcon className="w-5 h-5" />, 
-      path: "/berandaseksi" 
+    {
+      name: "Dashboard",
+      icon: <HomeIcon className="w-5 h-5" />,
+      path: "/berandaseksi",
     },
-    { 
-      name: "Penugasan", 
-      icon: <ClipboardDocumentCheckIcon className="w-5 h-5" />, 
-      path: "/penugasanseksi" 
+    {
+      name: "Penugasan",
+      icon: <ClipboardDocumentCheckIcon className="w-5 h-5" />,
+      path: "/penugasanseksi",
     },
-    { 
-      name: "Monitoring", 
-      icon: <ChartBarIcon className="w-5 h-5" />, 
+    {
+      name: "Monitoring",
+      icon: <ChartBarIcon className="w-5 h-5" />,
       path: "/monitoringseksi",
-      isActive: isMonitoringActive 
+      isActive: isMonitoringActive,
     },
-    { 
-      name: "Rating", 
-      icon: <StarIcon className="w-5 h-5" />, 
-      path: "/ratingseksi" 
+    {
+      name: "Rating",
+      icon: <StarIcon className="w-5 h-5" />,
+      path: "/ratingseksi",
     },
-    { 
-      name: "Layanan Chat", 
-      icon: <ChatBubbleLeftRightIcon className="w-5 h-5" />, 
-      path: "/layananchat" 
+    {
+      name: "Layanan Chat",
+      icon: <ChatBubbleLeftRightIcon className="w-5 h-5" />,
+      path: "/layananchat",
     },
   ];
 
@@ -48,8 +48,8 @@ export default function SidebarSeksi() {
       {/* === Logo === */}
       <div className="flex items-center gap-4 px-6 py-5">
         <img src="/assets/Logo Report.png" alt="Logo" className="w-12 h-12" />
-        <h1 className="font-bold text-2xl bg-gradient-to-r from-[#D32F2F] to-[#0F2C59] text-transparent bg-clip-text tracking-wide"> 
-          REPORT 
+        <h1 className="font-bold text-2xl bg-gradient-to-r from-[#D32F2F] to-[#0F2C59] text-transparent bg-clip-text tracking-wide">
+          REPORT
         </h1>
       </div>
 

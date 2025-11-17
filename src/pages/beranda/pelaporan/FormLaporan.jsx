@@ -1,8 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Menu, X, Bell, FileText, XCircle, ChevronDown } from "lucide-react";
-import Header from "../../../components/Header";
-import LeftSidebar from "../../../components/LeftSidebar";
+import { FileText, XCircle, ChevronDown } from "lucide-react";
+import LayoutPegawai from "../../../components/Layout/LayoutPegawai";
 
 export default function FormLaporan() {
   const [selectedReasons, setSelectedReasons] = useState([]);
@@ -10,7 +9,6 @@ export default function FormLaporan() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [formData, setFormData] = useState({
     nama: "Haikal Saputra",
     nip: "20001142023052053",
@@ -18,7 +16,6 @@ export default function FormLaporan() {
     judulPelaporan: "",
     kategoriAset: "",
     jenisAset: "",
-    bentukAset: "",
     dataAset: "",
     lokasiKejadian: "",
     rincianMasalah: "",
@@ -28,7 +25,6 @@ export default function FormLaporan() {
   const [dropdowns, setDropdowns] = useState({
     kategoriAset: false,
     jenisAset: false,
-    bentukAset: false,
     dataAset: false,
   });
 
@@ -56,7 +52,6 @@ export default function FormLaporan() {
       formData.judulPelaporan.trim() !== "" &&
       formData.kategoriAset.trim() !== "" &&
       formData.jenisAset.trim() !== "" &&
-      formData.bentukAset.trim() !== "" &&
       formData.dataAset.trim() !== "" &&
       formData.lokasiKejadian.trim() !== "" &&
       formData.rincianMasalah.trim() !== "" &&
@@ -119,13 +114,11 @@ export default function FormLaporan() {
 
     console.log("Data laporan:", laporanData);
 
-    // Tutup popup konfirmasi dan buka popup sukses
     setShowConfirmation(false);
     setShowSuccessPopup(true);
   };
 
   const handleSuccessOk = () => {
-    // Navigasi ke halaman sukses setelah klik Oke
     navigate("/SuksesPelaporan", {
       state: {
         laporanData: {
@@ -141,24 +134,6 @@ export default function FormLaporan() {
         },
       },
     });
-  };
-
-  const handleSimpanDraft = () => {
-    const draftData = {
-      ...formData,
-      uploadedFiles: uploadedFiles.map((file) => ({
-        name: file.name,
-        size: file.size,
-        type: file.type,
-      })),
-      tanggal: new Date().toISOString(),
-      status: "draft",
-      opdTujuan: selectedOpd.name,
-    };
-
-    console.log("Data draft:", draftData);
-    localStorage.setItem("draftLaporan", JSON.stringify(draftData));
-    alert("Draft berhasil disimpan!");
   };
 
   const handleBatalkan = () => {
@@ -180,515 +155,364 @@ export default function FormLaporan() {
     "Lainnya",
   ];
   const jenisAsetOptions = ["TI", "Non-TI"];
-  const bentukAsetOptions = ["Fisik", "Non-Fisik"];
   const dataAsetOptions = ["blablabla"];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
-      {/* Mobile Header */}
-      <div className="bg-white p-4 flex items-center justify-between md:hidden shadow-sm">
-        <button
-          onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-          className="p-2 rounded-lg bg-gray-100"
-        >
-          {isMobileSidebarOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-            <Bell size={16} className="text-gray-600" />
-          </div>
-          <div className="w-8 h-8 rounded-full overflow-hidden">
-            <img
-              src="/assets/Haechan.jpg"
-              alt="Profil"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Left Sidebar - Hidden on mobile unless toggled */}
-      <div
-        className={`${
-          isMobileSidebarOpen ? "block" : "hidden"
-        } md:block fixed md:relative inset-0 z-50 md:z-auto bg-white md:bg-transparent w-72 md:w-auto`}
-      >
-        <div className="h-full">
-          <LeftSidebar />
-          <button
-            onClick={() => setIsMobileSidebarOpen(false)}
-            className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full md:hidden"
-          >
-            <X size={20} />
-          </button>
-        </div>
-      </div>
-
-      {/* Overlay for mobile sidebar */}
-      {isMobileSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
-          onClick={() => setIsMobileSidebarOpen(false)}
-        ></div>
-      )}
-
+    <LayoutPegawai>
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <Header />
+      <div className="min-h-screen bg-gray-50 pt-4">
+        <div className="px-4 md:px-6 py-4 md:py-8">
+          {/* Form Pelaporan dalam Card */}
+          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md border border-gray-200">
+            {/* Header Form */}
+            <div className="p-6 border-b border-gray-200 text-center">
+              <h2 className="text-2xl font-bold text-[#226597]">
+                Pelaporan Online
+              </h2>
+            </div>
 
-        {/* Main Content */}
-        <div className="flex-1 relative overflow-hidden">
-          {/* Custom SVG Background */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <svg
-              width="100%"
-              height="100%"
-              viewBox="0 0 1065 351"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-              className="min-h-[200px] md:min-h-[350px]"
-            >
-              <mask
-                id="mask0_135_1312"
-                style={{ maskType: "alpha" }}
-                maskUnits="userSpaceOnUse"
-                x="0"
-                y="0"
-                width="1065"
-                height="351"
-              >
-                <rect
-                  width="1065"
-                  height="351"
-                  transform="matrix(-1 0 0 1 1065 0)"
-                  fill="#C4C4C4"
-                />
-              </mask>
-              <g mask="url(#mask0_135_1312)">
-                <g opacity="0.1">
-                  <path
-                    d="M-41.6782 68.2948C-41.6782 68.2948 -11.9803 97.8027 210.646 104.858C379.127 110.195 696.24 12.9597 888.09 19.2171C1085.55 25.5972 1064.34 90.1343 1064.34 46.8847V111.544C1064.34 111.544 998.397 50.7495 883.776 51.3017C715.224 52.2219 368.556 184.609 202.88 188.719C41.3033 192.707 -41.6782 111.544 -41.6782 111.544V68.2948Z"
-                    fill="#226597"
-                  />
-                </g>
-                <g opacity="0.2">
-                  <path
-                    d="M-4.97253 67.2116C376.62 306.122 638.244 -6.8645 841.318 0.115997C1050.41 7.34143 1065 129.454 1065 80.7744V153.58C1065 153.58 996.235 123.465 878.373 114.241C450.722 80.7744 425.791 380.116 227.03 348.135C28.2697 316.155 -110.155 1.35828 -4.97253 67.2116Z"
-                    fill="#226597"
-                  />
-                </g>
-              </g>
-            </svg>
-          </div>
-
-          <div className="relative z-10 container mx-auto px-4 py-6 md:py-8">
-            {/* Form Pelaporan dalam Card */}
-            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md border border-gray-200">
-              {/* Header Form */}
-              <div className="p-6 border-b border-gray-200 text-center">
-                <h2 className="text-2xl font-bold text-[#226597]">
-                  Pelaporan Online
-                </h2>
+            <div className="p-6 space-y-6">
+              {/* Kirim laporan ke */}
+              <div className="space-y-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-start w-full gap-2 sm:gap-4">
+                  <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                    Kirim laporan ke
+                  </label>
+                  <div className="bg-[#226597] text-white px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2 justify-center sm:justify-start">
+                    {selectedOpd.logo && (
+                      <img
+                        src={selectedOpd.logo}
+                        alt={`Logo ${selectedOpd.name}`}
+                        className="w-5 h-5 object-cover rounded"
+                      />
+                    )}
+                    <span className="text-sm">{selectedOpd.name}</span>
+                  </div>
+                </div>
               </div>
 
-              <div className="p-6 space-y-6">
-                {/* Kirim laporan ke */}
+              {/* Form Fields - Sesuai Gambar */}
+              <div className="space-y-4">
+                {/* Nama */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <label className="text-sm font-medium text-gray-700 sm:w-24 text-left whitespace-nowrap">
+                    Nama
+                  </label>
+                  <div className="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                    {formData.nama}
+                  </div>
+                </div>
+
+                {/* NIP */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <label className="text-sm font-medium text-gray-700 sm:w-24 text-left whitespace-nowrap">
+                    NIP
+                  </label>
+                  <div className="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                    {formData.nip}
+                  </div>
+                </div>
+
+                {/* Divisi */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <label className="text-sm font-medium text-gray-700 sm:w-24 text-left whitespace-nowrap">
+                    Divisi
+                  </label>
+                  <div className="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
+                    {formData.divisi}
+                  </div>
+                </div>
+
+                {/* Judul Pelaporan */}
                 <div className="space-y-2">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-start w-full gap-2 sm:gap-4">
-                    <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                      Kirim laporan ke
-                    </label>
-                    <div className="bg-[#226597] text-white px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2 justify-center sm:justify-start">
-                      {selectedOpd.logo && (
-                        <img
-                          src={selectedOpd.logo}
-                          alt={`Logo ${selectedOpd.name}`}
-                          className="w-5 h-5 object-cover rounded"
-                        />
-                      )}
-                      <span className="text-sm">{selectedOpd.name}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Form Fields - Sesuai Gambar */}
-                <div className="space-y-4">
-                  {/* Nama */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <label className="text-sm font-medium text-gray-700 sm:w-24 text-left whitespace-nowrap">
-                      Nama
-                    </label>
-                    <div className="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
-                      {formData.nama}
-                    </div>
-                  </div>
-
-                  {/* NIP */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <label className="text-sm font-medium text-gray-700 sm:w-24 text-left whitespace-nowrap">
-                      NIP
-                    </label>
-                    <div className="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
-                      {formData.nip}
-                    </div>
-                  </div>
-
-                  {/* Divisi */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <label className="text-sm font-medium text-gray-700 sm:w-24 text-left whitespace-nowrap">
-                      Divisi
-                    </label>
-                    <div className="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-xs text-center">
-                      {formData.divisi}
-                    </div>
-                  </div>
-
-                  {/* Judul Pelaporan */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 block">
-                      Judul Pelaporan
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Ketik disini"
-                      value={formData.judulPelaporan}
-                      onChange={(e) =>
-                        handleInputChange("judulPelaporan", e.target.value)
-                      }
-                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-left placeholder:text-left"
-                    />
-                  </div>
-
-                  {/* Kategori Aset dan Jenis Aset */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Kategori Aset */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700 block">
-                        Kategori Aset
-                      </label>
-                      <div className="relative">
-                        <button
-                          onClick={() => toggleDropdown("kategoriAset")}
-                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
-                        >
-                          <span
-                            className={`flex-1 text-left ${
-                              formData.kategoriAset
-                                ? "text-gray-700"
-                                : "text-gray-400"
-                            }`}
-                          >
-                            {formData.kategoriAset || "Pilih kategori"}
-                          </span>
-                          <ChevronDown size={16} className="text-gray-400" />
-                        </button>
-                        {dropdowns.kategoriAset && (
-                          <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
-                            {kategoriOptions.map((option) => (
-                              <div
-                                key={option}
-                                onClick={() => {
-                                  handleInputChange("kategoriAset", option);
-                                  toggleDropdown("kategoriAset");
-                                }}
-                                className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
-                              >
-                                {option}
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Jenis Aset */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700 block">
-                        Jenis Aset
-                      </label>
-                      <div className="relative">
-                        <button
-                          onClick={() => toggleDropdown("jenisAset")}
-                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
-                        >
-                          <span
-                            className={`flex-1 text-left ${
-                              formData.jenisAset
-                                ? "text-gray-700"
-                                : "text-gray-400"
-                            }`}
-                          >
-                            {formData.jenisAset || "Pilih jenis aset"}
-                          </span>
-                          <ChevronDown size={16} className="text-gray-400" />
-                        </button>
-                        {dropdowns.jenisAset && (
-                          <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
-                            {jenisAsetOptions.map((option) => (
-                              <div
-                                key={option}
-                                onClick={() => {
-                                  handleInputChange("jenisAset", option);
-                                  toggleDropdown("jenisAset");
-                                }}
-                                className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
-                              >
-                                {option}
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  {/* Bentuk Aset */}
-                  <div className="space-y-2">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Bentuk Aset */}
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700 block">
-                          Bentuk Aset
-                        </label>
-                        <div className="relative">
-                          <button
-                            onClick={() => toggleDropdown("bentukAset")}
-                            className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
-                          >
-                            <span
-                              className={`flex-1 text-left ${
-                                formData.bentukAset
-                                  ? "text-gray-700"
-                                  : "text-gray-400"
-                              }`}
-                            >
-                              {formData.bentukAset || "Pilih bentuk aset"}
-                            </span>
-                            <ChevronDown size={16} className="text-gray-400" />
-                          </button>
-                          {dropdowns.bentukAset && (
-                            <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
-                              {bentukAsetOptions.map((option) => (
-                                <div
-                                  key={option}
-                                  onClick={() => {
-                                    handleInputChange("bentukAset", option);
-                                    toggleDropdown("bentukAset");
-                                  }}
-                                  className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
-                                >
-                                  {option}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Data Aset */}
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700 block">
-                          Data Aset
-                        </label>
-                        <div className="relative">
-                          <button
-                            onClick={() => toggleDropdown("dataAset")}
-                            className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
-                          >
-                            <span
-                              className={`flex-1 text-left ${
-                                formData.dataAset
-                                  ? "text-gray-700"
-                                  : "text-gray-400"
-                              }`}
-                            >
-                              {formData.dataAset || "Pilih aset yang diminta"}
-                            </span>
-                            <ChevronDown size={16} className="text-gray-400" />
-                          </button>
-                          {dropdowns.dataAset && (
-                            <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
-                              {dataAsetOptions.map((option) => (
-                                <div
-                                  key={option}
-                                  onClick={() => {
-                                    handleInputChange("dataAset", option);
-                                    toggleDropdown("dataAset");
-                                  }}
-                                  className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
-                                >
-                                  {option}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Lokasi Kejadian */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 block">
-                      Lokasi Kejadian
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Ketik disini"
-                      value={formData.lokasiKejadian}
-                      onChange={(e) =>
-                        handleInputChange("lokasiKejadian", e.target.value)
-                      }
-                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-left placeholder:text-left"
-                    />
-                  </div>
-                </div>
-
-                {/* Rincian Masalah */}
-                <div className="space-y-2 text-left">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Rincian Masalah
+                    Judul Pelaporan
                   </label>
-                  <p className="text-xs text-gray-500 mb-2">
-                    Jelaskan lebih rinci terkait masalah tersebut agar kami
-                    dapat lebih memahami masalah ini
-                  </p>
-                  <textarea
-                    placeholder="Ketik disini..."
-                    value={formData.rincianMasalah}
-                    onChange={(e) =>
-                      handleInputChange("rincianMasalah", e.target.value)
-                    }
-                    className="w-full px-3 py-2 min-h-[120px] bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-left text-sm"
-                  />
-                </div>
-
-                {/* Upload File */}
-                <div className="space-y-2 text-left">
-                  <label className="text-sm font-medium text-gray-700 block">
-                    Tambahkan file
-                  </label>
-                  <p className="text-xs text-gray-500 mb-2">
-                    Lampirkan screenshot, log, atau dokumen terkait untuk
-                    membantu kami memahami masalah Anda lebih cepat!
-                  </p>
-
                   <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleFileUpload}
-                    multiple
-                    className="hidden"
-                  />
-
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="bg-[#226597] hover:bg-[#1a507a] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center w-full sm:w-auto gap-2"
-                  >
-                    <svg
-                      width="7"
-                      height="13"
-                      viewBox="0 0 7 13"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M2.2375 4.04576V8.54107C2.24269 8.86979 2.37692 9.18328 2.61121 9.41391C2.84551 9.64453 3.16109 9.77379 3.48984 9.77379C3.8186 9.77379 4.13418 9.64453 4.36847 9.41391C4.60277 9.18328 4.73699 8.86979 4.74219 8.54107L4.74625 2.64888C4.74966 2.36792 4.69726 2.08908 4.5921 1.82852C4.48694 1.56796 4.33111 1.33087 4.13364 1.13098C3.93616 0.931099 3.70098 0.7724 3.44171 0.664087C3.18245 0.555773 2.90426 0.5 2.62328 0.5C2.3423 0.5 2.06412 0.555773 1.80485 0.664087C1.54559 0.7724 1.3104 0.931099 1.11293 1.13098C0.915452 1.33087 0.759618 1.56796 0.654458 1.82852C0.549298 2.08908 0.496904 2.36792 0.500313 2.64888V8.58076C0.494588 8.9763 0.567552 9.36904 0.714962 9.73614C0.862372 10.1032 1.08129 10.4374 1.35898 10.7191C1.63667 11.0009 1.9676 11.2246 2.33253 11.3773C2.69746 11.53 3.0891 11.6086 3.48469 11.6086C3.88028 11.6086 4.27192 11.53 4.63685 11.3773C5.00177 11.2246 5.3327 11.0009 5.61039 10.7191C5.88809 10.4374 6.107 10.1032 6.25441 9.73614C6.40182 9.36904 6.47479 8.9763 6.46906 8.58076V3.03763"
-                        stroke="white"
-                        strokeWidth="1"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                    Lampirkan file
-                  </button>
-
-                  {uploadedFiles.length > 0 && (
-                    <div className="mt-4 space-y-2">
-                      <div className="space-y-2">
-                        {uploadedFiles.map((file) => (
-                          <div
-                            key={file.id}
-                            className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-md p-3"
-                          >
-                            <div className="flex items-center space-x-3 min-w-0 flex-1">
-                              <FileText
-                                size={16}
-                                className="text-gray-400 flex-shrink-0"
-                              />
-                              <div className="min-w-0 flex-1">
-                                <p className="text-sm font-medium text-gray-700 truncate">
-                                  {file.name}
-                                </p>
-                                <p className="text-xs text-gray-500">
-                                  {formatFileSize(file.size)}
-                                </p>
-                              </div>
-                            </div>
-                            <button
-                              onClick={() => handleRemoveFile(file.id)}
-                              className="text-red-500 hover:text-red-700 transition-colors flex-shrink-0 ml-2"
-                            >
-                              <XCircle size={16} />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Penyelesaian yang Diharapkan */}
-                <div className="space-y-2 text-left">
-                  <label className="text-sm font-medium text-gray-700 block">
-                    Penyelesaian yang Diharapkan
-                  </label>
-                  <p className="text-xs text-gray-500 mb-2">
-                    Jelaskan terkait harapan Anda terkait penyelesaian masalah
-                    tersebut agar kami dapat lebih menyesuaikan untuk
-                    menyelesaikan masalah ini
-                  </p>
-                  <textarea
-                    placeholder="Ketik disini..."
-                    value={formData.penyelesaianDiharapkan}
+                    type="text"
+                    placeholder="Ketik disini"
+                    value={formData.judulPelaporan}
                     onChange={(e) =>
-                      handleInputChange(
-                        "penyelesaianDiharapkan",
-                        e.target.value
-                      )
+                      handleInputChange("judulPelaporan", e.target.value)
                     }
-                    className="w-full px-3 py-2 min-h-[120px] bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-left text-sm"
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-left placeholder:text-left"
                   />
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row justify-between pt-6 gap-3 sm:gap-0 border-t border-gray-200">
-                  <button
-                    onClick={handleBatalkan}
-                    className="px-6 py-2 border border-gray-300 bg-white text-gray-700 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors text-center"
-                  >
-                    Batalkan
-                  </button>
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                    <button
-                      onClick={handleSimpanDraft}
-                      className="text-black bg-transparent px-0 py-0 text-sm font-medium hover:text-black underline transition-colors text-center sm:text-left"
-                    >
-                      Simpan draft
-                    </button>
-                    <button
-                      onClick={handleKonfirmasiKirim}
-                      className={`px-6 py-2 rounded-md text-sm font-medium transition-colors text-center ${
-                        isFormValid()
-                          ? "bg-[#226597] hover:bg-[#1a507a] text-white cursor-pointer"
-                          : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      }`}
-                      disabled={!isFormValid()}
-                    >
-                      Kirim
-                    </button>
+                {/* Kategori Aset, Jenis Aset, dan Data Aset */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Kategori Aset */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 block">
+                      Kategori Aset
+                    </label>
+                    <div className="relative">
+                      <button
+                        onClick={() => toggleDropdown("kategoriAset")}
+                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
+                      >
+                        <span
+                          className={`flex-1 text-left ${
+                            formData.kategoriAset
+                              ? "text-gray-700"
+                              : "text-gray-400"
+                          }`}
+                        >
+                          {formData.kategoriAset || "Pilih kategori"}
+                        </span>
+                        <ChevronDown size={16} className="text-gray-400" />
+                      </button>
+                      {dropdowns.kategoriAset && (
+                        <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
+                          {kategoriOptions.map((option) => (
+                            <div
+                              key={option}
+                              onClick={() => {
+                                handleInputChange("kategoriAset", option);
+                                toggleDropdown("kategoriAset");
+                              }}
+                              className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
+                            >
+                              {option}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
+
+                  {/* Jenis Aset */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 block">
+                      Jenis Aset
+                    </label>
+                    <div className="relative">
+                      <button
+                        onClick={() => toggleDropdown("jenisAset")}
+                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
+                      >
+                        <span
+                          className={`flex-1 text-left ${
+                            formData.jenisAset
+                              ? "text-gray-700"
+                              : "text-gray-400"
+                          }`}
+                        >
+                          {formData.jenisAset || "Pilih jenis aset"}
+                        </span>
+                        <ChevronDown size={16} className="text-gray-400" />
+                      </button>
+                      {dropdowns.jenisAset && (
+                        <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
+                          {jenisAsetOptions.map((option) => (
+                            <div
+                              key={option}
+                              onClick={() => {
+                                handleInputChange("jenisAset", option);
+                                toggleDropdown("jenisAset");
+                              }}
+                              className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
+                            >
+                              {option}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Data Aset */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 block">
+                      Data Aset
+                    </label>
+                    <div className="relative">
+                      <button
+                        onClick={() => toggleDropdown("dataAset")}
+                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm flex items-center justify-between"
+                      >
+                        <span
+                          className={`flex-1 text-left ${
+                            formData.dataAset
+                              ? "text-gray-700"
+                              : "text-gray-400"
+                          }`}
+                        >
+                          {formData.dataAset || "Pilih aset yang diminta"}
+                        </span>
+                        <ChevronDown size={16} className="text-gray-400" />
+                      </button>
+                      {dropdowns.dataAset && (
+                        <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 mt-1">
+                          {dataAsetOptions.map((option) => (
+                            <div
+                              key={option}
+                              onClick={() => {
+                                handleInputChange("dataAset", option);
+                                toggleDropdown("dataAset");
+                              }}
+                              className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm text-left"
+                            >
+                              {option}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Lokasi Kejadian */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 block">
+                    Lokasi Kejadian 
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ketik disini"
+                    value={formData.lokasiKejadian}
+                    onChange={(e) =>
+                      handleInputChange("lokasiKejadian", e.target.value)
+                    }
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-left placeholder:text-left"
+                  />
+                </div>
+              </div>
+
+              {/* Rincian Masalah */}
+              <div className="space-y-2 text-left">
+                <label className="text-sm font-medium text-gray-700 block">
+                  Rincian Masalah
+                </label>
+                <p className="text-xs text-gray-500 mb-2">
+                  Jelaskan lebih rinci terkait masalah tersebut agar kami dapat
+                  lebih memahami masalah ini
+                </p>
+                <textarea
+                  placeholder="Ketik disini..."
+                  value={formData.rincianMasalah}
+                  onChange={(e) =>
+                    handleInputChange("rincianMasalah", e.target.value)
+                  }
+                  className="w-full px-3 py-2 min-h-[120px] bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-left text-sm"
+                />
+              </div>
+
+              {/* Upload File */}
+              <div className="space-y-2 text-left">
+                <label className="text-sm font-medium text-gray-700 block">
+                  Tambahkan file
+                </label>
+                <p className="text-xs text-gray-500 mb-2">
+                  Lampirkan screenshot, log, atau dokumen terkait untuk membantu
+                  kami memahami masalah Anda lebih cepat!
+                </p>
+
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileUpload}
+                  multiple
+                  className="hidden"
+                />
+
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="bg-[#226597] hover:bg-[#1a507a] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center w-full sm:w-auto gap-2"
+                >
+                  <svg
+                    width="7"
+                    height="13"
+                    viewBox="0 0 7 13"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M2.2375 4.04576V8.54107C2.24269 8.86979 2.37692 9.18328 2.61121 9.41391C2.84551 9.64453 3.16109 9.77379 3.48984 9.77379C3.8186 9.77379 4.13418 9.64453 4.36847 9.41391C4.60277 9.18328 4.73699 8.86979 4.74219 8.54107L4.74625 2.64888C4.74966 2.36792 4.69726 2.08908 4.5921 1.82852C4.48694 1.56796 4.33111 1.33087 4.13364 1.13098C3.93616 0.931099 3.70098 0.7724 3.44171 0.664087C3.18245 0.555773 2.90426 0.5 2.62328 0.5C2.3423 0.5 2.06412 0.555773 1.80485 0.664087C1.54559 0.7724 1.3104 0.931099 1.11293 1.13098C0.915452 1.33087 0.759618 1.56796 0.654458 1.82852C0.549298 2.08908 0.496904 2.36792 0.500313 2.64888V8.58076C0.494588 8.9763 0.567552 9.36904 0.714962 9.73614C0.862372 10.1032 1.08129 10.4374 1.35898 10.7191C1.63667 11.0009 1.9676 11.2246 2.33253 11.3773C2.69746 11.53 3.0891 11.6086 3.48469 11.6086C3.88028 11.6086 4.27192 11.53 4.63685 11.3773C5.00177 11.2246 5.3327 11.0009 5.61039 10.7191C5.88809 10.4374 6.107 10.1032 6.25441 9.73614C6.40182 9.36904 6.47479 8.9763 6.46906 8.58076V3.03763"
+                      stroke="white"
+                      strokeWidth="1"
+                      strokeMiterlimit="10"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  Lampirkan file
+                </button>
+
+                {uploadedFiles.length > 0 && (
+                  <div className="mt-4 space-y-2">
+                    <div className="space-y-2">
+                      {uploadedFiles.map((file) => (
+                        <div
+                          key={file.id}
+                          className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-md p-3"
+                        >
+                          <div className="flex items-center space-x-3 min-w-0 flex-1">
+                            <FileText
+                              size={16}
+                              className="text-gray-400 flex-shrink-0"
+                            />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-sm font-medium text-gray-700 truncate">
+                                {file.name}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                {formatFileSize(file.size)}
+                              </p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => handleRemoveFile(file.id)}
+                            className="text-red-500 hover:text-red-700 transition-colors flex-shrink-0 ml-2"
+                          >
+                            <XCircle size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Penyelesaian yang Diharapkan */}
+              <div className="space-y-2 text-left">
+                <label className="text-sm font-medium text-gray-700 block">
+                  Penyelesaian yang Diharapkan
+                </label>
+                <p className="text-xs text-gray-500 mb-2">
+                  Jelaskan terkait harapan Anda terkait penyelesaian masalah
+                  tersebut agar kami dapat lebih menyesuaikan untuk
+                  menyelesaikan masalah ini
+                </p>
+                <textarea
+                  placeholder="Ketik disini..."
+                  value={formData.penyelesaianDiharapkan}
+                  onChange={(e) =>
+                    handleInputChange("penyelesaianDiharapkan", e.target.value)
+                  }
+                  className="w-full px-3 py-2 min-h-[120px] bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-left text-sm"
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row justify-between pt-6 gap-3 sm:gap-0 border-t border-gray-200">
+                <button
+                  onClick={handleBatalkan}
+                  className="px-6 py-2 border border-gray-300 bg-white text-gray-700 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors text-center"
+                >
+                  Batalkan
+                </button>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  <button
+                    onClick={handleKonfirmasiKirim}
+                    className={`px-6 py-2 rounded-md text-sm font-medium transition-colors text-center ${
+                      isFormValid()
+                        ? "bg-[#226597] hover:bg-[#1a507a] text-white cursor-pointer"
+                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    }`}
+                    disabled={!isFormValid()}
+                  >
+                    Kirim
+                  </button>
                 </div>
               </div>
             </div>
@@ -789,6 +613,6 @@ export default function FormLaporan() {
           </div>
         </div>
       )}
-    </div>
+    </LayoutPegawai>
   );
 }

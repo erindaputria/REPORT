@@ -1,6 +1,6 @@
 import { Plus, Menu, X, Bell, Calendar } from "lucide-react";
 import { Calender } from "../../components/beranda/Calender";
-import LeftSidebar from "../../components/LeftSidebar";
+import LeftSidebar from "../../components/Layout/LeftSidebar";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -253,8 +253,8 @@ export function Beranda() {
         ></div>
       )}
 
-      {/* Center Content - Tambahkan padding top untuk mobile header */}
-      <div className="flex-1 p-4 md:p-6 mt-16 md:mt-0">
+      {/* Center Content - Tambahkan padding top untuk mobile header dan ml-64 untuk desktop */}
+      <div className="flex-1 p-4 md:p-6 mt-16 md:mt-0 md:ml-64">
         {/* Main Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 md:mb-8 justify-center">
           {/* Card Pelaporan */}
@@ -516,7 +516,10 @@ export function Beranda() {
                 {/* Daftar Notifikasi */}
                 <div className="max-h-96 overflow-y-auto">
                   {/* Tiket Dibuat */}
-                  <div className="px-3 py-2 border-b border-gray-100 hover:bg-gray-50 cursor-pointer">
+                  <div
+                    className="px-3 py-2 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
+                    onClick={() => navigate("/notifdibuat")}
+                  >
                     <div className="flex items-start gap-2">
                       <svg
                         width="32"
@@ -557,7 +560,7 @@ export function Beranda() {
                   </div>
 
                   {/* Status Tiket Diperbarui */}
-                  <div className="px-3 py-2 border-b border-gray-100 hover:bg-gray-50 cursor-pointer">
+                  <div className="px-3 py-2 border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => navigate("/notifdiproses")}>
                     <div className="flex items-start gap-2">
                       <svg
                         width="32"
@@ -602,7 +605,7 @@ export function Beranda() {
                   </div>
 
                   {/* Pengumuman */}
-                  <div className="px-3 py-2 hover:bg-gray-50 cursor-pointer">
+                  <div className="px-3 py-2 hover:bg-gray-50 cursor-pointer" onClick={() => navigate("/notifmaintenance")}> 
                     <div className="flex items-start gap-2">
                       <svg
                         width="32"

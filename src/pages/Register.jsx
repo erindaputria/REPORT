@@ -69,7 +69,6 @@ const Register = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-6xl flex flex-col md:flex-row overflow-hidden">
-        {/* Kolom kiri: Form */}
         <div className="w-full md:w-1/2 p-4 md:p-8 order-2 md:order-1">
           {/* Logo */}
           <div className="flex justify-start mb-4 md:mb-6">
@@ -112,7 +111,7 @@ const Register = () => {
                   name="first_name"
                   value={formData.first_name}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#226597] focus:border-transparent"
                   required
                 />
               </div>
@@ -129,7 +128,7 @@ const Register = () => {
                   name="last_name"
                   value={formData.last_name}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#226597] focus:border-transparent"
                   required
                 />
               </div>
@@ -154,7 +153,7 @@ const Register = () => {
                     e.target.value = e.target.value.slice(0, 16);
                   }
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#226597] focus:border-transparent"
                 maxLength={16}
                 required
               />
@@ -173,7 +172,7 @@ const Register = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#226597] focus:border-transparent"
                 required
               />
             </div>
@@ -192,7 +191,7 @@ const Register = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#226597] focus:border-transparent"
                   required
                 />
               </div>
@@ -209,7 +208,7 @@ const Register = () => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#226597] focus:border-transparent"
                   required
                 />
               </div>
@@ -226,7 +225,7 @@ const Register = () => {
                 id="showPassword"
                 checked={showPassword}
                 onChange={(e) => setShowPassword(e.target.checked)}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-[#226597] border-gray-300 rounded focus:ring-[#226597]"
               />
               <label
                 htmlFor="showPassword"
@@ -261,20 +260,19 @@ const Register = () => {
               </select>
             </div>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-600">
-              <a href="#" className="hover:underline">
+              <a href="" className="hover:underline">
                 Bantuan
               </a>
-              <a href="#" className="hover:underline">
+              <a href="" className="hover:underline">
                 Privasi
               </a>
-              <a href="#" className="hover:underline">
+              <a href="" className="hover:underline">
                 Ketentuan
               </a>
             </div>
           </div>
         </div>
 
-        {/* Kolom kanan: Gambar - disembunyikan di layar kecil */}
         <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50 order-1 md:order-2 py-8 md:py-0">
           <img
             src="/assets/Register Flip.png"
