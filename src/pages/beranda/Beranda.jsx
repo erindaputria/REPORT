@@ -3,6 +3,8 @@ import { Calender } from "../../components/beranda/Calender";
 import LeftSidebar from "../../components/Layout/LeftSidebar";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FileText, Eye } from "lucide-react";
+import HelpdeskPopup from "../../components/HelpdeskPopup";
 
 export function Beranda() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -12,6 +14,9 @@ export function Beranda() {
   const dropdownRef = useRef(null);
   const notificationRef = useRef(null);
   const navigate = useNavigate();
+  const handleTampilkanSemua = () => {
+  navigate("/riwayat");
+};
 
   // Menutup dropdown ketika klik di luar
   useEffect(() => {
@@ -102,6 +107,66 @@ export function Beranda() {
   const handlePelacakan = () => {
     navigate("/Pelacakan");
   };
+
+  // === Tambahkan di atas return ===
+const riwayatLaporan = [
+  {
+    id: "LPR321336",
+    nama: "Gangguan Router",
+    tanggalSelesai: "17-07-2025",
+  },
+  {
+    id: "LYN651289",
+    nama: "Permintaan Printer",
+    tanggalSelesai: "17-07-2025",
+  },
+  // kamu bisa tambahkan data lain di sini untuk testing
+];
+
+// Ambil hanya 2 data terbaru
+const dataTerbaru = riwayatLaporan.slice(0, 2);
+
+const [isChatOpen, setIsChatOpen] = useState(false);
+
+const popupRef = useRef(null);
+const [isDragging, setIsDragging] = useState(false);
+const [position, setPosition] = useState({
+  x: window.innerWidth - 380, // posisi awal di kanan bawah
+  y: window.innerHeight - 450, 
+});
+const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+const handleMouseDown = (e) => {
+  setIsDragging(true);
+  const rect = popupRef.current.getBoundingClientRect();
+  setOffset({
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top,
+  });
+};
+
+useEffect(() => {
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    setPosition({
+      x: e.clientX - offset.x,
+      y: e.clientY - offset.y,
+    });
+  };
+
+  const handleMouseUp = () => setIsDragging(false);
+
+  document.addEventListener("mousemove", handleMouseMove);
+  document.addEventListener("mouseup", handleMouseUp);
+
+  return () => {
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
+}, [isDragging, offset]);
+
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -440,24 +505,79 @@ export function Beranda() {
           </div>
         </div>
 
-        {/* Riwayat Laporan */}
+        {/* riwayat laporan */}
         <div className="mt-6 md:mt-8">
-          <hr className="border-gray-300 mb-4" />
-          <h2 className="text-xl md:text-2xl font-semibold mb-4 text-left">
-            Riwayat Laporan
-          </h2>
+  <hr className="border-gray-300 mb-4" />
+  <div className="flex justify-between items-center mb-4">
+    <h2 className="text-lg md:text-xl font-semibold text-left">
+      Riwayat Laporan
+    </h2>
+    <button
+  onClick={handleTampilkanSemua}
+  className="text-[#226597] text-sm font-medium hover:underline transition"
+>
+  Tampilkan semua
+</button>
 
-          {/* Card peringatan */}
-          <div className="bg-white rounded-xl md:rounded-2xl p-3 flex items-center mb-4 shadow-sm border border-gray-200">
-            {/* Logo peringatan */}
-            <div className="w-5 h-5 md:w-6 md:h-6 flex items-center justify-center border-2 border-gray-400 rounded-full mr-3 font-bold text-gray-600 text-xs md:text-sm">
-              !
+  </div>
+
+  {/* Jika tidak ada data */}
+  {dataTerbaru.length === 0 ? (
+    <div className="bg-white rounded-xl md:rounded-2xl p-3 flex items-center mb-4 shadow-sm border border-gray-200">
+      <div className="w-5 h-5 md:w-6 md:h-6 flex items-center justify-center border-2 border-gray-400 rounded-full mr-3 font-bold text-gray-600 text-xs md:text-sm">
+        !
+      </div>
+      <p className="text-gray-600 text-xs md:text-sm text-left">
+        Tidak ada riwayat laporan untuk ditampilkan
+      </p>
+    </div>
+  ) : (
+    <div className="bg-white rounded-xl md:rounded-2xl p-4 shadow-sm border border-gray-200">
+      {dataTerbaru.slice(0, 2).map((laporan, index) => (
+        <div
+          key={index}
+          className="flex justify-between items-center border-b last:border-0 py-4"
+        >
+          {/* Bagian kiri (info laporan) */}
+          <div className="grid grid-cols-3 gap-4 w-full">
+            <div>
+              <p className="text-xs text-gray-500 mb-1">ID:</p>
+              <p className="text-sm font-semibold text-gray-800">
+                {laporan.id}
+              </p>
             </div>
-            <p className="text-gray-600 text-xs md:text-sm text-left">
-              Tidak ada riwayat laporan untuk ditampilkan
-            </p>
+            <div>
+              <p className="text-xs text-gray-500 mb-1">Nama:</p>
+              <p className="text-sm font-semibold text-gray-800">
+                {laporan.nama}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 mb-1">Tanggal Selesai:</p>
+              <p className="text-sm font-semibold text-gray-800">
+                {laporan.tanggalSelesai}
+              </p>
+            </div>
+          </div>
+
+          {/* Aksi di kanan */}
+          <div className="flex gap-4 ml-6 pr-2">
+            <button
+              className="text-[#226597] hover:text-[#153d6a] transition transform hover:scale-110"
+              title="Lihat Detail"
+            >
+              <Eye size={20} />
+            </button>
           </div>
         </div>
+      ))}
+    </div>
+  )}
+</div>
+
+
+
+
       </div>
 
       {/* Right Sidebar - Responsif untuk semua perangkat */}
@@ -778,29 +898,7 @@ export function Beranda() {
           <Calender />
         </div>
 
-        {/* ChatBot */}
-        <div className="bg-white rounded-lg border p-3 flex items-center gap-2">
-          {/* Logo custom */}
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 58 59"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-8 h-8 md:w-10 md:h-10"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M52.0548 15.2007V38.2556C52.0548 39.7842 51.4476 41.2502 50.3667 42.3311C49.2858 43.412 47.8198 44.0193 46.2911 44.0193H31.8818L17.4726 55.5467V44.0193H11.7089C10.1802 44.0193 8.71422 43.412 7.63331 42.3311C6.55241 41.2502 5.94516 39.7842 5.94516 38.2556V15.2007C5.94516 13.6721 6.55241 12.2061 7.63331 11.1252C8.71422 10.0443 10.1802 9.43701 11.7089 9.43701H46.2911C47.8198 9.43701 49.2858 10.0443 50.3667 11.1252C51.4476 12.2061 52.0548 13.6721 52.0548 15.2007ZM20.3544 23.8463H14.5907V29.61H20.3544V23.8463ZM26.1181 23.8463H31.8818V29.61H26.1181V23.8463ZM43.4093 23.8463H37.6456V29.61H43.4093V23.8463Z"
-              fill="#226597"
-            />
-          </svg>
 
-          <span className="font-medium text-[#226597] text-sm md:text-base">
-            Tanya Helpdesk
-          </span>
-        </div>
       </div>
 
       {/* Overlay for right sidebar di mobile */}
@@ -810,6 +908,8 @@ export function Beranda() {
           onClick={() => setIsRightSidebarOpen(false)}
         ></div>
       )}
+      <HelpdeskPopup />
+
     </div>
   );
 }
