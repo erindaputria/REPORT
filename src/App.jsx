@@ -85,7 +85,7 @@ import LayoutMasyarakat from "./components/Layout/LayoutMasyarakat";
 import HelpdeskChat from "./components/beranda/Helpdesk";
 
 //*-- Bidang --*/
-import DashboardBidang from "./pages/bidang/dashboardBidang";
+import DashboardBidang from "./pages/bidang/DashboardBidang";
 import AksiTiket from "./pages/bidang/AksiTiket";
 import MonitoringBidang from "./pages/bidang/MonitoringBidang";
 import RatingKepuasan from "./pages/bidang/RatingKepuasan";
