@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
-import LayoutOpd from "../../components/Layout/LayoutOpd";
+import LayoutOpd from "../../components/Layout/LayoutOPD";
 
 const LihatRatingOpd = () => {
   const navigate = useNavigate();
