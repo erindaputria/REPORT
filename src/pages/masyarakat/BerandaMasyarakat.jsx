@@ -1,10 +1,6 @@
 import { Plus, Menu, X, Bell, Calendar } from "lucide-react";
 import { Calender } from "../../components/beranda/Calender";
-<<<<<<< HEAD
 import LeftSidebar from "../../components/Layout/LeftSidebar";
-=======
-import SidebarMasyarakat from "./SidebarMasyarakat";
->>>>>>> Riwayathd
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import HelpdeskPopup from "../../components/HelpdeskPopup";
@@ -80,19 +76,7 @@ export function BerandaMasyarakat() {
       <div
         className={`${isMobileSidebarOpen ? "block" : "hidden"} md:block w-72`}
       >
-<<<<<<< HEAD
         <LeftSidebar />
-=======
-        <div className="h-full">
-          <SidebarMasyarakat />
-          <button
-            onClick={() => setIsMobileSidebarOpen(false)}
-            className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full md:hidden"
-          >
-            <X size={20} />
-          </button>
-        </div>
->>>>>>> Riwayathd
       </div>
 
       {/* Overlay for mobile sidebar */}
@@ -499,8 +483,6 @@ export function BerandaMasyarakat() {
                 Tidak ada riwayat laporan untuk ditampilkan
               </p>
             </div>
-<<<<<<< HEAD
-=======
 
             {/* Tombol dengan navigasi */}
             <button
@@ -639,7 +621,6 @@ export function BerandaMasyarakat() {
             >
               Tampilkan semua
             </button>
->>>>>>> Riwayathd
           </div>
 
           {/* Data Riwayat */}
@@ -1047,7 +1028,6 @@ export function BerandaMasyarakat() {
           <Calender />
         </div>
 
-<<<<<<< HEAD
         {/* ChatBot */}
         <div className="bg-white rounded-lg border p-3 flex items-center gap-2">
           <svg
@@ -1069,9 +1049,7 @@ export function BerandaMasyarakat() {
             Tanya Helpdesk
           </span>
         </div>
-=======
         
->>>>>>> Riwayathd
       </div>
 
       {/* Overlay for right sidebar di mobile */}

@@ -22,9 +22,7 @@ import FormPengajuan from "./pages/beranda/pengajuan/FormPengajuan";
 import SuksesPelayanan from "./pages/beranda/pengajuan/SuksesPelayanan";
 import SuksesPelaporan from "./pages/beranda/pelaporan/SuksesPelaporan";
 import DataDitemukan from "./pages/beranda/pelaporan/DataDitemukan";
-<<<<<<< HEAD
 import LayoutPegawai from "./components/Layout/LayoutPegawai";
-=======
 import Riwayat from "./pages/masyarakat/riwayat";
 import LihatHistory from "./pages/masyarakat/LihatHistory";
 import LihatRating from "./pages/masyarakat/LihatRating";
@@ -32,7 +30,6 @@ import BeriRating from "./pages/masyarakat/BeriRating";
 import ReopenPegawai from "./pages/masyarakat/ReopenPegawai";
 import ReopenMasyarakat from "./pages/masyarakat/ReopenMasyarakat";
 import RiwayatMasyarakat from "./pages/masyarakat/riwayatmasyarakat";
->>>>>>> Riwayathd
 
 //*-- Seksi --*/
 import BerandaSeksi from "./pages/beranda/Seksi/BerandaSeksi";
@@ -114,7 +111,7 @@ import NotifDiproses from "./pages/notifikasi/NotifDiproses";
 import NotifMaintenance from "./pages/notifikasi/NotifMaintenance";
 import NotifDarurat from "./pages/notifikasi/NotifDarurat";
 import NotifUmum from "./pages/notifikasi/NotifUmum";
-import LihatRating from "./pages/bidang/LihatRating";
+import LihatRatingBidang from "./pages/bidang/LihatRatingBidang";
 import LihatRatingOpd from "./pages/adminopd/LihatRatingOpd";
 import KBMasyarakat from "./pages/masyarakat/KBMasyarakat";
 import TampilanMasyarakat from "./pages/masyarakat/TampilanMasyarakat";
@@ -256,7 +253,6 @@ function App() {
         <Route path="/notifmaintenance" element={<NotifMaintenance />} />
         <Route path="/notifdarurat" element={<NotifDarurat />} />
         <Route path="/notifumum" element={<NotifUmum />} />
-<<<<<<< HEAD
 
         <Route path="/detailbidang" element={<DetailBidang />} />
         <Route path="/lihatratingopd" element={<LihatRatingOpd />} />
@@ -300,15 +296,13 @@ function App() {
         />
         <Route path="/kotakmasukbidang" element={<KotakMasukBidang />} />
         <Route path="/kotakmasukopd" element={<KotakMasukOpd />} />
-=======
         <Route path="riwayat" element={<Riwayat />} />
         <Route path="lihathistory" element={<LihatHistory />} />
-        <Route path="lihatrating" element={<LihatRating />} />
+        <Route path="lihatratingbidang" element={<LihatRatingBidang />} />
         <Route path="berirating" element={<BeriRating />} />
         <Route path="reopenpegawai" element={<ReopenPegawai />} />
         <Route path="reopenmasyarakat" element={<ReopenMasyarakat />} />
         <Route path="riwayatmasyarakat" element={<RiwayatMasyarakat />} />
->>>>>>> Riwayathd
       </Routes>
     </Router>
   );

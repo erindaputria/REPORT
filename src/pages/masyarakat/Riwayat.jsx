@@ -1,6 +1,6 @@
 import React from "react";
 import { Paperclip } from "lucide-react";
-import LeftSidebar from "../../components/LeftSidebar";
+import LeftSidebar from "../../components/Layout/LeftSidebar";
 import Header from "../../components/Header";
 import { useNavigate } from "react-router-dom";
 
